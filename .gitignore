@@ -1,0 +1,78 @@
+.idea
+node_modules/
+
+
+apps/web/node_modules/
+apps/web/build/
+
+.DS_Store
+
+apps/mobile/build/
+apps/mobile/*.pbxuser
+apps/mobile/!default.pbxuser
+apps/mobile/*.mode1v3
+apps/mobile/!default.mode1v3
+apps/mobile/*.mode2v3
+apps/mobile/!default.mode2v3
+apps/mobile/*.perspectivev3
+apps/mobile/!default.perspectivev3
+apps/mobile/xcuserdata
+apps/mobile/*.xccheckout
+apps/mobile/*.moved-aside
+apps/mobile/DerivedData
+apps/mobile/*.hmap
+apps/mobile/*.ipa
+apps/mobile/*.xcuserstate
+apps/mobile/**/.xcode.env.local
+
+# Android/IntelliJ
+#
+#apps/mobile/build/
+apps/mobile/.idea
+apps/mobile/.gradle
+apps/mobile/local.properties
+apps/mobile/*.iml
+apps/mobile/*.hprof
+apps/mobile/.cxx/
+apps/mobile/*.keystore
+apps/mobile/!debug.keystore
+apps/mobile/.kotlin/
+
+# node.js
+#
+apps/mobile/node_modules/
+apps/mobile/npm-debug.log
+apps/mobile/yarn-error.log
+
+# fastlane
+#
+# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
+# screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/
+
+apps/mobile/**/fastlane/report.xml
+apps/mobile/**/fastlane/Preview.html
+apps/mobile/**/fastlane/screenshots
+apps/mobile/**/fastlane/test_output
+
+# Bundle artifact
+apps/mobile/*.jsbundle
+
+# Ruby / CocoaPods
+apps/mobile/**/Pods/
+apps/mobile/vendor/bundle/
+
+# Temporary files created by Metro to check the health of the file watcher
+apps/mobile/metro-health-check*
+
+# testing
+apps/mobile/coverage/
+
+# Yarn
+apps/mobile/.yarn/*
+apps/mobile/!.yarn/patches
+apps/mobile/!.yarn/plugins
+apps/mobile/!.yarn/releases
+apps/mobile/!.yarn/sdks
+apps/mobile/!.yarn/versions
