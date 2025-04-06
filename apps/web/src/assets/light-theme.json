@@ -1,0 +1,102 @@
+{
+  "name": "Default",
+  "style": {
+    "web": {
+      "background": "rgba(245, 245, 245 , 1 )"
+    }
+  },
+  "shared-components": [
+
+  ],
+  "mainPage": {
+    "web": [
+      {
+        "type": "linear-layout",
+        "orientation": "vertical",
+        "style": {
+          "left": "10px",
+          "top": "10px",
+          "bottom": "10px",
+          "width": "60px",
+          "position": "absolute",
+          "background": "rgba(85, 150, 240, 1)",
+          "border-radius": "10px"
+        },
+        "children": [
+          {
+            "type": "account-button",
+            "style": {
+              "color": "rgba(255, 255, 255, 1)",
+              "padding": "15px",
+              "font-size": "20px",
+              "margin-bottom": "30px"
+            }
+          },
+          {
+            "type": "home-button",
+            "style": {
+              "color": "rgba(255, 255, 255, 1)",
+              "padding": "15px",
+              "font-size": "20px"
+            }
+          },
+          {
+            "type": "notifications-button",
+            "style": {
+              "color": "rgba(255, 255, 255, 1)",
+              "padding": "15px",
+              "font-size": "20px"
+            }
+          },
+          {
+            "type": "settings-button",
+            "style": {
+              "color": "rgba(255, 255, 255, 1)",
+              "padding": "15px",
+              "font-size": "20px"
+            }
+          },
+          {
+            "type": "google-button",
+            "style": {
+              "color": "rgba(255, 255, 255, 1)",
+              "padding": "15px",
+              "font-size": "20px"
+            }
+          },
+          {
+            "type": "forum-button",
+            "style": {
+              "color": "rgba(255, 255, 255, 1)",
+              "padding": "15px",
+              "font-size": "20px"
+            }
+          },
+          {
+            "type": "github-button",
+            "style": {
+              "color": "rgba(255, 255, 255, 1)",
+              "padding": "15px",
+              "font-size": "20px"
+            }
+          }
+        ]
+      },
+      {
+        "type": "search-bar",
+        "style": {
+          "font-size": "20px",
+          "color": "rgba(125, 125, 125, 1)",
+          "background": "rgba(255, 255, 255, 1)",
+          "border-radius": "10px",
+          "left": "90px",
+          "top": "10px",
+          "position": "absolute",
+          "padding": "10px",
+          "gap": "20px",
+          "width": "20%"
+        }
+      }
+    ]
+  }
+}

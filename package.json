@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run-web": "cd apps/web && npm start",
+    "run-web": "cd apps/web && npm run start",
     "run-ios": "cd apps/mobile && npx react-native run-ios",
-    "run-android": "cd apps/mobile && npx react-native run-android",
-    "dev": "npm run dev:web & npm run dev:mobile"
+    "run-android": "cd apps/mobile && npx react-native run-android"
   },
   "workspaces": {
     "packages": [
@@ -15,7 +14,7 @@
     ]
   },
   "dependencies": {
-    "react": "19.0.0",
+    "react": "^19.1.0",
     "react-native": "0.78.2"
   },
   "devDependencies": {
