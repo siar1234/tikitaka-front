@@ -1,9 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
-import hey from "@myorg/shared/utils";
 import lightTheme from "./assets/light-theme.json";
 import styled from "styled-components";
 import ComponentFromTheme from "./ComponentFromTheme";
+
+export const RelativeLayout = styled.div`
+        position: relative;
+    `;
 
 export const VerticalLinearLayout = styled.div`
         display: flex;
@@ -27,20 +30,14 @@ function App() {
   const AppLayout = styled.div`
   `;
 
-  const VerticalLinearLayout = styled.div`
-    display: flex;
-    flex-direction: column;
-  `;
-
-  const HorizontalLinearLayout = styled.div`
-    display: flex;
-    flex-direction: row;
-  `;
-
   const children = [];
+  const sharedComponents = [];
+
+  for(const item of lightTheme["shared-components"].web) {
+    sharedComponents.push(  <ComponentFromTheme elementData={item} />);
+  }
 
   for(const item of lightTheme.mainPage.web) {
-    console.log(item);
     children.push(
         <ComponentFromTheme elementData={item} />
     );
@@ -55,6 +52,7 @@ function App() {
   return (
       <AppLayout>
         {children}
+        {sharedComponents}
       </AppLayout>
   );
 }

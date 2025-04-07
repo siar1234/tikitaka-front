@@ -1,6 +1,8 @@
 import styled from "styled-components";
-import {HorizontalLinearLayout, IconButton, VerticalLinearLayout} from "./App";
+import {HorizontalLinearLayout, IconButton, RelativeLayout, VerticalLinearLayout} from "./App";
 import SearchBar from "./components/SearchBar";
+import {textByDocumentLocale, textByLocale} from "./textUtils";
+import Groups from "./components/Groups";
 
 export default function ComponentFromTheme({elementData}) {
 
@@ -8,17 +10,31 @@ export default function ComponentFromTheme({elementData}) {
 
     };
     for(const styleDataItemKey in elementData.style) {
-        styleData[styleDataItemKey] = elementData.style[styleDataItemKey];
+        let styleKey = styleDataItemKey;
+        switch (styleDataItemKey) {
+            case "font-weight":
+                styleKey = "fontWeight";
+                break;
+            case "font-size":
+                styleKey = "fontSize";
+                break;
+            case "margin-bottom":
+                styleKey = "marginBottom";
+                break;
+        }
+        styleData[styleKey] = elementData.style[styleDataItemKey];
+    }
+
+    const childrenOfLayout = [];
+    if(typeof elementData.children !== "undefined") {
+        for (const child of elementData.children) {
+            childrenOfLayout.push(<ComponentFromTheme elementData={child}/>);
+        }
     }
 
     switch (elementData.type) {
 
         case "linear-layout":
-            const childrenOfLayout = [];
-
-            for (const child of elementData.children) {
-                childrenOfLayout.push(<ComponentFromTheme elementData={child}/>);
-            }
 
             if (elementData.orientation === "vertical") {
                 return (
@@ -33,6 +49,16 @@ export default function ComponentFromTheme({elementData}) {
                     </HorizontalLinearLayout>
                 );
             }
+        case "relative-layout":
+            return (
+                <RelativeLayout style={styleData}>
+                    {childrenOfLayout}
+                </RelativeLayout>
+            );
+        case "groups":
+            return (
+              <Groups elementData={elementData}></Groups>
+            );
         case "account-button":
             return (<IconButton style={styleData}>
                 <i className="fa-solid fa-user"></i>
@@ -57,10 +83,20 @@ export default function ComponentFromTheme({elementData}) {
             return (<IconButton style={styleData}>
                 <i className="fa-solid fa-compass"></i>
             </IconButton>);
+        case "github-button":
+            return (<IconButton style={styleData}>
+                <i className="fa-brands fa-github"></i>
+            </IconButton>);
             case "search-bar":
                 return (
                     <SearchBar style={styleData}/>
                 );
+        case "text":
+            return (
+              <div style={styleData}>
+                  {textByDocumentLocale(elementData.text)}
+              </div>
+            );
         default:
             console.log("Unknown Component");
             console.log(elementData.type);
