@@ -1,47 +1,31 @@
-import {VerticalLinearLayout} from "../App";
 import ComponentFromTheme from "../ComponentFromTheme";
+import {VerticalLinearLayout} from "../App";
 import convertedStyle from "../styleUtils";
 
-export default function Groups({elementData}) {
-
+export default function Peoples({elementData}) {
     const children = [];
 
-    const groups = [
+    const peoples = [
         {
-            name: "Project1"
+            name: "Sam"
         },
         {
-            name: "Project2"
+            name: "John"
         },
         {
-            name: "Project3"
+            name: "Jackson"
         },
         {
-            name: "Project4"
+            name: "George"
         },
         {
-            name: "Project5"
-        },
-        {
-            name: "Project5"
-        },
-        {
-            name: "Project5"
-        },
-        {
-            name: "Project5"
-        },
-        {
-            name: "Project5"
-        },
-        {
-            name: "Project5"
+            name: "Carl"
         },
     ];
 
-    for(const group of groups) {
+    for(const people of peoples) {
         const replacements = {
-            "@name": group.name
+            "@name": people.name
         };
         children.push(
             <ComponentFromTheme elementData={elementData.item} replacements={replacements}/>

@@ -3,6 +3,11 @@ import './App.css';
 import lightTheme from "./assets/light-theme.json";
 import styled from "styled-components";
 import ComponentFromTheme from "./ComponentFromTheme";
+import {useState} from "react";
+import MainPage from "./pages/MainPage";
+import Forum from "./pages/Forum";
+import {useStore} from "./store";
+import {Route, Routes} from "react-router-dom";
 
 export const RelativeLayout = styled.div`
         position: relative;
@@ -28,19 +33,14 @@ export const IconButton = styled.button`
 function App() {
 
   const AppLayout = styled.div`
+      width: 100%;
+      height: 100%;
   `;
 
-  const children = [];
   const sharedComponents = [];
 
   for(const item of lightTheme["shared-components"].web) {
     sharedComponents.push(  <ComponentFromTheme elementData={item} />);
-  }
-
-  for(const item of lightTheme.mainPage.web) {
-    children.push(
-        <ComponentFromTheme elementData={item} />
-    );
   }
 
   const styleData = {};
@@ -51,8 +51,11 @@ function App() {
 
   return (
       <AppLayout>
-        {children}
-        {sharedComponents}
+          <Routes>
+              <Route path="/" element={<MainPage/>} />
+              <Route path="/forum" element={<Forum/>} />
+          </Routes>
+          {sharedComponents}
       </AppLayout>
   );
 }

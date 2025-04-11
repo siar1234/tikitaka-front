@@ -1,34 +1,22 @@
-import styled from "styled-components";
 import {HorizontalLinearLayout, IconButton, RelativeLayout, VerticalLinearLayout} from "./App";
 import SearchBar from "./components/SearchBar";
-import {textByDocumentLocale, textByLocale} from "./textUtils";
+import {textByDocumentLocale} from "./textUtils";
 import Groups from "./components/Groups";
+import Peoples from "./components/Peoples";
+import ChattingHeader from "./components/ChattingHeader";
+import convertedStyle from "./styleUtils";
+import {useNavigate} from "react-router-dom";
+import ChattingContents from "./components/ChattingContents";
 
-export default function ComponentFromTheme({elementData}) {
+export default function ComponentFromTheme({elementData, replacements}) {
 
-    const styleData = {
-
-    };
-    for(const styleDataItemKey in elementData.style) {
-        let styleKey = styleDataItemKey;
-        switch (styleDataItemKey) {
-            case "font-weight":
-                styleKey = "fontWeight";
-                break;
-            case "font-size":
-                styleKey = "fontSize";
-                break;
-            case "margin-bottom":
-                styleKey = "marginBottom";
-                break;
-        }
-        styleData[styleKey] = elementData.style[styleDataItemKey];
-    }
+    const styleData = convertedStyle(elementData.style);
+    const navigate = useNavigate();
 
     const childrenOfLayout = [];
     if(typeof elementData.children !== "undefined") {
         for (const child of elementData.children) {
-            childrenOfLayout.push(<ComponentFromTheme elementData={child}/>);
+            childrenOfLayout.push(<ComponentFromTheme elementData={child} replacements={replacements}/>);
         }
     }
 
@@ -51,7 +39,7 @@ export default function ComponentFromTheme({elementData}) {
             }
         case "relative-layout":
             return (
-                <RelativeLayout style={styleData}>
+                <RelativeLayout style={styleData} replacements={replacements}>
                     {childrenOfLayout}
                 </RelativeLayout>
             );
@@ -59,12 +47,18 @@ export default function ComponentFromTheme({elementData}) {
             return (
               <Groups elementData={elementData}></Groups>
             );
+        case "peoples":
+            return (
+              <Peoples elementData={elementData}></Peoples>
+            );
         case "account-button":
             return (<IconButton style={styleData}>
                 <i className="fa-solid fa-user"></i>
             </IconButton>);
         case "home-button":
-            return (<IconButton style={styleData}>
+            return (<IconButton style={styleData} onClick={() => {
+                navigate("/");
+            }}>
                 <i className="fa-solid fa-home"></i>
             </IconButton>);
         case "notifications-button":
@@ -80,7 +74,9 @@ export default function ComponentFromTheme({elementData}) {
                 <i className="fa-brands fa-google"></i>
             </IconButton>);
         case "forum-button":
-            return (<IconButton style={styleData}>
+            return (<IconButton style={styleData} onClick={() => {
+                navigate("/forum");
+            }}>
                 <i className="fa-solid fa-compass"></i>
             </IconButton>);
         case "github-button":
@@ -91,11 +87,40 @@ export default function ComponentFromTheme({elementData}) {
                 return (
                     <SearchBar style={styleData}/>
                 );
-        case "text":
+        case "chatting-header":
             return (
-              <div style={styleData}>
-                  {textByDocumentLocale(elementData.text)}
-              </div>
+              <ChattingHeader elementData={elementData}/>
+            );
+        case "chatting-contents":
+            return (
+                <ChattingContents elementData={elementData}/>
+            );
+        case "text":
+            if(typeof replacements !== "undefined") {
+                const text = {...elementData.text};
+                for(const key in replacements) {
+                    text["default"] = text["default"].replace(key, replacements[key]);
+                }
+                return (
+                    <div style={styleData}>
+                        {textByDocumentLocale(text)}
+                    </div>
+                );
+            }
+            else {
+                return (
+                    <div style={styleData}>
+                        {textByDocumentLocale(elementData.text)}
+                    </div>
+                );
+            }
+        case "img":
+            let src = elementData.src;
+            if(typeof src === "undefined") {
+                src = elementData.src;
+            }
+            return (
+                <img style={styleData} src={src}></img>
             );
         default:
             console.log("Unknown Component");
