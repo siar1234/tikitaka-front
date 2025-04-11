@@ -1,12 +1,54 @@
 import convertedStyle from "../styleUtils";
-import {RelativeLayout} from "../App";
+import {RelativeLayout, VerticalLinearLayout} from "../App";
+import ComponentFromTheme from "../ComponentFromTheme";
 
 export default function ChattingContents({elementData}) {
     const styleData = convertedStyle(elementData.style);
 
-    return (
-        <RelativeLayout style={styleData}>
+    const children = [];
+    const messages = [
+        {
+            "text": "Hi",
+            userId: "ddd"
+        },
+        {
+            "text": "Hi",
+            userId: "ttt"
+        },
+        {
+            "text": "Hi",
+            userId: "ddd"
+        },
+        {
+            "text": "Hi",
+            userId: "ttt"
+        },
+        {
+            "text": "Hi",
+            userId: "ttt"
+        }
+    ];
 
-        </RelativeLayout>
+    for(const message of messages) {
+        const replacements = {
+            "@message": message.text,
+        };
+        if(message.userId === "ttt"){
+            children.push(
+                <ComponentFromTheme elementData={elementData["item-partner"]} replacements={replacements}/>
+            );
+        }
+        else {
+            children.push(
+                <ComponentFromTheme elementData={elementData.item} replacements={replacements}/>
+            );
+        }
+
+    }
+
+    return (
+        <VerticalLinearLayout style={styleData}>
+            {children}
+        </VerticalLinearLayout>
     );
 }

@@ -281,22 +281,74 @@
             "style": {
 
             },
-            "profile-image": {
-              "style": {
-
+            "children": [
+              {
+                "type": "text",
+                "style": {
+                  "position": "absolute",
+                  "font-size": "25px",
+                  "font-weight": "bold",
+                  "left": "70px",
+                  "top": "5px"
+                },
+                "text": {
+                  "default": "@title"
+                }
+              },
+              {
+                "type": "text",
+                "style": {
+                  "position": "absolute",
+                  "font-size": "15px",
+                  "left": "70px",
+                  "top": "45px"
+                },
+                "text": {
+                  "default": "@subtitle"
+                }
               }
-            },
-            "user-name": {
-
-            },
-            "status": {
-
-            }
+            ]
           },
           {
             "type": "chatting-contents",
             "style": {
 
+            },
+            "item": {
+              "type": "relative-layout",
+              "style": {
+                "height": "60px"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "style": {
+                    "position": "absolute",
+                    "right": "0px"
+                  },
+                  "text": {
+                    "default": "@message"
+                  }
+                }
+              ]
+            },
+            "item-partner": {
+              "type": "relative-layout",
+              "style": {
+                "height": "60px"
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "style": {
+                    "position": "absolute",
+                    "left": "0px"
+                  },
+                  "text": {
+                    "default": "@message"
+                  }
+                }
+              ]
             }
           }
         ]
