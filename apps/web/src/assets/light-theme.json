@@ -312,43 +312,130 @@
           {
             "type": "chatting-contents",
             "style": {
-
+              "position": "absolute",
+              "top": "80px",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "60px"
             },
             "item": {
-              "type": "relative-layout",
+              "type": "linear-layout",
+              "orientation": "vertical",
               "style": {
-                "height": "60px"
+                "align-items": "flex-end"
               },
               "children": [
                 {
                   "type": "text",
                   "style": {
-                    "position": "absolute",
-                    "right": "0px"
+                    "background": "rgba(85, 150, 240, 1)",
+                    "color": "rgba(255, 255, 255, 1)",
+                    "padding-bottom": "10px",
+                    "padding-top": "10px",
+                    "padding-left": "50px",
+                    "padding-right": "50px",
+                    "border-radius": "15px",
+                    "width": "fit-content",
+                    "margin-right": "25px",
+                    "max-width": "300px",
+                    "word-wrap": "break-word"
                   },
                   "text": {
                     "default": "@message"
+                  }
+                },
+                {
+                  "type": "div",
+                  "style": {
+                    "background": "rgba(85, 150, 240, 1)",
+                    "width": "15px",
+                    "height": "15px",
+                    "border-radius": "15px",
+                    "margin-right": "10px"
+                  }
+                },
+                {
+                  "type": "text",
+                  "style": {
+                    "color": "rgba(125, 125, 125, 1)",
+                    "margin-right": "27px"
+                  },
+                  "text": {
+                    "default": "@date"
                   }
                 }
               ]
             },
             "item-partner": {
-              "type": "relative-layout",
+              "type": "linear-layout",
+              "orientation": "vertical",
               "style": {
-                "height": "60px"
+
               },
               "children": [
                 {
                   "type": "text",
                   "style": {
-                    "position": "absolute",
-                    "left": "0px"
+                    "background": "rgba(245, 245, 245, 1)",
+                    "padding-bottom": "10px",
+                    "padding-top": "10px",
+                    "padding-left": "50px",
+                    "padding-right": "50px",
+                    "border-radius": "15px",
+                    "width": "fit-content",
+                    "margin-left": "25px",
+                    "max-width": "300px",
+                    "word-wrap": "break-word"
                   },
                   "text": {
                     "default": "@message"
                   }
+                },
+                {
+                  "type": "div",
+                  "style": {
+                    "background": "rgba(245, 245, 245, 1)",
+                    "width": "15px",
+                    "height": "15px",
+                    "border-radius": "15px",
+                    "margin-left": "10px"
+                  }
+                },
+                {
+                  "type": "text",
+                  "style": {
+                    "color": "rgba(125, 125, 125, 1)",
+                    "margin-left": "30px"
+                  },
+                  "text": {
+                    "default": "@date"
+                  }
                 }
               ]
+            }
+          },
+          {
+            "type": "chatting-footer",
+            "style": {
+              "position": "absolute",
+              "left": "0px",
+              "right": "0px",
+              "bottom": "0px"
+            },
+            "send-button": {
+              "style": {
+                "background": "rgba(85, 150, 240, 1)",
+                "color": "rgba(255, 255, 255, 1)",
+                "padding": "10px",
+                "border-radius": "10px",
+                "font-size": "20px",
+                "position": "absolute",
+                "right": "10px",
+                "bottom": "10px"
+              }
+            },
+            "input": {
+              
             }
           }
         ]

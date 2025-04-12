@@ -7,6 +7,7 @@ import ChattingHeader from "./components/ChattingHeader";
 import convertedStyle from "./styleUtils";
 import {useNavigate} from "react-router-dom";
 import ChattingContents from "./components/ChattingContents";
+import ChattingFooter from "./components/ChattingFooter";
 
 export default function ComponentFromTheme({elementData, replacements}) {
 
@@ -95,6 +96,10 @@ export default function ComponentFromTheme({elementData, replacements}) {
             return (
                 <ChattingContents elementData={elementData}/>
             );
+        case "chatting-footer":
+            return (
+                <ChattingFooter elementData={elementData}/>
+            );
         case "text":
             if(typeof replacements !== "undefined") {
                 const text = {...elementData.text};
@@ -127,7 +132,7 @@ export default function ComponentFromTheme({elementData, replacements}) {
             console.log(elementData.type);
             console.log(elementData);
             return (
-                <div>
+                <div style={styleData}>
 
                 </div>
             );
