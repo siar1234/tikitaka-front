@@ -1,15 +1,17 @@
 import {RelativeLayout} from "../App";
 import convertedStyle from "../styleUtils";
 import ComponentFromTheme from "../ComponentFromTheme";
+import {useStore} from "../store";
 
 export default function ChattingHeader({elementData}) {
 
+    const {chatRoom} = useStore();
     const children = [];
 
     for(const child of elementData.children) {
         const replacements = {
-            "@title": "Seung yong",
-            "@subtitle": "Online - Last seen, 2.02pm"
+            "@title": chatRoom.title,
+            "@subtitle": chatRoom.subtitle
         };
         children.push(
           <ComponentFromTheme elementData={child} replacements={replacements}/>

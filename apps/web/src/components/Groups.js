@@ -1,44 +1,13 @@
 import {VerticalLinearLayout} from "../App";
 import ComponentFromTheme from "../ComponentFromTheme";
 import convertedStyle from "../styleUtils";
+import {useStore} from "../store";
 
 export default function Groups({elementData}) {
 
     const children = [];
 
-    const groups = [
-        {
-            name: "Project1"
-        },
-        {
-            name: "Project2"
-        },
-        {
-            name: "Project3"
-        },
-        {
-            name: "Project4"
-        },
-        {
-            name: "Project5"
-        },
-        {
-            name: "Project5"
-        },
-        {
-            name: "Project5"
-        },
-        {
-            name: "Project5"
-        },
-        {
-            name: "Project5"
-        },
-        {
-            name: "Project5"
-        },
-    ];
-
+    const {groups} = useStore();
     for(const group of groups) {
         const replacements = {
             "@name": group.name

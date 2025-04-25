@@ -1,9 +1,10 @@
-import lightTheme from "../assets/light-theme.json";
 import ComponentFromTheme from "../ComponentFromTheme";
+import {useStore} from "../store";
 
 export default function MainPage() {
+    const {theme} = useStore();
     const children = [];
-    for(const item of lightTheme["main-page"].web) {
+    for(const item of theme["main-page"].web) {
         children.push(
             <ComponentFromTheme elementData={item} />
         );

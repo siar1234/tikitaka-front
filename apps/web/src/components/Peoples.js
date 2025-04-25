@@ -1,27 +1,12 @@
 import ComponentFromTheme from "../ComponentFromTheme";
 import {VerticalLinearLayout} from "../App";
 import convertedStyle from "../styleUtils";
+import {useStore} from "../store";
 
 export default function Peoples({elementData}) {
     const children = [];
 
-    const peoples = [
-        {
-            name: "Sam"
-        },
-        {
-            name: "John"
-        },
-        {
-            name: "Jackson"
-        },
-        {
-            name: "George"
-        },
-        {
-            name: "Carl"
-        },
-    ];
+    const {peoples} = useStore();
 
     for(const people of peoples) {
         const replacements = {

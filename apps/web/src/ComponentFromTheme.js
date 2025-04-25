@@ -8,11 +8,13 @@ import convertedStyle from "./styleUtils";
 import {useNavigate} from "react-router-dom";
 import ChattingContents from "./components/ChattingContents";
 import ChattingFooter from "./components/ChattingFooter";
+import {useStore} from "./store";
 
-export default function ComponentFromTheme({elementData, replacements}) {
+export default function ComponentFromTheme({elementData, replacements, children}) {
 
     const styleData = convertedStyle(elementData.style);
     const navigate = useNavigate();
+    const {setNotificationDialogShowing} = useStore();
 
     const childrenOfLayout = [];
     if(typeof elementData.children !== "undefined") {
@@ -29,12 +31,14 @@ export default function ComponentFromTheme({elementData, replacements}) {
                 return (
                     <VerticalLinearLayout style={styleData}>
                         {childrenOfLayout}
+                        {children}
                     </VerticalLinearLayout>
                 );
             } else {
                 return (
                     <HorizontalLinearLayout style={styleData}>
                         {childrenOfLayout}
+                        {children}
                     </HorizontalLinearLayout>
                 );
             }
@@ -42,6 +46,7 @@ export default function ComponentFromTheme({elementData, replacements}) {
             return (
                 <RelativeLayout style={styleData} replacements={replacements}>
                     {childrenOfLayout}
+                    {children}
                 </RelativeLayout>
             );
         case "groups":
@@ -63,7 +68,9 @@ export default function ComponentFromTheme({elementData, replacements}) {
                 <i className="fa-solid fa-home"></i>
             </IconButton>);
         case "notifications-button":
-            return (<IconButton style={styleData}>
+            return (<IconButton style={styleData} onClick={() => {
+                setNotificationDialogShowing(true);
+            }}>
                 <i className="fa-solid fa-bell"></i>
             </IconButton>);
         case "settings-button":
