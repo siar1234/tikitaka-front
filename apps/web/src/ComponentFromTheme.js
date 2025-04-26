@@ -17,7 +17,7 @@ export default function ComponentFromTheme({elementData, replacements, children}
     const {setNotificationDialogShowing} = useStore();
 
     const childrenOfLayout = [];
-    if(typeof elementData.children !== "undefined") {
+    if (typeof elementData.children !== "undefined") {
         for (const child of elementData.children) {
             childrenOfLayout.push(<ComponentFromTheme elementData={child} replacements={replacements}/>);
         }
@@ -51,11 +51,11 @@ export default function ComponentFromTheme({elementData, replacements, children}
             );
         case "groups":
             return (
-              <Groups elementData={elementData}></Groups>
+                <Groups elementData={elementData}></Groups>
             );
         case "peoples":
             return (
-              <Peoples elementData={elementData}></Peoples>
+                <Peoples elementData={elementData}></Peoples>
             );
         case "account-button":
             return (<IconButton style={styleData}>
@@ -77,27 +77,25 @@ export default function ComponentFromTheme({elementData, replacements, children}
             return (<IconButton style={styleData}>
                 <i className="fa-solid fa-gear"></i>
             </IconButton>);
-        case "google-button":
-            return (<IconButton style={styleData}>
-                <i className="fa-brands fa-google"></i>
-            </IconButton>);
-        case "forum-button":
+        case "community-button":
             return (<IconButton style={styleData} onClick={() => {
-                navigate("/forum");
+                navigate("/community");
             }}>
                 <i className="fa-solid fa-compass"></i>
             </IconButton>);
-        case "github-button":
-            return (<IconButton style={styleData}>
-                <i className="fa-brands fa-github"></i>
+        case "marketplace-button":
+            return (<IconButton style={styleData} onClick={() => {
+                navigate("/marketplace");
+            }}>
+                <i className="fa-solid fa-cart-shopping"></i>
             </IconButton>);
-            case "search-bar":
-                return (
-                    <SearchBar style={styleData}/>
-                );
+        case "search-bar":
+            return (
+                <SearchBar style={styleData}/>
+            );
         case "chatting-header":
             return (
-              <ChattingHeader elementData={elementData}/>
+                <ChattingHeader elementData={elementData}/>
             );
         case "chatting-contents":
             return (
@@ -108,9 +106,9 @@ export default function ComponentFromTheme({elementData, replacements, children}
                 <ChattingFooter elementData={elementData}/>
             );
         case "text":
-            if(typeof replacements !== "undefined") {
+            if (typeof replacements !== "undefined") {
                 const text = {...elementData.text};
-                for(const key in replacements) {
+                for (const key in replacements) {
                     text["default"] = text["default"].replace(key, replacements[key]);
                 }
                 return (
@@ -118,8 +116,7 @@ export default function ComponentFromTheme({elementData, replacements, children}
                         {textByDocumentLocale(text)}
                     </div>
                 );
-            }
-            else {
+            } else {
                 return (
                     <div style={styleData}>
                         {textByDocumentLocale(elementData.text)}
@@ -128,7 +125,7 @@ export default function ComponentFromTheme({elementData, replacements, children}
             }
         case "img":
             let src = elementData.src;
-            if(typeof src === "undefined") {
+            if (typeof src === "undefined") {
                 src = elementData.src;
             }
             return (

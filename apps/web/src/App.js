@@ -2,7 +2,7 @@ import './App.css';
 import styled from "styled-components";
 import ComponentFromTheme from "./ComponentFromTheme";
 import MainPage from "./pages/MainPage";
-import Forum from "./pages/Forum";
+import Community from "./pages/Community";
 import {Route, Routes} from "react-router-dom";
 import NotificationsDialog from "./dialogs/NotificationsDialog";
 import {useStore} from "./store";
@@ -10,6 +10,7 @@ import {useEffect} from "react";
 import {getChattingMessages} from "@myorg/shared/api/chattingMessage";
 import {getGroups, getNotifications, getPeoples} from "@myorg/shared/api/user";
 import {themeModeOnWeb} from "@myorg/shared/themeMode";
+import Marketplace from "./pages/Marketplace";
 
 export const RelativeLayout = styled.div`
         position: relative;
@@ -70,7 +71,8 @@ function App() {
       <>
           <Routes>
               <Route path="/" element={<MainPage/>} />
-              <Route path="/forum" element={<Forum/>} />
+              <Route path="/community" element={<Community/>} />
+              <Route path="/marketplace" element={<Marketplace/>} />
           </Routes>
           {sharedComponents}
           <NotificationsDialog isOpen={notificationsDialogShowing} onClose={() => {

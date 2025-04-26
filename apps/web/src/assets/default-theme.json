@@ -13,7 +13,14 @@
         "--divider-color": "rgba(125, 125, 125, 1)",
         "--overlay-background-color": "rgba(0, 0, 0, 0.5)",
         "--shadow-color": "rgba(0, 0, 0, 0.1)",
-        "--item-padding": "15px"
+        "--nav-menu-item-padding": "15px",
+        "--card-border-radius": "13px",
+        "--card-padding": "15px",
+        "--nav-menu-width": "60px",
+        "--groups-height": "30%",
+        "--peoples-height": "",
+        "--search-bar-width": "25%",
+        "--search-bar-height": "15px"
       },
       "dark": {
         "--background-color": "rgba(15, 15, 15, 1)",
@@ -23,7 +30,14 @@
         "--divider-color": "rgba(125, 125, 125, 1)",
         "--overlay-background-color": "rgba(0, 0, 0, 0.5)",
         "--shadow-color": "rgba(0, 0, 0, 0.1)",
-        "--item-padding": "15px"
+        "--nav-menu-item-padding": "15px",
+        "--card-border-radius": "13px",
+        "--card-padding": "15px",
+        "--nav-menu-width": "60px",
+        "--groups-height": "30%",
+        "--peoples-height": "",
+        "--search-bar-width": "25%",
+        "--search-bar-height": "15px"
       }
     },
     "shared": {
@@ -39,20 +53,20 @@
         "type": "linear-layout",
         "orientation": "vertical",
         "style": {
-          "left": "15px",
-          "top": "15px",
-          "bottom": "15px",
-          "width": "60px",
+          "left": "var(--card-padding)",
+          "top": "var(--card-padding)",
+          "bottom": "var(--card-padding)",
+          "width": "var(--nav-menu-width)",
           "position": "absolute",
           "background": "var(--highlight-color)",
-          "border-radius": "13px"
+          "border-radius": "var(--card-border-radius)"
         },
         "children": [
           {
             "type": "account-button",
             "style": {
               "color": "var(--card-color)",
-              "padding": "15px",
+              "padding": "var(--nav-menu-item-padding)",
               "font-size": "20px",
               "margin-bottom": "30px"
             }
@@ -61,7 +75,7 @@
             "type": "home-button",
             "style": {
               "color": "var(--card-color)",
-              "padding": "15px",
+              "padding": "var(--nav-menu-item-padding)",
               "font-size": "20px"
             }
           },
@@ -69,7 +83,7 @@
             "type": "notifications-button",
             "style": {
               "color": "var(--card-color)",
-              "padding": "15px",
+              "padding": "var(--nav-menu-item-padding)",
               "font-size": "20px"
             }
           },
@@ -77,31 +91,23 @@
             "type": "settings-button",
             "style": {
               "color": "var(--card-color)",
-              "padding": "15px",
+              "padding": "var(--nav-menu-item-padding)",
               "font-size": "20px"
             }
           },
           {
-            "type": "google-button",
+            "type": "community-button",
             "style": {
               "color": "var(--card-color)",
-              "padding": "15px",
+              "padding": "var(--nav-menu-item-padding)",
               "font-size": "20px"
             }
           },
           {
-            "type": "forum-button",
+            "type": "marketplace-button",
             "style": {
               "color": "var(--card-color)",
-              "padding": "15px",
-              "font-size": "20px"
-            }
-          },
-          {
-            "type": "github-button",
-            "style": {
-              "color": "var(--card-color)",
-              "padding": "15px",
+              "padding": "var(--nav-menu-item-padding)",
               "font-size": "20px"
             }
           }
@@ -117,14 +123,16 @@
           "font-size": "20px",
           "color": "var(--divider-color)",
           "background": "var(--card-color)",
-          "border-radius": "13px",
-          "left": "90px",
-          "top": "15px",
+          "border-radius": "var(--card-border-radius)",
+          "left": "calc( var(--card-padding) + var(--card-padding) + var(--nav-menu-width) )",
+          "top": "var(--card-padding)",
           "position": "absolute",
-          "padding": "10px",
           "gap": "20px",
-          "width": "25%",
-          "height": "20px"
+          "justify-content": "center",
+          "align-items": "center",
+          "padding": "var(--card-padding)",
+          "width": "var(--search-bar-width)",
+          "height": "var(--search-bar-height)"
         }
       },
       {
@@ -134,14 +142,14 @@
           "font-size": "20px",
           "color": "var(--text-color)",
           "background": "var(--card-color)",
-          "border-radius": "13px",
-          "left": "90px",
-          "top": "75px",
+          "border-radius": "var(--card-border-radius)",
+          "left": "calc( var(--card-padding) + var(--card-padding) + var(--nav-menu-width) )",
+          "top": "calc( 4 * var(--card-padding) + var(--search-bar-height) )",
           "position": "absolute",
-          "padding": "10px",
           "gap": "20px",
-          "width": "25%",
-          "height": "30%",
+          "padding": "var(--card-padding)",
+          "width": "var(--search-bar-width)",
+          "height": "var(--groups-height)",
           "overflow-y": "scroll"
         },
         "children": [
@@ -217,14 +225,14 @@
           "font-size": "20px",
           "color": "var(--text-color)",
           "background": "var(--card-color)",
-          "border-radius": "13px",
-          "left": "90px",
-          "top": "calc(30% + 115px)",
-          "bottom": "15px",
+          "border-radius": "var(--card-border-radius)",
+          "left": "calc( var(--card-padding) + var(--card-padding) + var(--nav-menu-width) )",
+          "top": "calc( 7 * var(--card-padding) + var(--search-bar-height) + var(--groups-height) )",
+          "bottom": "var(--card-padding)",
           "position": "absolute",
-          "padding": "10px",
+          "padding": "var(--card-padding)",
           "gap": "20px",
-          "width": "25%",
+          "width": "var(--search-bar-width)",
           "overflow-y": "scroll"
         },
         "children": [
@@ -294,13 +302,13 @@
       {
         "type": "relative-layout",
         "style": {
-          "left": "calc(25% + 130px)",
-          "top": "15px",
-          "bottom": "15px",
-          "right": "15px",
+          "left": "calc(var(--search-bar-width) + 5 * var(--card-padding) + var(--nav-menu-width) )",
+          "top": "var(--card-padding)",
+          "bottom": "var(--card-padding)",
+          "right": "var(--card-padding)",
           "position": "absolute",
           "background": "var(--card-color)",
-          "border-radius": "13px"
+          "border-radius": "var(--card-border-radius)"
         },
         "children": [
           {
@@ -570,9 +578,64 @@
       }
     }
   },
-  "forum": {
+  "community": {
     "web": [
 
     ]
+  },
+  "marketplace": {
+    "web": {
+      "tap-bar": {
+        "type": "linear-layout",
+        "orientation": "horizontal",
+        "style": {
+          "background": "var(--card-color)",
+          "border-radius": "var(--card-border-radius)",
+          "position": "absolute",
+          "width": "150px",
+          "height": "60px",
+          "right": "15px",
+          "top": "15px"
+        },
+        "themes-button": {
+          "style": {
+
+          },
+          "children": [
+            {
+              "type": "text",
+              "style": {
+
+              },
+              "text": {
+                "default": "Themes"
+              }
+            }
+          ]
+        },
+        "plugins-button": {
+          "style": {
+
+          },
+          "children": [
+            {
+              "type": "text",
+              "style": {
+
+              },
+              "text": {
+                "default": "Plugins"
+              }
+            }
+          ]
+        }
+      },
+      "themes": {
+
+      },
+      "plugins": {
+
+      }
+    }
   }
 }
