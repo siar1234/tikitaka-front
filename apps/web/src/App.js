@@ -11,6 +11,9 @@ import {getChattingMessages} from "@myorg/shared/api/chattingMessage";
 import {getGroups, getNotifications, getPeoples} from "@myorg/shared/api/user";
 import {themeModeOnWeb} from "@myorg/shared/themeMode";
 import Marketplace from "./pages/Marketplace";
+import Cookies from "js-cookie";
+import SignInPage from "./pages/SignInPage";
+import SignUpPage from "./pages/SignUpPage";
 
 export const RelativeLayout = styled.div`
         position: relative;
@@ -35,7 +38,11 @@ export const IconButton = styled.button`
 
 function App() {
 
+    const token = Cookies.get("JSESSIONID");
+    console.log(Cookies);
+
     const {notificationsDialogShowing, setNotificationDialogShowing, theme,setgroups, setPeoples, setNotifications, setChatRoom} = useStore();
+
     const themeMode = themeModeOnWeb();
 
     for(const property in theme.style.properties[themeMode]) {
@@ -54,6 +61,15 @@ function App() {
             }
         );
     }, []);
+
+    if(token === undefined) {
+        return (
+            <Routes>
+                <Route path="/" element={<SignInPage/>} />
+                <Route path="/signUp" element={<SignUpPage/>} />
+            </Routes>
+        );
+    }
 
   const sharedComponents = [];
 
