@@ -111,7 +111,7 @@ function App() {
     buttonPanel.appendChild(button3);
     buttonPanel.style.zIndex = "99999";
     buttonPanel.style.position = "fixed";
-    buttonPanel.style.display = "none";
+    //buttonPanel.style.display = "none";
     document.body.appendChild(buttonPanel);
 
     document.addEventListener('keydown', function(event) {

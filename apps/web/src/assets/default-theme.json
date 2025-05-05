@@ -152,7 +152,7 @@
           "padding": "var(--card-padding)",
           "width": "var(--search-bar-width)",
           "height": "var(--groups-height)",
-          "overflow-y": "scroll"
+          "overflow-y": "hidden"
         },
         "children": [
           {
@@ -178,7 +178,7 @@
           {
             "type": "groups",
             "style": {
-              "overflow-y": "scroll",
+              "overflow-y": "hidden",
               "position": "absolute",
               "left": "0px",
               "right": "0px",
@@ -238,7 +238,7 @@
           "padding": "var(--card-padding)",
           "gap": "20px",
           "width": "var(--search-bar-width)",
-          "overflow-y": "scroll"
+          "overflow-y": "hidden"
         },
         "children": [
           {
@@ -264,7 +264,7 @@
           {
             "type": "peoples",
             "style": {
-              "overflow-y": "scroll",
+              "overflow-y": "hidden",
               "position": "absolute",
               "left": "0px",
               "right": "0px",

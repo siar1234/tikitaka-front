@@ -17,9 +17,9 @@
         "--card-border-radius": "13px",
         "--card-padding": "15px",
         "--nav-menu-width": "60px",
-        "--groups-height": "30%",
+        "--groups-height": "40%",
         "--peoples-height": "",
-        "--search-bar-width": "25%",
+        "--search-bar-width": "20%",
         "--search-bar-height": "15px",
         "--profile-image-border-radius": "60px"
       },
@@ -53,28 +53,32 @@
     "web": [
       {
         "type": "linear-layout",
-        "orientation": "vertical",
+        "orientation": "horizontal",
         "style": {
           "left": "var(--card-padding)",
-          "top": "var(--card-padding)",
+          "width": "calc(var(--search-bar-width) + 40px)",
+          "height": "60px",
           "bottom": "var(--card-padding)",
-          "width": "var(--nav-menu-width)",
           "position": "absolute",
           "background": "var(--highlight-color)",
           "border-radius": "var(--card-border-radius)"
         },
         "children": [
           {
-            "type": "account-button",
+            "type": "text",
             "style": {
               "color": "var(--card-color)",
               "padding": "var(--nav-menu-item-padding)",
               "font-size": "20px",
-              "margin-bottom": "30px"
+              "font-family": "cursive",
+              "font-weight": "bold"
+            },
+            "text": {
+              "default": "Tikitaka"
             }
           },
           {
-            "type": "home-button",
+            "type": "marketplace-button",
             "style": {
               "color": "var(--card-color)",
               "padding": "var(--nav-menu-item-padding)",
@@ -82,7 +86,7 @@
             }
           },
           {
-            "type": "notifications-button",
+            "type": "home-button",
             "style": {
               "color": "var(--card-color)",
               "padding": "var(--nav-menu-item-padding)",
@@ -98,7 +102,7 @@
             }
           },
           {
-            "type": "community-button",
+            "type": "account-button",
             "style": {
               "color": "var(--card-color)",
               "padding": "var(--nav-menu-item-padding)",
@@ -106,7 +110,15 @@
             }
           },
           {
-            "type": "marketplace-button",
+            "type": "notifications-button",
+            "style": {
+              "color": "var(--card-color)",
+              "padding": "var(--nav-menu-item-padding)",
+              "font-size": "20px"
+            }
+          },
+          {
+            "type": "community-button",
             "style": {
               "color": "var(--card-color)",
               "padding": "var(--nav-menu-item-padding)",
@@ -126,7 +138,7 @@
           "color": "var(--divider-color)",
           "background": "var(--card-color)",
           "border-radius": "var(--card-border-radius)",
-          "left": "calc( var(--card-padding) + var(--card-padding) + var(--nav-menu-width) )",
+          "left": "calc( var(--card-padding))",
           "top": "var(--card-padding)",
           "position": "absolute",
           "gap": "20px",
@@ -145,14 +157,98 @@
           "color": "var(--text-color)",
           "background": "var(--card-color)",
           "border-radius": "var(--card-border-radius)",
-          "left": "calc( var(--card-padding) + var(--card-padding) + var(--nav-menu-width) )",
+          "left": "calc( var(--card-padding) )",
           "top": "calc( 4 * var(--card-padding) + var(--search-bar-height) )",
+          "height": "var(--groups-height)",
           "position": "absolute",
+          "padding": "var(--card-padding)",
+          "gap": "20px",
+          "width": "var(--search-bar-width)",
+          "overflow-y": "hidden"
+        },
+        "children": [
+          {
+            "type": "linear-layout",
+            "orientation": "vertical",
+            "style": {
+
+            },
+            "children": [
+              {
+                "type": "text",
+                "style": {
+                  "font-size": "20px",
+                  "font-weight": "bold"
+                },
+                "text": {
+                  "default": "친구목록",
+                  "ko": "친구"
+                }
+              }
+            ]
+          },
+          {
+            "type": "peoples",
+            "style": {
+              "overflow-y": "hidden",
+              "position": "absolute",
+              "left": "0px",
+              "right": "0px",
+              "top": "60px",
+              "bottom": "0px",
+              "display": "block"
+            },
+            "item": {
+              "type": "relative-layout",
+              "style": {
+                "height": "60px"
+              },
+              "children": [
+                {
+                  "type": "img",
+                  "style": {
+                    "width": "50px",
+                    "height": "50px",
+                    "left": "15px",
+                    "position": "absolute",
+                    "object-fit": "cover",
+                    "border-radius": "var(--profile-image-border-radius)"
+                  },
+                  "src": "@image"
+                },
+                {
+                  "type": "text",
+                  "style": {
+                    "font-size": "20px",
+                    "font-weight": "bold",
+                    "position": "absolute",
+                    "left": "70px"
+                  },
+                  "text": {
+                    "default": "@name"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "linear-layout",
+        "orientation": "vertical",
+        "style": {
+          "font-size": "20px",
+          "color": "var(--text-color)",
+          "background": "var(--card-color)",
+          "border-radius": "var(--card-border-radius)",
+          "left": "calc( var(--card-padding) )",
+          "top": "calc( 7 * var(--card-padding) + var(--search-bar-height) + var(--groups-height) )",
+          "position": "absolute",
+          "bottom": "calc( var(--card-padding) + var(--card-padding) + 60px )",
           "gap": "20px",
           "padding": "var(--card-padding)",
           "width": "var(--search-bar-width)",
-          "height": "var(--groups-height)",
-          "overflow-y": "scroll"
+          "overflow-y": "hidden"
         },
         "children": [
           {
@@ -169,7 +265,7 @@
                   "font-weight": "bold"
                 },
                 "text": {
-                  "default": "그룹채팅",
+                  "default": "그룹채팅 목록",
                   "ko": "그룹"
                 }
               }
@@ -178,7 +274,7 @@
           {
             "type": "groups",
             "style": {
-              "overflow-y": "scroll",
+              "overflow-y": "hidden",
               "position": "absolute",
               "left": "0px",
               "right": "0px",
@@ -224,96 +320,12 @@
         ]
       },
       {
-        "type": "linear-layout",
-        "orientation": "vertical",
-        "style": {
-          "font-size": "20px",
-          "color": "var(--text-color)",
-          "background": "var(--card-color)",
-          "border-radius": "var(--card-border-radius)",
-          "left": "calc( var(--card-padding) + var(--card-padding) + var(--nav-menu-width) )",
-          "top": "calc( 7 * var(--card-padding) + var(--search-bar-height) + var(--groups-height) )",
-          "bottom": "var(--card-padding)",
-          "position": "absolute",
-          "padding": "var(--card-padding)",
-          "gap": "20px",
-          "width": "var(--search-bar-width)",
-          "overflow-y": "scroll"
-        },
-        "children": [
-          {
-            "type": "linear-layout",
-            "orientation": "vertical",
-            "style": {
-
-            },
-            "children": [
-              {
-                "type": "text",
-                "style": {
-                  "font-size": "20px",
-                  "font-weight": "bold"
-                },
-                "text": {
-                  "default": "친구",
-                  "ko": "친구"
-                }
-              }
-            ]
-          },
-          {
-            "type": "peoples",
-            "style": {
-              "overflow-y": "scroll",
-              "position": "absolute",
-              "left": "0px",
-              "right": "0px",
-              "top": "60px",
-              "bottom": "0px",
-              "display": "block"
-            },
-            "item": {
-              "type": "relative-layout",
-              "style": {
-                "height": "60px"
-              },
-              "children": [
-                {
-                  "type": "img",
-                  "style": {
-                    "width": "50px",
-                    "height": "50px",
-                    "left": "15px",
-                    "position": "absolute",
-                    "object-fit": "cover",
-                    "border-radius": "var(--profile-image-border-radius)"
-                  },
-                  "src": "@image"
-                },
-                {
-                  "type": "text",
-                  "style": {
-                    "font-size": "20px",
-                    "font-weight": "bold",
-                    "position": "absolute",
-                    "left": "70px"
-                  },
-                  "text": {
-                    "default": "@name"
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      },
-      {
         "type": "relative-layout",
         "style": {
-          "left": "calc(var(--search-bar-width) + 5 * var(--card-padding) + var(--nav-menu-width) )",
-          "top": "var(--card-padding)",
-          "bottom": "var(--card-padding)",
-          "right": "var(--card-padding)",
+          "left": "calc(var(--search-bar-width) + 5 * var(--card-padding) )",
+          "top": "calc( var(--card-padding) + 15px)",
+          "bottom": "calc( var(--card-padding) + 15px )",
+          "right": "calc( var(--card-padding) + 15px )",
           "position": "absolute",
           "background": "var(--card-color)",
           "border-radius": "var(--card-border-radius)"
