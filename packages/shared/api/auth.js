@@ -1,9 +1,10 @@
 import axios from 'axios';
 import {BACKEND_URL} from "./serverAddress";
+import Cookies from "js-cookie";
 
 export async function login({id, password, onFailed, onSuccess}) {
     try {
-        const response = await axios.post(`${BACKEND_URL}/signIn`, {
+        const response = await axios.post(`${BACKEND_URL}/api/user/signIn`, {
             id,
             password,
         }, {
@@ -11,7 +12,8 @@ export async function login({id, password, onFailed, onSuccess}) {
         });
 
         if(response.status === 200){
-            console.log(response.data);
+            const token = response.data["token"];
+            Cookies.set("Authorization", token);
             onSuccess();
         }
         else {
@@ -25,7 +27,7 @@ export async function login({id, password, onFailed, onSuccess}) {
 
 export async function register({username, id, password, onFailed, onSuccess}) {
     try {
-        const response = await axios.post(`${BACKEND_URL}/signUp`, {
+        const response = await axios.post(`${BACKEND_URL}/api/user/signUp`, {
             name: username,
             id,
             password,

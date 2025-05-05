@@ -10,7 +10,8 @@ export default function Peoples({elementData}) {
 
     for(const people of peoples) {
         const replacements = {
-            "@name": people.name
+            "@name": people.name,
+            "@image": people.image
         };
         children.push(
             <ComponentFromTheme elementData={elementData.item} replacements={replacements}/>

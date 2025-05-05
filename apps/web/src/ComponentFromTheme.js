@@ -9,6 +9,7 @@ import {useNavigate} from "react-router-dom";
 import ChattingContents from "./components/ChattingContents";
 import ChattingFooter from "./components/ChattingFooter";
 import {useStore} from "./store";
+import profileImage from "../src/assets/profile.png";
 
 export default function ComponentFromTheme({elementData, replacements, children}) {
 
@@ -58,7 +59,10 @@ export default function ComponentFromTheme({elementData, replacements, children}
                 <Peoples elementData={elementData}></Peoples>
             );
         case "account-button":
-            return (<IconButton style={styleData}>
+            return (
+                <IconButton style={styleData} onClick={() => {
+                    navigate("/profile");
+                }}>
                 <i className="fa-solid fa-user"></i>
             </IconButton>);
         case "home-button":
@@ -126,7 +130,14 @@ export default function ComponentFromTheme({elementData, replacements, children}
         case "img":
             let src = elementData.src;
             if (typeof src === "undefined") {
-                src = elementData.src;
+                src = profileImage;
+            }
+            if (typeof replacements !== "undefined") {
+                for (const key in replacements) {
+                    if(key === src) {
+                        src = replacements[key];
+                    }
+                }
             }
             return (
                 <img style={styleData} src={src}></img>

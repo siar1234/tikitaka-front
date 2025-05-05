@@ -20,4 +20,6 @@ export const useStore = create((set) => ({
         messages: []
     },
     setChatRoom: (chatRoom) => set({ chatRoom }),
+    user: {},
+    setUser: (user) => set({ user }),
 }));

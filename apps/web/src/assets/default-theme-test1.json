@@ -7,7 +7,7 @@
     "properties": {
       "light": {
         "--background-color": "rgba(245, 245, 245, 1)",
-        "--highlight-color": "rgba(85, 150, 240, 1)",
+        "--highlight-color": "#FF0033",
         "--text-color": "rgba(15, 15, 15, 1)",
         "--card-color": "rgba(255, 255, 255, 1)",
         "--divider-color": "rgba(125, 125, 125, 1)",

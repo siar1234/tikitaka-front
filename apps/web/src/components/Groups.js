@@ -10,7 +10,8 @@ export default function Groups({elementData}) {
     const {groups} = useStore();
     for(const group of groups) {
         const replacements = {
-            "@name": group.name
+            "@name": group.name,
+            "@thumbnail": group.thumbnail
         };
         children.push(
             <ComponentFromTheme elementData={elementData.item} replacements={replacements}/>

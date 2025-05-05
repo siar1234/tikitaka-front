@@ -1,29 +1,29 @@
 export function getChattingMessages() {
     return [
         {
-            "text": "Hi",
+            "text": "어디냐",
             userId: "ddd",
-            date: "Today, 8.30pm"
+            date: "오후 4:30"
         },
         {
-            "text": "Hi",
+            "text": "구로역",
             userId: "ttt",
-            date: "Today, 8.30pm"
+            date: "오후 4:31"
         },
         {
-            "text": "Hi342432h432o432h432j4h32kj32ghkbdfhkjldsfs9f83298432748932dfkdshf23894832djksf",
+            "text": "1번 출구로 오셈",
             userId: "ddd",
-            date: "Today, 8.30pm"
+            date: "오후 4:31"
         },
         {
-            "text": "34i32u43248324y234k23jh423j4g23l4h23423g423hj4g23j4h32g4j32h4g32j4hg324j32hg432j4g23j423lg",
+            "text": "애들 다 옴?",
             userId: "ttt",
-            date: "Today, 8.30pm"
+            date: "오후 4:32"
         },
         {
-            "text": "Hi",
-            userId: "ttt",
-            date: "Today, 8.30pm"
-        }
+            "text": "아직",
+            userId: "ddd",
+            date: "오후 4:32"
+        },
     ];
 }

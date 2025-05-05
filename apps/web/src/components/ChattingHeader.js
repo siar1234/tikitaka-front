@@ -11,7 +11,8 @@ export default function ChattingHeader({elementData}) {
     for(const child of elementData.children) {
         const replacements = {
             "@title": chatRoom.title,
-            "@subtitle": chatRoom.subtitle
+            "@subtitle": chatRoom.subtitle,
+            "@thumbnail": chatRoom.thumbnail
         };
         children.push(
           <ComponentFromTheme elementData={child} replacements={replacements}/>
