@@ -105,7 +105,6 @@ function App() {
         setTheme(theme2);
     };
     buttonPanel.innerHTML = "";
-    buttonPanel.innerText = "테스트";
     buttonPanel.appendChild(button1);
     buttonPanel.appendChild(button2);
     buttonPanel.appendChild(button3);

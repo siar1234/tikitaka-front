@@ -9,7 +9,7 @@
         "--highlight-color": "rgb(252, 244, 163)",
         "--background-color": "rgba(15, 15, 15, 1)",
         "--text-color": "rgba(255, 255, 255, 1)",
-        "--card-color": "rgba(25, 25, 25, 1)",
+        "--card-color": "rgba(35, 35, 35, 1)",
         "--divider-color": "rgba(125, 125, 125, 1)",
         "--overlay-background-color": "rgba(0, 0, 0, 0.5)",
         "--shadow-color": "rgba(0, 0, 0, 0.1)",
@@ -19,7 +19,7 @@
         "--nav-menu-width": "60px",
         "--groups-height": "30%",
         "--peoples-height": "",
-        "--search-bar-width": "25%",
+        "--search-bar-width": "50%",
         "--search-bar-height": "15px",
         "--profile-image-border-radius": "60px"
       },
@@ -43,7 +43,6 @@
       }
     },
     "shared": {
-
     },
     "web": {
       "background": "var(--background-color)"
@@ -52,13 +51,27 @@
   "shared-components": {
     "web": [
       {
-        "type": "linear-layout",
-        "orientation": "vertical",
+        "type": "text",
         "style": {
-          "left": "var(--card-padding)",
+          "position": "absolute",
+          "left": "30px",
+          "top": "var(--card-padding)",
+          "font-size": "30px",
+          "font-weight": "bold"
+        },
+        "text": {
+          "default": "티키타카"
+        }
+      },
+      {
+        "type": "linear-layout",
+        "orientation": "horizontal",
+        "style": {
           "top": "var(--card-padding)",
           "bottom": "var(--card-padding)",
-          "width": "var(--nav-menu-width)",
+          "right": "var(--card-padding)",
+          "width": "300px",
+          "height": "60px",
           "position": "absolute",
           "background": "var(--highlight-color)",
           "border-radius": "var(--card-border-radius)"
@@ -67,10 +80,9 @@
           {
             "type": "account-button",
             "style": {
-              "color": "var(--card-color)",
+              "color": "var(--text-color)",
               "padding": "var(--nav-menu-item-padding)",
-              "font-size": "20px",
-              "margin-bottom": "30px"
+              "font-size": "20px"
             }
           },
           {
@@ -84,7 +96,7 @@
           {
             "type": "notifications-button",
             "style": {
-              "color": "var(--card-color)",
+              "color": "var(--text-color)",
               "padding": "var(--nav-menu-item-padding)",
               "font-size": "20px"
             }
@@ -100,7 +112,7 @@
           {
             "type": "community-button",
             "style": {
-              "color": "var(--card-color)",
+              "color": "var(--text-color)",
               "padding": "var(--nav-menu-item-padding)",
               "font-size": "20px"
             }
@@ -126,14 +138,14 @@
           "color": "var(--divider-color)",
           "background": "var(--card-color)",
           "border-radius": "var(--card-border-radius)",
-          "left": "calc( var(--card-padding) + var(--card-padding) + var(--nav-menu-width) )",
+          "left": "550px",
           "top": "var(--card-padding)",
+          "right": "550px",
           "position": "absolute",
           "gap": "20px",
           "justify-content": "center",
           "align-items": "center",
           "padding": "var(--card-padding)",
-          "width": "var(--search-bar-width)",
           "height": "var(--search-bar-height)"
         }
       },
@@ -145,12 +157,12 @@
           "color": "var(--text-color)",
           "background": "var(--card-color)",
           "border-radius": "var(--card-border-radius)",
-          "left": "calc( var(--card-padding) + var(--card-padding) + var(--nav-menu-width) )",
-          "top": "calc( 4 * var(--card-padding) + var(--search-bar-height) )",
+          "left": "calc( var(--card-padding) + var(--card-padding) + var(--search-bar-width) )",
+          "right": "calc( var(--card-padding) )",
+          "top": "80px",
           "position": "absolute",
           "gap": "20px",
           "padding": "var(--card-padding)",
-          "width": "var(--search-bar-width)",
           "height": "var(--groups-height)",
           "overflow-y": "hidden"
         },
@@ -231,13 +243,13 @@
           "color": "var(--text-color)",
           "background": "var(--card-color)",
           "border-radius": "var(--card-border-radius)",
-          "left": "calc( var(--card-padding) + var(--card-padding) + var(--nav-menu-width) )",
+          "left": "calc( var(--card-padding) + var(--card-padding) + var(--search-bar-width) )",
+          "right": "calc( var(--card-padding) )",
           "top": "calc( 7 * var(--card-padding) + var(--search-bar-height) + var(--groups-height) )",
           "bottom": "var(--card-padding)",
           "position": "absolute",
           "padding": "var(--card-padding)",
           "gap": "20px",
-          "width": "var(--search-bar-width)",
           "overflow-y": "hidden"
         },
         "children": [
@@ -310,10 +322,10 @@
       {
         "type": "relative-layout",
         "style": {
-          "left": "calc(var(--search-bar-width) + 5 * var(--card-padding) + var(--nav-menu-width) )",
-          "top": "var(--card-padding)",
+          "left": "var(--card-padding)",
+          "top": "80px",
           "bottom": "var(--card-padding)",
-          "right": "var(--card-padding)",
+          "width": "var(--search-bar-width)",
           "position": "absolute",
           "background": "var(--card-color)",
           "border-radius": "var(--card-border-radius)"
@@ -481,12 +493,13 @@
               "position": "absolute",
               "left": "0px",
               "right": "0px",
-              "bottom": "0px"
+              "bottom": "0px",
+              "color": "rgb(255, 255, 255)"
             },
             "send-button": {
               "style": {
                 "background": "var(--highlight-color)",
-                "color": "var(--card-color)",
+                "color": "rgb(255, 255, 255)",
                 "padding": "10px",
                 "border-radius": "10px",
                 "font-size": "20px",
@@ -526,7 +539,8 @@
                   "left": "10px",
                   "bottom": "10px",
                   "border": "none",
-                  "outline": "none"
+                  "outline": "none",
+                  "color": "rgb(255, 255, 255)"
                 }
               },
               "popup-menu": {
