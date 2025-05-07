@@ -6,9 +6,9 @@ import {useStore} from "../store";
 export default function Peoples({elementData}) {
     const children = [];
 
-    const {peoples} = useStore();
+    const {friends} = useStore();
 
-    for(const people of peoples) {
+    for(const people of friends) {
         const replacements = {
             "@name": people.name,
             "@image": people.image

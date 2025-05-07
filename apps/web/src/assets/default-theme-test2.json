@@ -18,7 +18,7 @@
         "--card-padding": "15px",
         "--nav-menu-width": "60px",
         "--groups-height": "30%",
-        "--peoples-height": "",
+        "--friends-height": "",
         "--search-bar-width": "50%",
         "--search-bar-height": "15px",
         "--profile-image-border-radius": "60px"
@@ -36,7 +36,7 @@
         "--card-padding": "15px",
         "--nav-menu-width": "60px",
         "--groups-height": "30%",
-        "--peoples-height": "",
+        "--friends-height": "",
         "--search-bar-width": "25%",
         "--search-bar-height": "15px",
         "--profile-image-border-radius": "60px"
@@ -274,7 +274,7 @@
             ]
           },
           {
-            "type": "peoples",
+            "type": "friends",
             "style": {
               "overflow-y": "hidden",
               "position": "absolute",

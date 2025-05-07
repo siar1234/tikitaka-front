@@ -15,7 +15,7 @@ export function getGroups() {
     ];
 }
 
-export function getPeoples() {
+export function getFriends() {
     return [
         {
             name: "이승용",

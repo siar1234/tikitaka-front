@@ -54,9 +54,23 @@ export default function ComponentFromTheme({elementData, replacements, children}
             return (
                 <Groups elementData={elementData}></Groups>
             );
-        case "peoples":
+        case "add-group-button":
+            return (
+                <IconButton style={styleData} onClick={() => {
+
+                }}>
+                    <i className="fa-solid fa-circle-plus"></i>
+                </IconButton>
+            )
+        case "friends":
             return (
                 <Peoples elementData={elementData}></Peoples>
+            );
+        case "add-friend-button":
+            return (
+                <IconButton style={styleData} onClick={() => {}}>
+                    <i className="fa-solid fa-circle-plus"></i>
+                </IconButton>
             );
         case "account-button":
             return (

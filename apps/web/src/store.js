@@ -10,8 +10,8 @@ export const useStore = create((set) => ({
     setTheme: (theme) => set({ theme }),
     groups: [],
     setgroups: (groups) => set({ groups }),
-    peoples: [],
-    setPeoples: (peoples) => set({ peoples }),
+    friends: [],
+    setFriends: (friends) => set({ friends }),
     notifications: [],
     setNotifications: (notifications) => set({ notifications }),
     chatRoom: {
