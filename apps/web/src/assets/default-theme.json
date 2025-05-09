@@ -21,13 +21,14 @@
         "--friends-height": "",
         "--search-bar-width": "25%",
         "--search-bar-height": "15px",
-        "--profile-image-border-radius": "60px"
+        "--profile-image-border-radius": "60px",
+        "--card-shadow": "2px 5px 15px rgba(125, 125, 125, 25)"
       },
       "dark": {
         "--background-color": "rgba(15, 15, 15, 1)",
         "--highlight-color": "rgba(85, 150, 240, 1)",
-        "--text-color": "rgba(15, 15, 15, 1)",
-        "--card-color": "rgba(255, 255, 255, 1)",
+        "--text-color": "rgba(255, 255, 255, 1)",
+        "--card-color": "rgba(35, 35, 35, 1)",
         "--divider-color": "rgba(125, 125, 125, 1)",
         "--overlay-background-color": "rgba(0, 0, 0, 0.5)",
         "--shadow-color": "rgba(0, 0, 0, 0.1)",
@@ -43,10 +44,10 @@
       }
     },
     "shared": {
-
     },
     "web": {
-      "background": "var(--background-color)"
+      "background": "var(--background-color)",
+      "color": "var(--text-color)"
     }
   },
   "shared-components": {
@@ -231,7 +232,16 @@
               "top": "10px"
             },
             "menu": {
-
+              "comment": "add-group-popup",
+              "style": {
+                "position": "absolute",
+                "right": "15px",
+                "top": "15px",
+                "width": "200px",
+                "height": "300px",
+                "box-shadow": "var(--card-shadow)",
+                "border-radius": "var(--card-border-radius)"
+              }
             }
           }
         ]
@@ -258,7 +268,6 @@
             "type": "linear-layout",
             "orientation": "vertical",
             "style": {
-
             },
             "children": [
               {
@@ -328,7 +337,47 @@
               "top": "10px"
             },
             "menu": {
+              "style": {
+                "position": "absolute",
+                "right": "15px",
+                "top": "15px",
+                "width": "300px",
+                "height": "200px",
+                "box-shadow": "var(--card-shadow)",
+                "background": "var(--card-color)",
+                "border-radius": "var(--card-border-radius)"
+              },
+              "search-bar": {
+                "style": {
 
+                },
+                "hint": {
+                  "default": ""
+                }
+              },
+              "item": {
+                "style": {
+
+                },
+                "children": [
+                  {
+                    "type": "img",
+                    "style": {
+
+                    },
+                    "img": "@profile"
+                  },
+                  {
+                    "type": "text",
+                    "style": {
+
+                    },
+                    "text": {
+                      "default": "@name"
+                    }
+                  }
+                ]
+              }
             }
           }
         ]
@@ -348,7 +397,6 @@
           {
             "type": "chatting-header",
             "style": {
-
             },
             "children": [
               {
@@ -454,7 +502,6 @@
               "type": "linear-layout",
               "orientation": "vertical",
               "style": {
-
               },
               "children": [
                 {
@@ -553,7 +600,6 @@
                 }
               },
               "popup-menu": {
-
               }
             }
           }
@@ -610,13 +656,11 @@
         "item": {
           "type": "relative-layout",
           "style": {
-
           },
           "children": [
             {
               "type": "text",
               "style": {
-
               },
               "text": {
                 "default": "@title"
@@ -629,7 +673,6 @@
   },
   "community": {
     "web": [
-
     ]
   },
   "marketplace": {
@@ -648,13 +691,11 @@
         },
         "themes-button": {
           "style": {
-
           },
           "children": [
             {
               "type": "text",
               "style": {
-
               },
               "text": {
                 "default": "Themes"
@@ -664,13 +705,11 @@
         },
         "plugins-button": {
           "style": {
-
           },
           "children": [
             {
               "type": "text",
               "style": {
-
               },
               "text": {
                 "default": "Plugins"
@@ -680,22 +719,103 @@
         }
       },
       "themes": {
-
       },
       "plugins": {
-
       }
     }
   },
   "profile-page": {
     "web": [
       {
-        "type": "relative-layout",
+        "type": "linear-layout",
+        "orientation": "vertical",
         "style": {
-
+          "justify-content": "center",
+          "align-items": "center",
+          "height": "100vh"
         },
         "children": [
+          {
+            "type": "linear-layout",
+            "orientation": "vertical",
+            "style": {
+              "width": "400px",
+              "height": "600px",
+              "background": "var(--card-color)",
+              "border-radius": "var(--card-border-radius)",
+              "justify-content": "center",
+              "align-items": "center"
+            },
+            "children": [
+              {
+                "type": "img",
+                "style": {
+                },
+                "src": "@profile"
+              },
+              {
+                "type": "text",
+                "style": {
+                },
+                "text": {
+                  "default": "@name"
+                }
+              },
+              {
+                "comment": "친구, 게시글 목록",
+                "type": "linear-layout",
+                "orientation": "horizontal",
+                "style": {
+                },
+                "children": [
+                  {
+                    "type": "text",
+                    "style": {
+                      "margin-right": "5px"
+                    },
+                    "text": {
+                      "default": "Friends"
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "style": {
+                      "margin-right": "10px"
+                    },
+                    "text": {
+                      "default": "@friends"
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "style": {
+                      "margin-right": "5px"
+                    },
+                    "text": {
+                      "default": "Posts"
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "style": {
+                    },
+                    "text": {
+                      "default": "@posts"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "text",
+                "style": {
 
+                },
+                "text": {
+                  "default": "@bio"
+                }
+              }
+            ]
+          }
         ]
       }
     ]

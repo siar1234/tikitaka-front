@@ -2,7 +2,7 @@ import {HorizontalLinearLayout, IconButton, RelativeLayout, VerticalLinearLayout
 import SearchBar from "./components/SearchBar";
 import {textByDocumentLocale} from "./textUtils";
 import Groups from "./components/Groups";
-import Peoples from "./components/Peoples";
+import Friends from "./components/Friends";
 import ChattingHeader from "./components/ChattingHeader";
 import convertedStyle from "./styleUtils";
 import {useNavigate} from "react-router-dom";
@@ -10,6 +10,7 @@ import ChattingContents from "./components/ChattingContents";
 import ChattingFooter from "./components/ChattingFooter";
 import {useStore} from "./store";
 import profileImage from "../src/assets/profile.png";
+import AddFriendButton from "./components/AddFriendButton";
 
 export default function ComponentFromTheme({elementData, replacements, children}) {
 
@@ -64,13 +65,11 @@ export default function ComponentFromTheme({elementData, replacements, children}
             )
         case "friends":
             return (
-                <Peoples elementData={elementData}></Peoples>
+                <Friends elementData={elementData}></Friends>
             );
         case "add-friend-button":
             return (
-                <IconButton style={styleData} onClick={() => {}}>
-                    <i className="fa-solid fa-circle-plus"></i>
-                </IconButton>
+                <AddFriendButton elementData={elementData} />
             );
         case "account-button":
             return (
@@ -143,15 +142,19 @@ export default function ComponentFromTheme({elementData, replacements, children}
             }
         case "img":
             let src = elementData.src;
-            if (typeof src === "undefined") {
-                src = profileImage;
-            }
+
             if (typeof replacements !== "undefined") {
                 for (const key in replacements) {
                     if(key === src) {
                         src = replacements[key];
                     }
                 }
+            }
+            else if (typeof src === "undefined") {
+                src = profileImage;
+            }
+            else {
+                src = profileImage;
             }
             return (
                 <img style={styleData} src={src}></img>

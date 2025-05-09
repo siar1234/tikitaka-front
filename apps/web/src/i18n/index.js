@@ -42,7 +42,7 @@ i18n
     // .use(Backend) // optional: load translation files (you can also hardcode translations)
     .use(initReactI18next) // Initialize react-i18next
     .init({
-        fallbackLng: 'en', // default language
+        fallbackLng: 'ko', // default language
         debug: true, // Enable debugging (useful during development)
         interpolation: {
             escapeValue: false, // React already escapes values

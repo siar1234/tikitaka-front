@@ -1,4 +1,8 @@
-export function getGroups() {
+import axios from 'axios';
+import {BACKEND_URL} from "./serverAddress";
+import Cookies from "js-cookie";
+
+export async function getGroups() {
     return [
         {
             name: "000 기획팀",
@@ -15,32 +19,26 @@ export function getGroups() {
     ];
 }
 
-export function getFriends() {
-    return [
-        {
-            name: "이승용",
-            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzHP-ZLzyQ4v-BQNFrYI459cPc82Xfc8OfmA&s"
-        },
-        {
-            name: "김철수",
-            image: "https://www.vidavetcare.com/wp-content/uploads/sites/234/2022/04/golden-retriever-dog-breed-info.jpeg"
-        },
-        {
-            name: "박영희",
-            image: "https://www.alleycat.org/wp-content/uploads/2019/03/FELV-cat.jpg"
-        },
-        {
-            name: "정민수",
-            image: "https://images.mypetlife.co.kr/content/uploads/2023/10/25165800/%EC%8B%9C%EB%B0%94%EA%B2%AC.png"
-        },
-        {
-            name: "고길동",
-            image: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+export async function getFriends({onFailed, onSuccess}) {
+    try {
+        const response = await axios.get(`${BACKEND_URL}/api/friend/list`, {
+            withCredentials: true,
+            headers: { 'Authorization': Cookies.get('Authorization') },
+        });
+
+        if(response.status === 200){
+            onSuccess(response.data.friends);
         }
-    ];
+        else {
+            return onFailed(null, response.status);
+        }
+
+    } catch (error) {
+        return onFailed(error, null);
+    }
 }
 
-export function getNotifications() {
+export async function getNotifications() {
     return [
         {
             "title": "고길동님이 당신에게 친구신청을 했습니다."
@@ -51,9 +49,34 @@ export function getNotifications() {
     ];
 }
 
-export function getUserInfo() {
+export async function getUserInfo() {
     return {
         name: "이승용",
         image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzHP-ZLzyQ4v-BQNFrYI459cPc82Xfc8OfmA&s"
     };
+}
+
+export async function getUsersById({id, onSuccess, onFailed, currentUserId}) {
+    try {
+        const response = await axios.get(`${BACKEND_URL}/api/user/search/${id}`, {
+            withCredentials: true,
+            headers: { 'Authorization': Cookies.get('Authorization') },
+        });
+
+        if(response.status === 200){
+            const result = [];
+            for(const user of response.data.users) {
+                if(currentUserId !== user.userId){
+                    result.push(user);
+                }
+            }
+            onSuccess(result);
+        }
+        else {
+            return onFailed(null, response.status);
+        }
+
+    } catch (error) {
+        return onFailed(error, null);
+    }
 }

@@ -3,15 +3,15 @@ import {VerticalLinearLayout} from "../App";
 import convertedStyle from "../styleUtils";
 import {useStore} from "../store";
 
-export default function Peoples({elementData}) {
+export default function Friends({elementData}) {
     const children = [];
 
     const {friends} = useStore();
 
-    for(const people of friends) {
+    for(const friend of friends) {
         const replacements = {
-            "@name": people.name,
-            "@image": people.image
+            "@name": friend.userName,
+            "@image": friend.userProfileImage
         };
         children.push(
             <ComponentFromTheme elementData={elementData.item} replacements={replacements}/>
