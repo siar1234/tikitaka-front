@@ -17,7 +17,7 @@
         "--card-border-radius": "13px",
         "--card-padding": "15px",
         "--nav-menu-width": "60px",
-        "--groups-height": "30%",
+        "--chats-height": "30%",
         "--friends-height": "",
         "--search-bar-width": "50%",
         "--search-bar-height": "15px",
@@ -35,7 +35,7 @@
         "--card-border-radius": "13px",
         "--card-padding": "15px",
         "--nav-menu-width": "60px",
-        "--groups-height": "30%",
+        "--chats-height": "30%",
         "--friends-height": "",
         "--search-bar-width": "25%",
         "--search-bar-height": "15px",
@@ -163,7 +163,7 @@
           "position": "absolute",
           "gap": "20px",
           "padding": "var(--card-padding)",
-          "height": "var(--groups-height)",
+          "height": "var(--chats-height)",
           "overflow-y": "hidden"
         },
         "children": [
@@ -188,7 +188,7 @@
             ]
           },
           {
-            "type": "groups",
+            "type": "chats",
             "style": {
               "overflow-y": "hidden",
               "position": "absolute",
@@ -245,7 +245,7 @@
           "border-radius": "var(--card-border-radius)",
           "left": "calc( var(--card-padding) + var(--card-padding) + var(--search-bar-width) )",
           "right": "calc( var(--card-padding) )",
-          "top": "calc( 7 * var(--card-padding) + var(--search-bar-height) + var(--groups-height) )",
+          "top": "calc( 7 * var(--card-padding) + var(--search-bar-height) + var(--chats-height) )",
           "bottom": "var(--card-padding)",
           "position": "absolute",
           "padding": "var(--card-padding)",

@@ -3,6 +3,7 @@ import ComponentFromTheme from "../ComponentFromTheme";
 import {useRef, useState} from "react";
 import {getUsersById} from "@myorg/shared/api/user";
 import {useStore} from "../store";
+import Cookies from "js-cookie";
 
 export default function AddFriendMenu({elementData, showing}) {
 

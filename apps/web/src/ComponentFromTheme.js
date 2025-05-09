@@ -1,7 +1,7 @@
 import {HorizontalLinearLayout, IconButton, RelativeLayout, VerticalLinearLayout} from "./App";
 import SearchBar from "./components/SearchBar";
 import {textByDocumentLocale} from "./textUtils";
-import Groups from "./components/Groups";
+import Chats from "./components/Chats";
 import Friends from "./components/Friends";
 import ChattingHeader from "./components/ChattingHeader";
 import convertedStyle from "./styleUtils";
@@ -11,6 +11,7 @@ import ChattingFooter from "./components/ChattingFooter";
 import {useStore} from "./store";
 import profileImage from "../src/assets/profile.png";
 import AddFriendButton from "./components/AddFriendButton";
+import CreateChattingButton from "./components/CreateChattingButton";
 
 export default function ComponentFromTheme({elementData, replacements, children}) {
 
@@ -51,18 +52,14 @@ export default function ComponentFromTheme({elementData, replacements, children}
                     {children}
                 </RelativeLayout>
             );
-        case "groups":
+        case "chats":
             return (
-                <Groups elementData={elementData}></Groups>
+                <Chats elementData={elementData}></Chats>
             );
-        case "add-group-button":
+        case "create-chatting-button":
             return (
-                <IconButton style={styleData} onClick={() => {
-
-                }}>
-                    <i className="fa-solid fa-circle-plus"></i>
-                </IconButton>
-            )
+                <CreateChattingButton elementData={elementData}/>
+            );
         case "friends":
             return (
                 <Friends elementData={elementData}></Friends>

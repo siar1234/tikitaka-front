@@ -3,15 +3,15 @@ import ComponentFromTheme from "../ComponentFromTheme";
 import convertedStyle from "../styleUtils";
 import {useStore} from "../store";
 
-export default function Groups({elementData}) {
+export default function Chats({elementData}) {
 
     const children = [];
 
-    const {groups} = useStore();
-    for(const group of groups) {
+    const {chats} = useStore();
+    for(const chat of chats) {
         const replacements = {
-            "@name": group.name,
-            "@thumbnail": group.thumbnail
+            "@name": chat.chatName,
+            "@thumbnail": chat.chatName
         };
         children.push(
             <ComponentFromTheme elementData={elementData.item} replacements={replacements}/>

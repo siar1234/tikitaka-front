@@ -8,7 +8,7 @@ import NotificationsDialog from "./dialogs/NotificationsDialog";
 import {useStore} from "./store";
 import {useEffect, useState} from "react";
 import {getChattingMessages} from "@myorg/shared/api/chattingMessage";
-import {getGroups, getNotifications, getFriends, getUserInfo} from "@myorg/shared/api/user";
+import {getNotifications, getFriends, getUserInfo} from "@myorg/shared/api/user";
 import {themeModeOnWeb} from "@myorg/shared/themeMode";
 import Marketplace from "./pages/Marketplace";
 import Cookies from "js-cookie";
@@ -19,6 +19,7 @@ import defaultTheme from "../src/assets/default-theme.json";
 import theme1 from "../src/assets/default-theme-test1.json";
 import theme2 from "../src/assets/default-theme-test2.json";
 import SplashScreen from "./pages/SplashScreen";
+import {getChats} from "@myorg/shared/api/chat";
 
 export const RelativeLayout = styled.div`
     position: relative;
@@ -50,7 +51,7 @@ function App() {
         notificationsDialogShowing,
         setNotificationDialogShowing,
         theme,
-        setgroups,
+        setChats,
         setFriends,
         setNotifications,
         setChatRoom,
@@ -66,18 +67,29 @@ function App() {
     useEffect(  () => {
         getFriends({
             onFailed: (e, response) => {
-                if( (e !== null && e !== undefined) || (response !== null && response !== undefined)  ) {
-                    console.log(e);
-                    console.log(response);
-                    //Cookies.remove("Authorization");
+                if(typeof response !== "undefined" && response !== null) {
+                    if(response.status === 401) {
+                        Cookies.remove("Authorization");
+                    }
                 }
             },
             onSuccess: (friends) => {
                 setFriends(friends);
             }
         });
-        //setgroups(getGroups());
-        setNotifications(getNotifications());
+        getChats({
+            onFailed: (e, response) => {
+                if(typeof response !== "undefined" && response !== null) {
+                    if(response.status === 401) {
+                        Cookies.remove("Authorization");
+                    }
+                }
+            },
+            onSuccess: (chats) => {
+                setChats(chats);
+            }
+        });
+        // setNotifications(getNotifications());
         setChatRoom(
             {
                 title: "이승용",

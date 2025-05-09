@@ -5,8 +5,7 @@ import {IconButton} from "../App";
 import ComponentFromTheme from "../ComponentFromTheme";
 export default function NotificationsDialog({isOpen, onClose}) {
 
-    const {notifications} = useStore();
-    const {theme} = useStore();
+    const {notifications, theme} = useStore();
     const elementData = theme["notifications"].web;
 
     if (!isOpen) return null;
