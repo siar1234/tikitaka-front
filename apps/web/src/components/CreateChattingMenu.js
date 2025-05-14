@@ -34,6 +34,7 @@ export default function CreateChattingMenu({elementData, showing, onClose}) {
                         chats.push({
                            chatName: nameRef.current.value,
                         });
+                        setChats(chats);
                         onClose();
                     }
                 });
