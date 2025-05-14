@@ -3,6 +3,7 @@ import styled from "styled-components";
 import convertedStyle from "../styleUtils";
 import {IconButton} from "../App";
 import ComponentFromTheme from "../ComponentFromTheme";
+import {acceptFriend} from "@myorg/shared/api/friend";
 export default function NotificationsDialog({isOpen, onClose}) {
 
     const {notifications, theme} = useStore();
@@ -29,15 +30,39 @@ export default function NotificationsDialog({isOpen, onClose}) {
     const closeButtonStyle = convertedStyle(elementData["close-button"].style);
 
     const itemData = elementData["items"].item;
+    const itemStyle = itemData.style;
 
     const children = [];
 
     for(const notification of notifications) {
-        const replacements = {
-          "@title": notification.title,
-        };
+        const itemChildren = [];
+        for(const item of itemData.children) {
+            const replacements = {
+                "@title": notification.title,
+            };
+            itemChildren.push(
+                <ComponentFromTheme elementData={item} replacements={replacements} />
+            );
+        }
         const child = (
-            <ComponentFromTheme elementData={itemData} replacements={replacements} />
+            <div style={itemStyle} onClick={ async () => {
+                switch (notification.type) {
+                    case "request-friend":
+                        const userId = notification.data;
+                        await acceptFriend({
+                            id: userId,
+                            onFailed: (error, response) => {
+                                alert(error);
+                            },
+                            onSuccess: () => {
+                                alert("TTAAKKKKK!!!!!!");
+                            }
+                        });
+                        break;
+                }
+            }}>
+                {itemChildren}
+            </div>
         );
         children.push(child);
     }
