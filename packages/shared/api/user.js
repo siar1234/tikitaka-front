@@ -2,28 +2,6 @@ import axios from 'axios';
 import {BACKEND_URL} from "./serverAddress";
 import Cookies from "js-cookie";
 
-export async function getFriends({onFailed, onSuccess}) {
-    try {
-        const response = await axios.get(`${BACKEND_URL}/api/friend/list`, {
-            withCredentials: true,
-            headers: {
-                'Authorization': `Bearer ${Cookies.get('Authorization')}`,
-                'Content-Type': 'application/json; charset=utf-8'
-            },
-        });
-
-        if(response.status === 200){
-            onSuccess(response.data.friends);
-        }
-        else {
-            return onFailed(null, response.status);
-        }
-
-    } catch (error) {
-        return onFailed(error, null);
-    }
-}
-
 export async function getNotifications() {
     return [
         {

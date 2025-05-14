@@ -4,6 +4,7 @@ import {useRef, useState} from "react";
 import {getUsersById} from "@myorg/shared/api/user";
 import {useStore} from "../store";
 import Cookies from "js-cookie";
+import {requestFriend} from "@myorg/shared/api/friend";
 
 export default function AddFriendMenu({elementData, showing}) {
 
@@ -28,8 +29,19 @@ export default function AddFriendMenu({elementData, showing}) {
           itemChildren.push(<ComponentFromTheme elementData={itemData} replacements={replacements}/>)
         }
         children.push(
-            <div onClick={() => {
-
+            <div onClick={ async () => {
+                alert(user.userId);
+                await requestFriend({
+                   id: user.userId,
+                    onFailed: (error, response) => {
+                       alert(error);
+                       alert(response);
+                       //alert(response.status);
+                    },
+                    onSuccess: () => {
+                      alert("야 기분좋다")
+                    },
+                });
             }}>
                 {itemChildren}
             </div>
