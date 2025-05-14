@@ -157,9 +157,9 @@ export default function ComponentFromTheme({elementData, replacements, children}
                 <img style={styleData} src={src}></img>
             );
         default:
-            console.log("Unknown Component");
-            console.log(elementData.type);
-            console.log(elementData);
+            // console.log("Unknown Component");
+            // console.log(elementData.type);
+            // console.log(elementData);
             return (
                 <div style={styleData}>
 
