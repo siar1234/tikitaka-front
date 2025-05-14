@@ -179,7 +179,7 @@
           {
             "type": "chats",
             "style": {
-              "overflow-y": "hidden",
+              "overflow-y": "scroll",
               "position": "absolute",
               "left": "0px",
               "right": "0px",
@@ -295,7 +295,7 @@
           {
             "type": "friends",
             "style": {
-              "overflow-y": "hidden",
+              "overflow-y": "scroll",
               "position": "absolute",
               "left": "0px",
               "right": "0px",
@@ -663,7 +663,6 @@
           "margin-top": "40px"
         },
         "item": {
-          "type": "relative-layout",
           "style": {
           },
           "children": [
