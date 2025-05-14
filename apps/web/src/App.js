@@ -8,7 +8,7 @@ import NotificationsDialog from "./dialogs/NotificationsDialog";
 import {useStore} from "./store";
 import {useEffect, useState} from "react";
 import {getChattingMessages} from "@myorg/shared/api/chattingMessage";
-import {getNotifications, getFriends, getUserInfo} from "@myorg/shared/api/user";
+import {getUserInfo} from "@myorg/shared/api/user";
 import {themeModeOnWeb} from "@myorg/shared/themeMode";
 import Marketplace from "./pages/Marketplace";
 import Cookies from "js-cookie";
@@ -20,6 +20,7 @@ import theme1 from "../src/assets/default-theme-test1.json";
 import theme2 from "../src/assets/default-theme-test2.json";
 import SplashScreen from "./pages/SplashScreen";
 import {getChats} from "@myorg/shared/api/chat";
+import {getFriends, receivedFriendRequests} from "@myorg/shared/api/friend";
 
 export const RelativeLayout = styled.div`
     position: relative;
@@ -87,6 +88,24 @@ function App() {
             },
             onSuccess: (chats) => {
                 setChats(chats);
+            }
+        });
+        receivedFriendRequests({
+           onFailed: (e, response) => {
+
+           },
+            onSuccess: (friends) => {
+               const notifications = [];
+               for(const friend of friends) {
+                   notifications.push(
+                       {
+                           title: `친추 ${friend.userName}`,
+                           type: "request-friend",
+                           data: friend.userId,
+                       }
+                   );
+               }
+               setNotifications(notifications);
             }
         });
         // setNotifications(getNotifications());
