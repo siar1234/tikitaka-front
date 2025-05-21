@@ -117,7 +117,15 @@ function App() {
                 thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzHP-ZLzyQ4v-BQNFrYI459cPc82Xfc8OfmA&s"
             }
         );
-        setUserInfo(getUserInfo());
+        getUserInfo({
+            onSuccess: (userInfo) => {
+                setUserInfo(userInfo);
+            },
+            onFailed: (error, response) => {
+
+            }
+        });
+        //setUserInfo(getUserInfo());
         setLoading(false);
     }, []);
 

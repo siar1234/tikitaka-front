@@ -13,11 +13,23 @@ export async function getNotifications() {
     ];
 }
 
-export async function getUserInfo() {
-    return {
-        name: "이승용",
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzHP-ZLzyQ4v-BQNFrYI459cPc82Xfc8OfmA&s"
-    };
+export async function getUserInfo({onSuccess, onFailed}) {
+    try {
+        const response = await axios.get(`${BACKEND_URL}/api/member`, {
+            withCredentials: true,
+            headers: { 'Authorization': `Bearer ${Cookies.get('Authorization') }` },
+        });
+
+        if(response.status === 200){
+            onSuccess(response.data.user);
+        }
+        else {
+            return onFailed(null, response);
+        }
+
+    } catch (error) {
+        return onFailed(error, null);
+    }
 }
 
 export async function getUsersById({id, onSuccess, onFailed, currentUserId}) {
@@ -44,3 +56,4 @@ export async function getUsersById({id, onSuccess, onFailed, currentUserId}) {
         return onFailed(error, null);
     }
 }
+
