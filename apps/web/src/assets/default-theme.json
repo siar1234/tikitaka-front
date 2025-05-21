@@ -758,6 +758,7 @@
               {
                 "type": "img",
                 "style": {
+                  "width": "300px"
                 },
                 "src": "@profile"
               },
