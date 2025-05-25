@@ -22,4 +22,8 @@ export const useStore = create((set) => ({
     setChatRoom: (chatRoom) => set({ chatRoom }),
     userInfo: {},
     setUserInfo: (userInfo) => set({ userInfo }),
+    isAuthStateChanged: false,
+    setAuthStateChanged: (isAuthStateChanged) => set({ isAuthStateChanged }),
+    stompClient: null,
+    setStompClient: (stompClient) => set({ stompClient }),
 }));
