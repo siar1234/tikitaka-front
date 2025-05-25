@@ -3,6 +3,9 @@ import {useTranslation} from "react-i18next";
 import {useRef} from "react";
 import {login} from "@myorg/shared/api/auth";
 import {useNavigate} from "react-router-dom";
+import {useStore} from "../store";
+import {getUserInfo} from "@myorg/shared/api/user";
+import {fetchAllData} from "../App";
 
 export const SingInCard = styled.div`
         background: var(--card-background-color);
@@ -56,6 +59,7 @@ export const SignInButton = styled.button`
 export default function SignInPage() {
 
     const [t] = useTranslation();
+    const {setAuthStateChanged} = useStore();
     const navigate = useNavigate();
     const idRef = useRef();
     const passwordRef = useRef();
@@ -81,9 +85,13 @@ export default function SignInPage() {
                         onFailed: (e, statusCode) => {
                             alert(e);
                         },
-                        onSuccess: () => {
-                            alert(`Login successful`);
-                        }
+                        onSuccess: async () => {
+                            await getUserInfo({
+                                onSuccess: (userInfo) => {
+                                    setAuthStateChanged(true);
+                            },
+                            });
+                        },
                     });
                 }}>
                     {t("signIn")}
