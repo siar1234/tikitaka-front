@@ -19,8 +19,11 @@ import defaultTheme from "../src/assets/default-theme.json";
 import theme1 from "../src/assets/default-theme-test1.json";
 import theme2 from "../src/assets/default-theme-test2.json";
 import SplashScreen from "./pages/SplashScreen";
-import {getChats} from "@myorg/shared/api/chat";
+import {getChatRoomMessages, getChats} from "@myorg/shared/api/chat";
 import {getFriends, receivedFriendRequests} from "@myorg/shared/api/friend";
+import {defaultChattingThumbnail} from "@myorg/shared/api/media";
+import {Stomp} from "@stomp/stompjs";
+import SockJS from 'sockjs-client';
 
 export const RelativeLayout = styled.div`
     position: relative;
@@ -56,7 +59,10 @@ function App() {
         setFriends,
         setNotifications,
         setChatRoom,
-        setUserInfo
+        setUserInfo,
+        isAuthStateChanged,
+        setAuthStateChanged,
+        setStompClient
     } = useStore();
 
     const themeMode = themeModeOnWeb();
@@ -66,13 +72,18 @@ function App() {
     }
 
     useEffect(  () => {
+
+        const socket = new SockJS('http://localhost:8080/socket/conn');
+        const stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, () => {
+            setStompClient(stompClient);
+
+        });
+
         getFriends({
             onFailed: (e, response) => {
-                if(typeof response !== "undefined" && response !== null) {
-                    if(response.status === 401) {
-                        Cookies.remove("Authorization");
-                    }
-                }
+                Cookies.remove("Authorization");
             },
             onSuccess: (friends) => {
                 setFriends(friends);
@@ -80,11 +91,7 @@ function App() {
         });
         getChats({
             onFailed: (e, response) => {
-                if(typeof response !== "undefined" && response !== null) {
-                    if(response.status === 401) {
-                        Cookies.remove("Authorization");
-                    }
-                }
+                Cookies.remove("Authorization");
             },
             onSuccess: (chats) => {
                 setChats(chats);
@@ -109,14 +116,15 @@ function App() {
             }
         });
         // setNotifications(getNotifications());
-        setChatRoom(
-            {
-                title: "이승용",
-                subtitle: "접속중",
-                messages: getChattingMessages(),
-                thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzHP-ZLzyQ4v-BQNFrYI459cPc82Xfc8OfmA&s"
-            }
-        );
+        // setChatRoom(
+        //     {
+        //         title: "이승용",
+        //         subtitle: "접속중",
+        //         messages: getChattingMessages(),
+        //         thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzHP-ZLzyQ4v-BQNFrYI459cPc82Xfc8OfmA&s"
+        //     }
+        // );
+
         getUserInfo({
             onSuccess: (userInfo) => {
                 setUserInfo(userInfo);
@@ -125,9 +133,9 @@ function App() {
 
             }
         });
-        //setUserInfo(getUserInfo());
         setLoading(false);
-    }, []);
+        setAuthStateChanged(false);
+    }, [isAuthStateChanged]);
 
     if (token === undefined) {
         return (
