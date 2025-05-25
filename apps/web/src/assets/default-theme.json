@@ -190,36 +190,32 @@
               "overflow-x": "hidden"
             },
             "item": {
-              "type": "relative-layout",
               "style": {
-                "height": "60px"
+                "height": "60px",
+                "position": "relative"
               },
-              "children": [
-                {
-                  "type": "img",
-                  "style": {
-                    "width": "50px",
-                    "height": "50px",
-                    "left": "15px",
-                    "position": "absolute",
-                    "object-fit": "cover",
-                    "border-radius": "var(--profile-image-border-radius)"
-                  },
-                  "src": "@thumbnail"
+              "thumbnail": {
+                "style": {
+                  "width": "50px",
+                  "height": "50px",
+                  "left": "15px",
+                  "position": "absolute",
+                  "object-fit": "cover",
+                  "border-radius": "var(--profile-image-border-radius)"
                 },
-                {
-                  "type": "text",
-                  "style": {
-                    "font-size": "20px",
-                    "font-weight": "bold",
-                    "position": "absolute",
-                    "left": "70px"
-                  },
-                  "text": {
-                    "default": "@name"
-                  }
+                "src": "@thumbnail"
+              },
+              "title": {
+                "style": {
+                  "font-size": "20px",
+                  "font-weight": "bold",
+                  "position": "absolute",
+                  "left": "70px"
+                },
+                "text": {
+                  "default": "@name"
                 }
-              ]
+              }
             }
           },
           {
@@ -404,6 +400,71 @@
         },
         "children": [
           {
+            "popup-menu-button": {
+              "style": {
+                "position": "absolute",
+                "right": "15px",
+                "top": "15px",
+                "color": "var(--highlight-color)",
+                "font-size": "20px",
+                "background": "none",
+                "outline": "none"
+              },
+              "menu": {
+                "style": {
+                  "position": "absolute",
+                  "right": "15px",
+                  "top": "15px",
+                  "width": "200px",
+                  "height": "275px",
+                  "box-shadow": "var(--card-shadow)",
+                  "background": "var(--card-color)",
+                  "border-radius": "var(--card-border-radius)"
+                },
+                "children": [
+                  {
+                    "type": "add-friend-button",
+                    "style": {
+                      "background": "none",
+                      "outline": "none",
+                      "border": "none"
+                    },
+                    "text": {
+                      "default": "Add Friend"
+                    },
+                    "item": {
+                      "style": {
+                        "height": "60px"
+                      },
+                      "checkbox": {
+                        "style": {
+
+                        }
+                      },
+                      "children": [
+                        {
+                          "type": "img",
+                          "style": {
+                            "position": "absolute",
+                            "left": "5px"
+                          },
+                          "img": "@profile"
+                        },
+                        {
+                          "type": "text",
+                          "style": {
+
+                          },
+                          "text": {
+                            "default": "@name"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
             "type": "chatting-header",
             "style": {
             },
@@ -457,7 +518,8 @@
               "top": "80px",
               "left": "0px",
               "right": "0px",
-              "bottom": "60px"
+              "bottom": "60px",
+              "overflow-y": "scroll"
             },
             "item": {
               "type": "linear-layout",
