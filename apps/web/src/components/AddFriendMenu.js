@@ -5,10 +5,12 @@ import {getUsersById} from "@myorg/shared/api/user";
 import {useStore} from "../store";
 import Cookies from "js-cookie";
 import {requestFriend} from "@myorg/shared/api/friend";
+import {defaultProfileImage} from "@myorg/shared/api/media";
 
 export default function AddFriendMenu({elementData, showing}) {
 
     const styleData = convertedStyle(elementData.style);
+    const itemStyle = convertedStyle(elementData.item.style);
     if(!showing) {
         styleData["display"] = "none";
     }
@@ -17,32 +19,30 @@ export default function AddFriendMenu({elementData, showing}) {
     }
     const children = [];
     const idRef = useRef();
-    const {userInfo} = useStore();
+    const {userInfo, stompClient} = useStore();
     const [users, setUsers] = useState([]);
     for(const user of users) {
         const itemChildren = [];
         const replacements = {
-            "@profile": user.userProfileImage,
-            "@name": user.userName
+            "@profile": user.userProfileImage ?? defaultProfileImage,
+            "@name": user.userName,
+            "@request-friend": async () => {
+                await requestFriend({
+                    id: user.userId,
+                    onFailed: (error, response) => {
+                        alert(error);
+                    },
+                    onSuccess: () => {
+                        alert("친구요청이 완료되었습니다");
+                    },
+                });
+            }
         };
         for(const itemData of elementData.item.children) {
           itemChildren.push(<ComponentFromTheme elementData={itemData} replacements={replacements}/>)
         }
         children.push(
-            <div onClick={ async () => {
-                alert(user.userId);
-                await requestFriend({
-                   id: user.userId,
-                    onFailed: (error, response) => {
-                       alert(error);
-                       alert(response);
-                       //alert(response.status);
-                    },
-                    onSuccess: () => {
-                      alert("야 기분좋다")
-                    },
-                });
-            }}>
+            <div style={itemStyle}>
                 {itemChildren}
             </div>
         );

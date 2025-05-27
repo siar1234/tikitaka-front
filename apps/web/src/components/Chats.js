@@ -4,7 +4,9 @@ import convertedStyle from "../styleUtils";
 import {useStore} from "../store";
 import {defaultChattingThumbnail} from "@myorg/shared/api/media";
 import styled from "styled-components";
-import {getChatRoomMessages} from "@myorg/shared/api/chat";
+import {getChatRoomMessages, getChats} from "@myorg/shared/api/chat";
+import {useEffect, useState} from "react";
+import Cookies from "js-cookie";
 
 export default function Chats({elementData}) {
 
@@ -19,7 +21,10 @@ export default function Chats({elementData}) {
     const itemStyle = convertedStyle(elementData.item.style);
     const thumbnailStyle = convertedStyle(elementData.item.thumbnail.style);
     const titleStyle = convertedStyle(elementData.item.title.style);
-    const {chats, setChatRoom, stompClient, chatRoom} = useStore();
+    const subtitleStyle = convertedStyle(elementData.item.subtitle.style);
+    const indicatorStyle = convertedStyle(elementData.item.indicator.style);
+    const {chats, setChatRoom, stompClient, receivedMessages, setChats, setReceivedMessages, chatRoom} = useStore();
+
     for(const chat of chats) {
 
         children.push(
@@ -28,16 +33,19 @@ export default function Chats({elementData}) {
                 <div style={titleStyle} onClick={ async () => {
                     await getChatRoomMessages({
                         onSuccess: (messages) => {
+
                             if(typeof messages !== "undefined") {
+
                                 setChatRoom({
                                     title: chat.chatName,
-                                    subtitle: "접속중",
+                                    subtitle: "",
                                     messages: messages,
                                     thumbnail: defaultChattingThumbnail,
                                     chatId: chat.chatId
                                 });
 
                                 if(stompClient !== null) {
+                                    stompClient.unsubscribe(`/topic/chatting/${chat.chatId}`);
                                     stompClient.subscribe(`/topic/chatting/${chat.chatId}`, (messageOutput) => {
                                         messages.push(JSON.parse(messageOutput.body));
                                        setChatRoom({
@@ -45,7 +53,7 @@ export default function Chats({elementData}) {
                                            messages: messages,
                                            thumbnail: defaultChattingThumbnail,
                                            title: chat.chatName,
-                                           subtitle: "접속중",
+                                           subtitle: "",
                                        });
                                     });
                                 }
@@ -53,8 +61,16 @@ export default function Chats({elementData}) {
                             }
                         },
                         chatId: chat.chatId,
+                        onFailed: (error) => {}
                     });
                 }}>{chat.chatName}</div>
+                <div style={subtitleStyle}>
+
+                </div>
+
+                <div style={indicatorStyle} hidden={typeof receivedMessages[chat.chatId] === "undefined"}>
+                    {receivedMessages[chat.chatId]}
+                </div>
             </Item>
         );
     }

@@ -40,7 +40,8 @@
         "--friends-height": "",
         "--search-bar-width": "25%",
         "--search-bar-height": "15px",
-        "--profile-image-border-radius": "60px"
+        "--profile-image-border-radius": "60px",
+        "--card-shadow": "2px 5px 15px rgba(5, 5, 5, 25)"
       }
     },
     "shared": {
@@ -211,9 +212,31 @@
                   "font-weight": "bold",
                   "position": "absolute",
                   "left": "70px"
-                },
-                "text": {
-                  "default": "@name"
+                }
+              },
+              "subtitle": {
+                "style": {
+                  "font-size": "15px",
+                  "position": "absolute",
+                  "left": "70px",
+                  "bottom": "15px"
+                }
+              },
+              "indicator": {
+                "style": {
+                  "position": "absolute",
+                  "bottom": "30px",
+                  "right": "15px",
+                  "color": "white",
+                  "background": "red",
+                  "width": "25px",
+                  "height": "25px",
+                  "border-radius": "15px",
+                  "font-size": "15px",
+                  "text-align": "center",
+                  "justify-content": "center",
+                  "align-content": "center",
+                  "font-weight": "bold"
                 }
               }
             }
@@ -232,19 +255,112 @@
                 "position": "absolute",
                 "right": "15px",
                 "top": "15px",
-                "width": "200px",
-                "height": "300px",
+                "width": "300px",
+                "height": "250px",
                 "box-shadow": "var(--card-shadow)",
-                "border-radius": "var(--card-border-radius)"
+                "background": "var(--card-color)",
+                "border-radius": "var(--card-border-radius)",
+                "overflow-y": "scroll"
+              },
+              "friends": {
+                "style": {
+                  "position": "absolute",
+                  "top": "60px",
+                  "bottom": "60px",
+                  "left": "0px",
+                  "right": "0px",
+                  "overflow-y": "scroll"
+                },
+                "item": {
+                  "style": {
+                    "height": "60px",
+                    "position": "relative"
+                  },
+                  "children": [
+                    {
+                      "type": "img",
+                      "style": {
+                        "width": "50px",
+                        "height": "50px",
+                        "position": "absolute",
+                        "left": "5px"
+                      },
+                      "src": "@profile"
+                    },
+                    {
+                      "type": "text",
+                      "style": {
+                        "position": "absolute",
+                        "left": "65px",
+                        "text-align": "center",
+                        "justify-content": "center",
+                        "align-items": "center",
+                        "height": "50px",
+                        "display": "flex"
+                      },
+                      "text": {
+                        "default": "@name"
+                      }
+                    },
+                    {
+                      "type": "checkbox",
+                      "style": {
+                        "background": "var(--highlight-color)",
+                        "padding-left": "15px",
+                        "padding-right": "15px",
+                        "padding-top": "10px",
+                        "padding-bottom": "10px",
+                        "position": "absolute",
+                        "right": "15px",
+                        "top": "10px",
+                        "width": "20px",
+                        "height": "20px",
+                        "border-radius": "inherit",
+                        "border": "0",
+                        "outline": "0",
+                        "vertical-align": "middle"
+                      },
+                      "onchange": "@onchange",
+                      "children": [
+                        {
+                          "type": "text",
+                          "style": {
+
+                          },
+                          "text": {
+                            "default": "친구요청"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
               },
               "input": {
                 "style": {
-
+                  "border": "2px solid var(--shadow-color)",
+                  "border-radius": "5px",
+                  "padding": "8px",
+                  "outline": "none",
+                  "margin-left": "8px",
+                  "margin-right": "8px",
+                  "margin-top": "8px",
+                  "width": "260px",
+                  "height": "30px",
+                  "font-size": "20px"
                 }
               },
               "button": {
                 "style": {
-
+                  "padding": "8px",
+                  "font-size": "17px",
+                  "font-weight": "bold",
+                  "color": "white",
+                  "background": "var(--highlight-color)",
+                  "position": "absolute",
+                  "right": "15px",
+                  "bottom": "15px",
+                  "border-radius": "8px"
                 }
               }
             }
@@ -347,14 +463,24 @@
                 "right": "15px",
                 "top": "15px",
                 "width": "300px",
-                "height": "200px",
+                "height": "300px",
                 "box-shadow": "var(--card-shadow)",
                 "background": "var(--card-color)",
-                "border-radius": "var(--card-border-radius)"
+                "border-radius": "var(--card-border-radius)",
+                "overflow-y": "scroll"
               },
               "search-bar": {
                 "style": {
-
+                  "border": "2px solid var(--shadow-color)",
+                  "border-radius": "5px",
+                  "padding": "8px",
+                  "outline": "none",
+                  "margin-left": "8px",
+                  "margin-right": "8px",
+                  "margin-top": "8px",
+                  "width": "260px",
+                  "height": "30px",
+                  "font-size": "20px"
                 },
                 "hint": {
                   "default": ""
@@ -362,24 +488,66 @@
               },
               "item": {
                 "style": {
-
+                  "padding-left": "15px",
+                  "padding-right": "15px",
+                  "padding-top": "5px",
+                  "padding-bottom": "5px",
+                  "height": "60px"
                 },
                 "children": [
                   {
                     "type": "img",
                     "style": {
-
+                      "width": "50px",
+                      "height": "50px",
+                      "position": "absolute",
+                      "left": "5px"
                     },
-                    "img": "@profile"
+                    "src": "@profile"
                   },
                   {
                     "type": "text",
                     "style": {
-
+                      "position": "absolute",
+                      "left": "65px",
+                      "text-align": "center",
+                      "justify-content": "center",
+                      "align-items": "center",
+                      "height": "50px",
+                      "display": "flex"
                     },
                     "text": {
                       "default": "@name"
                     }
+                  },
+                  {
+                    "type": "button",
+                    "style": {
+                      "background": "var(--highlight-color)",
+                      "padding-left": "15px",
+                      "padding-right": "15px",
+                      "padding-top": "10px",
+                      "padding-bottom": "10px",
+                      "color": "white",
+                      "border-radius": "10px",
+                      "font-size": "15px",
+                      "font-weight": "bold",
+                      "position": "absolute",
+                      "right": "10px",
+                      "text-align": "center"
+                    },
+                    "onclick": "@request-friend",
+                    "children": [
+                      {
+                        "type": "text",
+                        "style": {
+
+                        },
+                        "text": {
+                          "default": "친구요청"
+                        }
+                      }
+                    ]
                   }
                 ]
               }
@@ -399,118 +567,6 @@
           "border-radius": "var(--card-border-radius)"
         },
         "children": [
-          {
-            "popup-menu-button": {
-              "style": {
-                "position": "absolute",
-                "right": "15px",
-                "top": "15px",
-                "color": "var(--highlight-color)",
-                "font-size": "20px",
-                "background": "none",
-                "outline": "none"
-              },
-              "menu": {
-                "style": {
-                  "position": "absolute",
-                  "right": "15px",
-                  "top": "15px",
-                  "width": "200px",
-                  "height": "275px",
-                  "box-shadow": "var(--card-shadow)",
-                  "background": "var(--card-color)",
-                  "border-radius": "var(--card-border-radius)"
-                },
-                "children": [
-                  {
-                    "type": "add-friend-button",
-                    "style": {
-                      "background": "none",
-                      "outline": "none",
-                      "border": "none"
-                    },
-                    "text": {
-                      "default": "Add Friend"
-                    },
-                    "item": {
-                      "style": {
-                        "height": "60px"
-                      },
-                      "checkbox": {
-                        "style": {
-
-                        }
-                      },
-                      "children": [
-                        {
-                          "type": "img",
-                          "style": {
-                            "position": "absolute",
-                            "left": "5px"
-                          },
-                          "img": "@profile"
-                        },
-                        {
-                          "type": "text",
-                          "style": {
-
-                          },
-                          "text": {
-                            "default": "@name"
-                          }
-                        }
-                      ]
-                    }
-                  }
-                ]
-              }
-            },
-            "type": "chatting-header",
-            "style": {
-            },
-            "children": [
-              {
-                "type": "img",
-                "style": {
-                  "position": "absolute",
-                  "font-size": "25px",
-                  "font-weight": "bold",
-                  "left": "5px",
-                  "top": "5px",
-                  "width": "60px",
-                  "height": "60px",
-                  "object-fit": "cover",
-                  "border-radius": "var(--profile-image-border-radius)"
-                },
-                "src": "@thumbnail"
-              },
-              {
-                "type": "text",
-                "style": {
-                  "position": "absolute",
-                  "font-size": "25px",
-                  "font-weight": "bold",
-                  "left": "75px",
-                  "top": "5px"
-                },
-                "text": {
-                  "default": "@title"
-                }
-              },
-              {
-                "type": "text",
-                "style": {
-                  "position": "absolute",
-                  "font-size": "15px",
-                  "left": "75px",
-                  "top": "45px"
-                },
-                "text": {
-                  "default": "@subtitle"
-                }
-              }
-            ]
-          },
           {
             "type": "chatting-contents",
             "style": {
@@ -615,6 +671,183 @@
                 }
               ]
             }
+          },
+          {
+            "popup-menu-button": {
+              "cmt": "ChattingHeaderMenu.js",
+              "style": {
+                "position": "absolute",
+                "right": "15px",
+                "top": "15px",
+                "color": "var(--highlight-color)",
+                "font-size": "20px",
+                "background": "none",
+                "outline": "none"
+              },
+              "menu": {
+                "style": {
+                  "position": "absolute",
+                  "right": "15px",
+                  "top": "15px",
+                  "width": "300px",
+                  "height": "250px",
+                  "box-shadow": "var(--card-shadow)",
+                  "background": "var(--card-color)",
+                  "border-radius": "var(--card-border-radius)",
+                  "z-index": "1000",
+                  "overflow-y": "scroll"
+                },
+                "children": [
+                  {
+                    "type": "add-friend",
+                    "style": {
+                      "height": "200px",
+                      "background": "none",
+                      "outline": "none",
+                      "border": "none",
+                      "position": "relative"
+                    },
+                    "items": {
+                      "style": {
+                        "position": "absolute",
+                        "left": "0px",
+                        "right": "0px",
+                        "top": "0px",
+                        "bottom": "60px",
+                        "overflow-y": "scroll"
+                      },
+                      "item": {
+                        "style": {
+                          "height": "60px"
+                        },
+                        "children": [
+                          {
+                            "type": "img",
+                            "style": {
+                              "position": "absolute",
+                              "left": "5px",
+                              "width": "40px",
+                              "height": "40px"
+                            },
+                            "src": "@profile"
+                          },
+                          {
+                            "type": "text",
+                            "style": {
+                              "position": "absolute",
+                              "left": "50px",
+                              "text-align": "center",
+                              "justify-content": "center",
+                              "align-items": "center",
+                              "height": "35px",
+                              "display": "flex"
+                            },
+                            "text": {
+                              "default": "@name"
+                            }
+                          },
+                          {
+                            "type": "checkbox",
+                            "style": {
+                              "background": "var(--highlight-color)",
+                              "padding-left": "15px",
+                              "padding-right": "15px",
+                              "padding-top": "10px",
+                              "padding-bottom": "10px",
+                              "position": "absolute",
+                              "right": "15px",
+                              "width": "20px",
+                              "height": "20px",
+                              "border-radius": "inherit",
+                              "border": "0",
+                              "outline": "0",
+                              "vertical-align": "middle",
+                              "margin-top": "10px"
+                            },
+                            "onchange": "@onchange"
+                          }
+                        ]
+                      }
+                    },
+                    "button": {
+                      "style": {
+                        "background": "var(--highlight-color)",
+                        "font-size": "17px",
+                        "font-weight": "bold",
+                        "padding-top": "8px",
+                        "padding-bottom": "8px",
+                        "padding-left": "10px",
+                        "padding-right": "10px",
+                        "border-radius": "8px",
+                        "color": "white",
+                        "position": "absolute",
+                        "right": "10px",
+                        "bottom": "10px"
+                      }
+                    }
+                  },
+                  {
+                    "type": "delete-button",
+                    "style": {
+                      "position": "absolute",
+                      "right": "10px",
+                      "bottom": "5px",
+                      "background": "red",
+                      "font-weight": "bold",
+                      "font-size": "17px",
+                      "color": "white",
+                      "padding": "10px",
+                      "border-radius": "8px"
+                    }
+                  }
+                ]
+              }
+            },
+            "type": "chatting-header",
+            "style": {
+            },
+            "children": [
+              {
+                "type": "img",
+                "style": {
+                  "position": "absolute",
+                  "font-size": "25px",
+                  "font-weight": "bold",
+                  "left": "5px",
+                  "top": "5px",
+                  "width": "60px",
+                  "height": "60px",
+                  "object-fit": "cover",
+                  "border-radius": "var(--profile-image-border-radius)"
+                },
+                "src": "@thumbnail"
+              },
+              {
+                "type": "text",
+                "style": {
+                  "position": "absolute",
+                  "font-size": "25px",
+                  "font-weight": "bold",
+                  "left": "75px",
+                  "top": "5px"
+                },
+                "text": {
+                  "default": "@title"
+                }
+              },
+              {
+                "type": "text",
+                "style": {
+                  "position": "absolute",
+                  "font-size": "15px",
+                  "left": "75px",
+                  "top": "45px"
+                },
+                "text": {
+                  "default": "@subtitle"
+                }
+              }
+            ]
           },
           {
             "type": "chatting-footer",
@@ -883,6 +1116,12 @@
                 },
                 "text": {
                   "default": "@bio"
+                }
+              },
+              {
+                "type": "logout-button",
+                "style": {
+
                 }
               }
             ]

@@ -3,7 +3,7 @@ import {textByDocumentLocale} from "../../textUtils";
 import {useState} from "react";
 import AddFriendToChat from "./AddFriendToChat";
 
-export default function ChattingHeaderMenu({elementData, showing}) {
+export default function ChattingHeaderMenu({elementData, showing, requestClose}) {
 
     const styleData = convertedStyle(elementData.style);
     if(!showing) {
@@ -15,45 +15,32 @@ export default function ChattingHeaderMenu({elementData, showing}) {
     const children = [
 
     ];
-    const menuList = [
-
-    ];
-
-    const onClickMethod = (type) => {
-        switch (type) {
-            case "add-friend-button":
-                return () => {
-
-                }
-            default:
-                return (e) => {
-
-                }
-        }
-    }
 
     for(const child of elementData.children) {
-        // children.push(
-        //   <button style={convertedStyle(child.style)} onClick={onClickMethod(child.type)}>
-        //       {textByDocumentLocale(child.text)}
-        //   </button>
-        // );
         switch (child.type) {
-            case "add-friend-button":
+            case "add-friend":
                 children.push(
-                  <AddFriendToChat elementData={child}/>
+                  <AddFriendToChat elementData={child} requestClose={requestClose}/>
                 );
                 break;
+                case "delete-button":
+                    children.push(
+                        <button style={convertedStyle(child.style)}>
+                            삭제
+                        </button>
+                    );
+                    break;
         }
     }
 
     return (
-        <>
-            <div style={styleData} onClick={(e) => {
+            <div style={{
+                ...styleData,
+                zIndex: "1000 !important",
+            }} onClick={(e) => {
                 e.stopPropagation();
             }}>
                 {children}
             </div>
-        </>
     );
 }

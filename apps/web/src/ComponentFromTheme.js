@@ -12,6 +12,7 @@ import {useStore} from "./store";
 import profileImage from "../src/assets/profile.png";
 import AddFriendButton from "./components/AddFriendButton";
 import CreateChattingButton from "./components/CreateChattingButton";
+import Cookies from "js-cookie";
 
 export default function ComponentFromTheme({elementData, replacements, children}) {
 
@@ -103,6 +104,42 @@ export default function ComponentFromTheme({elementData, replacements, children}
             }}>
                 <i className="fa-solid fa-cart-shopping"></i>
             </IconButton>);
+        case "logout-button":
+            return (
+                <button onClick={() => {
+                    Cookies.remove("Authorization");
+                    navigate("/");
+                    document.location.reload();
+                }}>
+                    로그아웃
+                </button>
+            );
+        case "button":
+            if(replacements !== undefined) {
+                return (
+                    <button onClick={replacements[elementData.onclick]} style={styleData}>
+                        {childrenOfLayout}
+                        {children}
+                    </button>
+                );
+            }
+            else {
+                return (
+                    <button onClick={() => {}} style={styleData}>
+                    </button>
+                );
+            }
+        case "checkbox":
+            if(replacements !== undefined) {
+                return (
+                    <input type={"checkbox"} onChange={replacements[elementData.onchange]} style={styleData}/>
+                );
+            }
+            else {
+                return (
+                    <input type={"checkbox"} style={styleData}/>
+                );
+            }
         case "search-bar":
             return (
                 <SearchBar style={styleData}/>

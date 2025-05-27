@@ -58,11 +58,16 @@ function App() {
         setChats,
         setFriends,
         setNotifications,
+        chatRoom,
         setChatRoom,
+        userInfo,
         setUserInfo,
         isAuthStateChanged,
         setAuthStateChanged,
-        setStompClient
+        setStompClient,
+        notifications,
+        receivedMessages,
+        setReceivedMessages,
     } = useStore();
 
     const themeMode = themeModeOnWeb();
@@ -73,68 +78,91 @@ function App() {
 
     useEffect(  () => {
 
-        const socket = new SockJS('http://localhost:8080/socket/conn');
-        const stompClient = Stomp.over(socket);
+        const handleFocus = () => {
+            getFriends({
+                onFailed: (e, response) => {
+                    Cookies.remove("Authorization");
+                },
+                onSuccess: (friends) => {
+                    setFriends(friends);
+                }
+            });
+            receivedFriendRequests({
+                onFailed: (e, response) => {
 
-        stompClient.connect({}, () => {
-            setStompClient(stompClient);
+                },
+                onSuccess: (friends) => {
+                    const notificationList = [];
+                    for(const friend of friends) {
+                        notificationList.push(
+                            {
+                                title: `친추 ${friend.userName}`,
+                                type: "request-friend",
+                                data: friend.userId,
+                            }
+                        );
+                    }
+                    setNotifications(notificationList);
+                }
+            });
 
-        });
+            getUserInfo({
+                onSuccess: (userInfo) => {
 
-        getFriends({
-            onFailed: (e, response) => {
-                Cookies.remove("Authorization");
-            },
-            onSuccess: (friends) => {
-                setFriends(friends);
-            }
-        });
-        getChats({
-            onFailed: (e, response) => {
-                Cookies.remove("Authorization");
-            },
-            onSuccess: (chats) => {
-                setChats(chats);
-            }
-        });
-        receivedFriendRequests({
-           onFailed: (e, response) => {
+                    const socket = new SockJS('http://localhost:8080/socket/conn');
+                    const stompClient = Stomp.over(socket);
 
-           },
-            onSuccess: (friends) => {
-               const notifications = [];
-               for(const friend of friends) {
-                   notifications.push(
-                       {
-                           title: `친추 ${friend.userName}`,
-                           type: "request-friend",
-                           data: friend.userId,
-                       }
-                   );
-               }
-               setNotifications(notifications);
-            }
-        });
-        // setNotifications(getNotifications());
-        // setChatRoom(
-        //     {
-        //         title: "이승용",
-        //         subtitle: "접속중",
-        //         messages: getChattingMessages(),
-        //         thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzHP-ZLzyQ4v-BQNFrYI459cPc82Xfc8OfmA&s"
-        //     }
-        // );
+                    stompClient.connect({}, () => {
 
-        getUserInfo({
-            onSuccess: (userInfo) => {
-                setUserInfo(userInfo);
-            },
-            onFailed: (error, response) => {
+                        stompClient.subscribe(`/queue/${userInfo.userId}`, (messageOutput) => {
+                            const jsonData = JSON.parse(messageOutput.body);
+                            notifications.push(
+                                {
+                                    title: `친추 ${jsonData.senderId}`,
+                                    type: "request-friend",
+                                    data: jsonData.senderId,
+                                }
+                            );
+                        });
 
-            }
-        });
-        setLoading(false);
-        setAuthStateChanged(false);
+                        getChats({
+                            onFailed: (e, response) => {
+                                Cookies.remove("Authorization");
+                            },
+                            onSuccess: (chats) => {
+                                setChats(chats);
+
+                                for(const chat of chats) {
+                                    stompClient.subscribe(`/topic/chatting/${chat.chatId}`, (messageOutput) => {
+                                        if(chatRoom.chatId !== chat.chatId) {
+                                            if(typeof receivedMessages[chat.chatId] !== "number") {
+                                                receivedMessages[chat.chatId] = 1;
+                                            }
+                                            else {
+                                                receivedMessages[chat.chatId]++;
+                                            }
+                                            setReceivedMessages(receivedMessages);
+                                        }
+                                    });
+                                }
+                            }
+                        });
+
+                        setStompClient(stompClient);
+                    });
+                    setUserInfo(userInfo);
+                },
+                onFailed: (error, response) => {
+
+                }
+            });
+            setLoading(false);
+            setAuthStateChanged(false);
+        };
+
+        handleFocus();
+        window.addEventListener('focus', handleFocus);
+        return () => window.removeEventListener('focus', handleFocus);
     }, [isAuthStateChanged]);
 
     if (token === undefined) {

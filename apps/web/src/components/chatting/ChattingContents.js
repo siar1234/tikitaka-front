@@ -15,13 +15,6 @@ export default function ChattingContents({elementData}) {
             "@date": message.writeDateTime,
         };
 
-        // {
-        //     "senderId": "test1",
-        //     "senderName": "name1",
-        //     "profileImage": null,
-        //     "content": "테스트",
-        //     "writeDateTime": "2025-04-30T23:50:33.852"
-        // }
         if(message.senderId !== userInfo.userId) {
             children.push(
                 <ComponentFromTheme elementData={elementData["item-partner"]} replacements={replacements}/>

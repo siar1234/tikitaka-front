@@ -44,7 +44,9 @@ export default function ChattingHeader({elementData}) {
                     <i className="fa-solid fa-ellipsis-vertical"></i>
                 </button>
             </RelativeLayout>
-            <ChattingHeaderMenu showing={menuShowing} elementData={elementData["popup-menu-button"].menu}/>
+            <ChattingHeaderMenu showing={menuShowing} elementData={elementData["popup-menu-button"].menu} requestClose={() => {
+                setMenuShowing(false);
+            }}/>
         </>
     );
 }

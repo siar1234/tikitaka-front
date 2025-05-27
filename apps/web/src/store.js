@@ -26,4 +26,6 @@ export const useStore = create((set) => ({
     setAuthStateChanged: (isAuthStateChanged) => set({ isAuthStateChanged }),
     stompClient: null,
     setStompClient: (stompClient) => set({ stompClient }),
+    receivedMessages: {},
+    setReceivedMessages: (receivedMessages) => set({receivedMessages})
 }));

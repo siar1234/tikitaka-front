@@ -17,22 +17,35 @@ export default function ChattingFooter({elementData}) {
 
     const inputRef = useRef(null);
 
+    const sendMessage = () => {
+        const sendJson = {
+            "chatId": chatRoom.chatId,
+            "content": inputRef.current.value,
+        };
+        stompClient.send('/app/send', { "token": `${Cookies.get("Authorization")}`}, JSON.stringify(sendJson));
+        inputRef.current.value = "";
+    };
+
     return (
         <RelativeLayout style={styleData}>
 
             <div style={inputFieldStyle}>
-                <input style={inputStyle} placeholder={"Type your message here..."} ref={inputRef} />
+                <input style={inputStyle} placeholder={"Type your message here..."} ref={inputRef}
+                       onKeyDown={(e) => {
+                           if (e.key === "Enter") {
+                               sendMessage();
+                           }
+                       }}
+                onSubmit={() => {
+                    sendMessage();
+                }}/>
                 <IconButton style={popupMenuButtonStyle}>
                     <i className="fa-solid fa-plus"></i>
                 </IconButton>
             </div>
 
             <IconButton style={sendButtonStyle} onClick={() => {
-                const sendJson = {
-                    "chatId": chatRoom.chatId,
-                    "content": inputRef.current.value,
-                };
-                stompClient.send('/app/send', { "token": `${Cookies.get("Authorization")}`}, JSON.stringify(sendJson));
+                sendMessage();
             }}>
                 <i className="fa-solid fa-paper-plane"></i>
             </IconButton>
