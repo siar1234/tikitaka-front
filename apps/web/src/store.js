@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import lightTheme from './assets/default-theme.json';
+import lightTheme from '@myorg/shared/default-theme.json';
 
 export const useStore = create((set) => ({
     fragmentIndex: 0,

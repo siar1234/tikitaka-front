@@ -959,11 +959,34 @@
         },
         "item": {
           "style": {
+            "height": "50px",
+            "position": "relative",
+            "cursor": "pointer"
           },
           "children": [
             {
+              "type": "img",
+              "style": {
+                "width": "40px",
+                "height": "40px",
+                "position": "absolute",
+                "left": "5px"
+              },
+              "src": "@image"
+            },
+            {
               "type": "text",
               "style": {
+                "height": "20px",
+                "position": "absolute",
+                "left": "50px",
+                "right": "10px",
+                "top": "10px",
+                "text-align": "start",
+                "justify-content": "center",
+                "align-items": "center",
+                "align-self": "center",
+                "vertical-align": "center"
               },
               "text": {
                 "default": "@title"
