@@ -15,13 +15,13 @@ import Cookies from "js-cookie";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 import ProfilePage from "./pages/ProfilePage";
-import defaultTheme from "../src/assets/default-theme.json";
+import defaultTheme from "@myorg/shared/default-theme.json";
 import theme1 from "../src/assets/default-theme-test1.json";
 import theme2 from "../src/assets/default-theme-test2.json";
 import SplashScreen from "./pages/SplashScreen";
 import {getChatRoomMessages, getChats} from "@myorg/shared/api/chat";
-import {getFriends, receivedFriendRequests} from "@myorg/shared/api/friend";
-import {defaultChattingThumbnail} from "@myorg/shared/api/media";
+import {getFriends, notificationFromFriendRequest, receivedFriendRequests} from "@myorg/shared/api/friend";
+import {defaultChattingThumbnail, defaultProfileImage} from "@myorg/shared/api/media";
 import {Stomp} from "@stomp/stompjs";
 import SockJS from 'sockjs-client';
 
@@ -95,11 +95,7 @@ function App() {
                     const notificationList = [];
                     for(const friend of friends) {
                         notificationList.push(
-                            {
-                                title: `친추 ${friend.userName}`,
-                                type: "request-friend",
-                                data: friend.userId,
-                            }
+                            notificationFromFriendRequest(friend)
                         );
                     }
                     setNotifications(notificationList);
@@ -117,11 +113,7 @@ function App() {
                         stompClient.subscribe(`/queue/${userInfo.userId}`, (messageOutput) => {
                             const jsonData = JSON.parse(messageOutput.body);
                             notifications.push(
-                                {
-                                    title: `친추 ${jsonData.senderId}`,
-                                    type: "request-friend",
-                                    data: jsonData.senderId,
-                                }
+                                notificationFromFriendRequest(jsonData)
                             );
                         });
 
@@ -131,6 +123,21 @@ function App() {
                             },
                             onSuccess: (chats) => {
                                 setChats(chats);
+                                if(chatRoom.chatId === undefined && chats.length > 0) {
+                                    getChatRoomMessages({
+                                        onSuccess: (messages) => {
+                                            setChatRoom( {
+                                                title: chats[0].chatName,
+                                                subtitle: "",
+                                                messages: messages,
+                                                thumbnail: defaultChattingThumbnail,
+                                                chatId: chats[0].chatId
+                                            });
+                                        },
+                                        chatId: chats[0].chatId,
+                                        onFailed: (error) => {}
+                                    });
+                                }
 
                                 for(const chat of chats) {
                                     stompClient.subscribe(`/topic/chatting/${chat.chatId}`, (messageOutput) => {

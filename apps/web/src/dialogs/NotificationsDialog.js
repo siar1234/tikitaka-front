@@ -4,9 +4,10 @@ import convertedStyle from "../styleUtils";
 import {IconButton} from "../App";
 import ComponentFromTheme from "../ComponentFromTheme";
 import {acceptFriend} from "@myorg/shared/api/friend";
+
 export default function NotificationsDialog({isOpen, onClose}) {
 
-    const {notifications, theme} = useStore();
+    const {notifications, theme, setNotifications} = useStore();
     const elementData = theme["notifications"].web;
 
     if (!isOpen) return null;
@@ -34,10 +35,12 @@ export default function NotificationsDialog({isOpen, onClose}) {
 
     const children = [];
 
-    for(const notification of notifications) {
+    for (let i = 0; i < notifications.length; i++){
+        const notification = notifications[i];
         const itemChildren = [];
         for(const item of itemData.children) {
             const replacements = {
+                "@image": notification.image,
                 "@title": notification.title,
             };
             itemChildren.push(
@@ -52,10 +55,11 @@ export default function NotificationsDialog({isOpen, onClose}) {
                         await acceptFriend({
                             id: userId,
                             onFailed: (error, response) => {
-                                alert(error);
+                                alert(`수락에 실패했습니다. ${error}`);
                             },
                             onSuccess: () => {
-                                alert("TTAAKKKKK!!!!!!");
+                                notifications.splice(i, 1);
+                                setNotifications(notifications);
                             }
                         });
                         break;

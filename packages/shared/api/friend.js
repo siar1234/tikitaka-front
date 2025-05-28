@@ -1,6 +1,7 @@
 import axios from "axios";
 import {BACKEND_URL} from "./serverAddress";
 import Cookies from "js-cookie";
+import {defaultProfileImage} from "./media";
 
 export async function acceptFriend({id, onFailed, onSuccess}) {
     try {
@@ -88,4 +89,13 @@ export async function receivedFriendRequests({onFailed, onSuccess}) {
     } catch (error) {
         return onFailed(error, null);
     }
+}
+
+export function notificationFromFriendRequest(friend) {
+    return {
+        image: defaultProfileImage,
+        title: `${friend.userName}님에게서 친구요청이 왔습니다.`,
+        type: "request-friend",
+        data: friend.userId,
+    };
 }
