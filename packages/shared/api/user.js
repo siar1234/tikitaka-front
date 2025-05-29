@@ -32,11 +32,11 @@ export async function getUserInfo({onSuccess, onFailed}) {
     }
 }
 
-export async function getUsersById({id, onSuccess, onFailed, currentUserId}) {
+export async function getAvailableFriendsById({id, onSuccess, onFailed, currentUserId}) {
     try {
-        const response = await axios.get(`${BACKEND_URL}/api/user/search/${id}`, {
+        const response = await axios.get(`${BACKEND_URL}/api/friend/add/list/${id}`, {
             withCredentials: true,
-            headers: { 'Authorization': Cookies.get('Authorization') },
+            headers: { 'Authorization': `Bearer ${Cookies.get('Authorization') }` },
         });
 
         if(response.status === 200){
