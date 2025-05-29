@@ -544,7 +544,7 @@
 
                         },
                         "text": {
-                          "default": "친구요청"
+                          "default": "@label"
                         }
                       }
                     ]
@@ -1144,7 +1144,12 @@
               {
                 "type": "logout-button",
                 "style": {
-
+                  "background": "var(--highlight-color)",
+                  "font-weight": "bold",
+                  "color": "white",
+                  "font-size": "15px",
+                  "padding": "8px",
+                  "border-radius": "8px"
                 }
               }
             ]

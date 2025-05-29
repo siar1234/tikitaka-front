@@ -106,7 +106,7 @@ export default function ComponentFromTheme({elementData, replacements, children}
             </IconButton>);
         case "logout-button":
             return (
-                <button onClick={() => {
+                <button style={styleData} onClick={() => {
                     Cookies.remove("Authorization");
                     navigate("/");
                     document.location.reload();
