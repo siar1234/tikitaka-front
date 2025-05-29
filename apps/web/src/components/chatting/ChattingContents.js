@@ -2,6 +2,7 @@ import convertedStyle from "../../styleUtils";
 import {RelativeLayout, VerticalLinearLayout} from "../../App";
 import ComponentFromTheme from "../../ComponentFromTheme";
 import {useStore} from "../../store";
+import {useEffect, useRef} from "react";
 
 export default function ChattingContents({elementData}) {
     const styleData = convertedStyle(elementData.style);
@@ -9,7 +10,14 @@ export default function ChattingContents({elementData}) {
     const children = [];
     const {chatRoom, userInfo} = useStore();
 
+    const bottomRef = useRef(null);
+
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [chatRoom]);
+
     for(const message of chatRoom.messages) {
+
         const replacements = {
             "@message": message.content,
             "@date": message.writeDateTime,
@@ -31,6 +39,7 @@ export default function ChattingContents({elementData}) {
     return (
         <VerticalLinearLayout style={styleData}>
             {children}
+            <div ref={bottomRef} />
         </VerticalLinearLayout>
     );
 }
