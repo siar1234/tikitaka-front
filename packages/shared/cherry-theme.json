@@ -1,13 +1,13 @@
 {
   "name": {
-    "default": "Default",
+    "default": "체리",
     "ko": "기본"
   },
   "style": {
     "properties": {
       "light": {
         "--background-color": "rgba(245, 245, 245, 1)",
-        "--highlight-color": "rgba(85, 150, 240, 1)",
+        "--highlight-color": "#FF0033",
         "--text-color": "rgba(15, 15, 15, 1)",
         "--card-color": "rgba(255, 255, 255, 1)",
         "--divider-color": "rgba(125, 125, 125, 1)",
@@ -17,9 +17,9 @@
         "--card-border-radius": "13px",
         "--card-padding": "15px",
         "--nav-menu-width": "60px",
-        "--chats-height": "30%",
+        "--chats-height": "40%",
         "--friends-height": "",
-        "--search-bar-width": "25%",
+        "--search-bar-width": "20%",
         "--search-bar-height": "15px",
         "--profile-image-border-radius": "60px",
         "--card-shadow": "2px 5px 15px rgba(125, 125, 125, 25)"
@@ -57,7 +57,7 @@
         "type": "linear-layout",
         "orientation": "vertical",
         "style": {
-          "left": "var(--card-padding)",
+          "right": "var(--card-padding)",
           "top": "var(--card-padding)",
           "bottom": "var(--card-padding)",
           "width": "var(--nav-menu-width)",
@@ -67,20 +67,11 @@
         },
         "children": [
           {
-            "type": "account-button",
-            "style": {
-              "color": "var(--card-color)",
-              "padding": "var(--nav-menu-item-padding)",
-              "font-size": "20px",
-              "margin-bottom": "30px"
-            }
-          },
-          {
             "type": "home-button",
             "style": {
               "color": "var(--card-color)",
               "padding": "var(--nav-menu-item-padding)",
-              "font-size": "20px"
+              "font-size": "25px"
             }
           },
           {
@@ -88,7 +79,7 @@
             "style": {
               "color": "var(--card-color)",
               "padding": "var(--nav-menu-item-padding)",
-              "font-size": "20px"
+              "font-size": "25px"
             }
           },
           {
@@ -96,7 +87,7 @@
             "style": {
               "color": "var(--card-color)",
               "padding": "var(--nav-menu-item-padding)",
-              "font-size": "20px"
+              "font-size": "25px"
             }
           },
           {
@@ -104,7 +95,7 @@
             "style": {
               "color": "var(--card-color)",
               "padding": "var(--nav-menu-item-padding)",
-              "font-size": "20px"
+              "font-size": "25px"
             }
           },
           {
@@ -112,7 +103,16 @@
             "style": {
               "color": "var(--card-color)",
               "padding": "var(--nav-menu-item-padding)",
-              "font-size": "20px"
+              "font-size": "25px"
+            }
+          },
+          {
+            "type": "account-button",
+            "style": {
+              "color": "var(--card-color)",
+              "padding": "var(--nav-menu-item-padding)",
+              "font-size": "25px",
+              "margin-bottom": "30px"
             }
           }
         ]
@@ -918,10 +918,10 @@
         "style": {
           "background": "var(--card-color)",
           "position": "absolute",
-          "left": "calc(  var(--card-padding) + var(--card-padding) + var(--nav-menu-width) )",
+          "right": "calc(  var(--card-padding) + var(--card-padding) + var(--nav-menu-width) )",
           "top": "var(--card-padding)",
           "bottom": "var(--card-padding)",
-          "right": "var(--card-padding)",
+          "left": "var(--card-padding)",
           "border-radius": "15px"
         },
         "children": [

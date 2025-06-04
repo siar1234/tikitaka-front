@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 import lightTheme from '@myorg/shared/default-theme.json';
+import cherryTheme from '@myorg/shared/cherry-theme.json';
+import fogForrestTheme from '@myorg/shared/fog-forrest-theme.json';
 
 export const useStore = create((set) => ({
     fragmentIndex: 0,
@@ -8,6 +10,8 @@ export const useStore = create((set) => ({
     setNotificationDialogShowing: (notificationsDialogShowing) => set({notificationsDialogShowing}),
     theme: lightTheme,
     setTheme: (theme) => set({ theme }),
+    themes: [lightTheme, cherryTheme, fogForrestTheme],
+    setThemes: (themes) => set({themes}),
     chats: [],
     setChats: (chats) => set({ chats }),
     friends: [],

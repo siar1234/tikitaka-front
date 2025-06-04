@@ -13,6 +13,7 @@ import profileImage from "../src/assets/profile.png";
 import AddFriendButton from "./components/AddFriendButton";
 import CreateChattingButton from "./components/CreateChattingButton";
 import Cookies from "js-cookie";
+import SelectTheme from "./components/SelectTheme";
 
 export default function ComponentFromTheme({elementData, replacements, children}) {
 
@@ -89,7 +90,9 @@ export default function ComponentFromTheme({elementData, replacements, children}
                 <i className="fa-solid fa-bell"></i>
             </IconButton>);
         case "settings-button":
-            return (<IconButton style={styleData}>
+            return (<IconButton style={styleData} onClick={() => {
+                navigate("/settings");
+            }}>
                 <i className="fa-solid fa-gear"></i>
             </IconButton>);
         case "community-button":
@@ -192,6 +195,10 @@ export default function ComponentFromTheme({elementData, replacements, children}
             }
             return (
                 <img style={styleData} src={src}></img>
+            );
+        case "select-theme":
+            return (
+                <SelectTheme elementData={elementData}/>
             );
         default:
             // console.log("Unknown Component");

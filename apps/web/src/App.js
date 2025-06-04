@@ -24,6 +24,8 @@ import {getFriends, notificationFromFriendRequest, receivedFriendRequests} from 
 import {defaultChattingThumbnail, defaultProfileImage} from "@myorg/shared/api/media";
 import {Stomp} from "@stomp/stompjs";
 import SockJS from 'sockjs-client';
+import Chats from "./components/Chats";
+import SettingsPage from "./pages/SettingsPage";
 
 export const RelativeLayout = styled.div`
     position: relative;
@@ -206,6 +208,7 @@ function App() {
                 <Route path="/community" element={<Community/>}/>
                 <Route path="/marketplace" element={<Marketplace/>}/>
                 <Route path="/profile" element={<ProfilePage/>}/>
+                <Route path="/settings" element={<SettingsPage />}/>
             </Routes>
             {sharedComponents}
             <NotificationsDialog isOpen={notificationsDialogShowing} onClose={() => {

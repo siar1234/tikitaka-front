@@ -1,15 +1,15 @@
 {
   "name": {
-    "default": "Default",
+    "default": "안개낀 숲",
     "ko": "기본"
   },
   "style": {
     "properties": {
       "light": {
-        "--background-color": "rgba(245, 245, 245, 1)",
-        "--highlight-color": "rgba(85, 150, 240, 1)",
-        "--text-color": "rgba(15, 15, 15, 1)",
-        "--card-color": "rgba(255, 255, 255, 1)",
+        "--background-color": "rgba(15, 15, 15, 1)",
+        "--highlight-color": "rgba(15, 245, 15, 1)",
+        "--text-color": "rgba(255, 255, 255, 1)",
+        "--card-color": "rgba(35, 35, 35, 1)",
         "--divider-color": "rgba(125, 125, 125, 1)",
         "--overlay-background-color": "rgba(0, 0, 0, 0.5)",
         "--shadow-color": "rgba(0, 0, 0, 0.1)",
@@ -22,7 +22,7 @@
         "--search-bar-width": "25%",
         "--search-bar-height": "15px",
         "--profile-image-border-radius": "60px",
-        "--card-shadow": "2px 5px 15px rgba(125, 125, 125, 25)"
+        "--card-shadow": "2px 5px 15px rgba(5, 5, 5, 25)"
       },
       "dark": {
         "--background-color": "rgba(15, 15, 15, 1)",
@@ -55,12 +55,11 @@
     "web": [
       {
         "type": "linear-layout",
-        "orientation": "vertical",
+        "orientation": "horizontal",
         "style": {
           "left": "var(--card-padding)",
           "top": "var(--card-padding)",
-          "bottom": "var(--card-padding)",
-          "width": "var(--nav-menu-width)",
+          "right": "var(--card-padding)",
           "position": "absolute",
           "background": "var(--highlight-color)",
           "border-radius": "var(--card-border-radius)"
@@ -71,8 +70,7 @@
             "style": {
               "color": "var(--card-color)",
               "padding": "var(--nav-menu-item-padding)",
-              "font-size": "20px",
-              "margin-bottom": "30px"
+              "font-size": "20px"
             }
           },
           {
@@ -918,10 +916,10 @@
         "style": {
           "background": "var(--card-color)",
           "position": "absolute",
-          "left": "calc(  var(--card-padding) + var(--card-padding) + var(--nav-menu-width) )",
-          "top": "var(--card-padding)",
-          "bottom": "var(--card-padding)",
-          "right": "var(--card-padding)",
+          "top": "calc(  var(--card-padding) + var(--card-padding) + var(--nav-menu-width) )",
+          "left": "var(--nav-menu-width)",
+          "bottom": "var(--nav-menu-width)",
+          "right": "var(--nav-menu-width)",
           "border-radius": "15px"
         },
         "children": [
