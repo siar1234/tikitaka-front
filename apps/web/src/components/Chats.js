@@ -35,7 +35,8 @@ export default function Chats({elementData}) {
                         onSuccess: (messages) => {
 
                             if(typeof messages !== "undefined") {
-
+                                receivedMessages[chat.chatId] = undefined;
+                                setReceivedMessages(receivedMessages);
                                 setChatRoom({
                                     title: chat.chatName,
                                     subtitle: "",
