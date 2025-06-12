@@ -57,3 +57,28 @@ export async function getAvailableFriendsById({id, onSuccess, onFailed, currentU
     }
 }
 
+export async function updateUserInfo({onSuccess, onFailed, name, password, profileImage}) {
+    try {
+        const response = await axios.post(`${BACKEND_URL}/api/member/update`,
+            {
+                name: name,
+                password: password,
+                profileImage: profileImage
+            }
+            ,{
+            withCredentials: true,
+            headers: { 'Authorization': `Bearer ${Cookies.get('Authorization') }` },
+        });
+
+        if(response.status === 200){
+            onSuccess();
+        }
+        else {
+            return onFailed(null, response.status);
+        }
+
+    } catch (error) {
+        return onFailed(error, null);
+    }
+}
+
