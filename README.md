@@ -22,6 +22,11 @@
 
 ![chatting](images/chatting.png)
 
+### 친구추가 및 실시간 알림
+
+![friend](images/request_friend.png)
+![friend](images/friend_notification.png)
+
 ### 커스텀 테마 적용
 
 ![theme](images/theme.png)
