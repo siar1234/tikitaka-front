@@ -11,6 +11,10 @@
 
 **사용자가 지정한 테마로 UI를 완전히 커스터마이징할 수 있는 채팅 서비스**
 
+## 시연동영상
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/GJ47xWy5QIw?si=UqtRGJ_ma5Pu3sH1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 ## 주요기능
 
 ### 회원가입 및 로그인
