@@ -15,10 +15,18 @@
 
 ## 개발일정
 
-## 개발환경
+![schedule.png](images/schedule.png)
+
+## 개발환경 및 도구
+
+| IDE & 코드에디터                                                                 | 라이브러리 및 프레임워크                       | 데이터베이스                                          |
+|-----------------------------------------------------------------------------|-------------------------------------|-------------------------------------------------|
+| <img src="images/vscode-logo.webp" width="100">                             | <img src="images/react.png" width="100">     | <img src="images/mysql.svg" width="100"> |
+|
+| [<img src="images/webstorm.png" width="100"> | <img src="images/spring-boot-logo.png" width="100">    | <img src="images/mongo-db.png" width="100"> |
 
 ## 개발자목록
 
-| 김민준 | 이승용                                      | 천병욱 |
-| ------ |------------------------------------------| ------ |
-|        | <br/>[Siar](https://github.com/siar1234) |        |
+| 김민준 | 이승용                                   | 천병욱                               |
+| ------ | ---------------------------------------- |-----------------------------------|
+|[minjoon1015](https://github.com/minjoon1015)| [Siar](https://github.com/siar1234) | [chbyuk](https://github.com/chbyuk) |
