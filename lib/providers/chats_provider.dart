@@ -1,0 +1,99 @@
+import 'dart:io';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tikitaka/channels/app_web_channel.dart';
+import 'package:tikitaka/models/chat_room.dart';
+
+class ChatsState {
+  final Map<int, ChatRoom> chats;
+  final List<int> idList;
+
+  ChatsState(this.chats, this.idList);
+
+}
+
+class ChatsNotifier extends StateNotifier<ChatsState> {
+  ChatsNotifier() : super(ChatsState({}, []));
+  
+  void init() {
+    appWebChannel.getChats(onSuccess: (list) {
+      List<int> idList = [];
+      Map<int, ChatRoom> chats = {};
+
+      for(var chatRoom in list) {
+        idList.add(chatRoom.id);
+        chats[chatRoom.id] = chatRoom;
+      }
+
+      state = ChatsState(chats, idList);
+    });
+  }
+
+}
+
+final chatsProvider = StateNotifierProvider<ChatsNotifier, ChatsState>((ref) {
+  return ChatsNotifier();
+});
+
+extension ChatsNullSafe on Map<int, ChatRoom> {
+  ChatRoom get(int id) {
+    return this[id] ?? ChatRoom();
+  }
+}
+
+// extension SortEx on List {
+//   void sortChats(String sortOption, Map<String, Photo> map) {
+//     switch(sortOption) {
+//       case SortOption.date:
+//         sort((a, b) {
+//           return map.get(a).date.compareTo(map.get(b).date);
+//         });
+//         break;
+//       case SortOption.created:
+//         sort((a, b) {
+//           return map.get(a).created.compareTo(map.get(b).created);
+//         });
+//         break;
+//       case SortOption.modified:
+//         sort((a, b) {
+//           return map.get(a).modified.compareTo(map.get(b).modified);
+//         });
+//         break;
+//       case SortOption.deleted:
+//         sort((a, b) {
+//           return map.get(a).deleted!.compareTo(map.get(b).deleted!);
+//         });
+//         break;
+//       case SortOption.title:
+//         sort((a, b) {
+//           return map.get(a).title.toLowerCase().compareTo(map.get(b).title.toLowerCase());
+//         });
+//         break;
+//       case SortOption.dateDescending:
+//         sort((a, b) {
+//           return map.get(b).date.compareTo(map.get(a).date);
+//         });
+//         break;
+//       case SortOption.createdDescending:
+//         sort((a, b) {
+//           return map.get(b).created.compareTo(map.get(a).created);
+//         });
+//         break;
+//       case SortOption.modifiedDescending:
+//         sort((a, b) {
+//           return map.get(b).modified.compareTo(map.get(a).modified);
+//         });
+//         break;
+//       case SortOption.deletedDescending:
+//         sort((a, b) {
+//           return map.get(b).deleted!.compareTo(map.get(a).deleted!);
+//         });
+//         break;
+//       case SortOption.titleDescending:
+//         sort((a, b) {
+//           return map.get(b).title.toLowerCase().compareTo(map.get(a).title.toLowerCase());
+//         });
+//         break;
+//     }
+//   }
+// }
