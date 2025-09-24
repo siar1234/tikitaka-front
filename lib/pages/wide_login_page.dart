@@ -12,6 +12,7 @@ import 'package:tikitaka/models/app_state.dart';
 import 'package:tikitaka/models/fragment_index.dart';
 import 'package:tikitaka/providers/chats_provider.dart';
 
+import '../components/custom_window_button.dart';
 import '../providers/providers.dart';
 import '../utils/toast.dart';
 
@@ -36,7 +37,14 @@ class WideLoginPageState extends ConsumerState<WideLoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("23424324");
+    final colors = CustomWindowButtonColors(
+        iconMouseOver: Theme.of(context).textTheme.bodyMedium?.color,
+        mouseOver: const Color.fromRGBO(125, 125, 125, 0.1),
+        iconNormal: Theme.of(context).textTheme.bodyMedium?.color,
+        mouseDown: const Color.fromRGBO(125, 125, 125, 0.1),
+        iconMouseDown: Theme.of(context).textTheme.bodyMedium?.color,
+        normal: Theme.of(context).scaffoldBackgroundColor
+    );
 
     return Scaffold(
       body: Stack(
@@ -47,8 +55,38 @@ class WideLoginPageState extends ConsumerState<WideLoginPage> {
               right: 0,
               top: 0,
               child: SizedBox(
-                  height: 60,
-                  child: MoveWindow()
+                  height: 50,
+                  child: Row(
+                    children: [
+                      Expanded(child: MoveWindow()),
+                      if(Platform.isWindows) ...[
+                        Visibility(
+                          visible: App.isDesktop(),
+                          child: MinimizeCustomWindowButton(colors: colors),
+                        ),
+                        appWindow.isMaximized
+                            ? RestoreCustomWindowButton(
+                          colors: colors,
+                          onPressed: () {
+                            appWindow.restore();
+                          },
+                        )
+                            : MaximizeCustomWindowButton(
+                          colors: colors,
+                          onPressed: () {
+                            appWindow.maximize();
+                          },
+                        ),
+                        CloseCustomWindowButton(
+                            colors: CustomWindowButtonColors(
+                                mouseOver: const Color(0xFFD32F2F),
+                                mouseDown: const Color(0xFFB71C1C),
+                                iconNormal: const Color(0xFF805306),
+                                iconMouseOver: const Color(0xFFFFFFFF),
+                                normal: Theme.of(context).scaffoldBackgroundColor))
+                      ]
+                    ],
+                  )
               ),
 
             )

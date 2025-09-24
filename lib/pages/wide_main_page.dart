@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:amphi/models/app.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tikitaka/fragments/profile_fragment.dart';
 import 'package:tikitaka/models/app_cache.dart';
 import 'package:tikitaka/models/app_state.dart';
+import '../components/custom_window_button.dart';
 import '../fragments/home_fragment.dart';
 import '../models/fragment_index.dart';
 import 'package:tikitaka/pages/wide_login_page.dart';
@@ -36,6 +39,15 @@ class _WideMainPageState extends ConsumerState<WideMainPage> {
 
     final fragmentIndex = ref.watch(fragmentIndexProvider);
 
+    final colors = CustomWindowButtonColors(
+        iconMouseOver: Theme.of(context).textTheme.bodyMedium?.color,
+        mouseOver: const Color.fromRGBO(125, 125, 125, 0.1),
+        iconNormal: Theme.of(context).textTheme.bodyMedium?.color,
+        mouseDown: const Color.fromRGBO(125, 125, 125, 0.1),
+        iconMouseDown: Theme.of(context).textTheme.bodyMedium?.color,
+        normal: Theme.of(context).scaffoldBackgroundColor
+    );
+
     return Scaffold(
       body: Stack(
         children: [
@@ -45,8 +57,38 @@ class _WideMainPageState extends ConsumerState<WideMainPage> {
               top: 0,
               right: 0,
               child: SizedBox(
-                height: 60,
-                child: MoveWindow(),
+                height: 50,
+                child: Row(
+                  children: [
+                    Expanded(child: MoveWindow()),
+                    if(Platform.isWindows) ...[
+                      Visibility(
+                        visible: App.isDesktop(),
+                        child: MinimizeCustomWindowButton(colors: colors),
+                      ),
+                      appWindow.isMaximized
+                          ? RestoreCustomWindowButton(
+                        colors: colors,
+                        onPressed: () {
+                          appWindow.restore();
+                        },
+                      )
+                          : MaximizeCustomWindowButton(
+                        colors: colors,
+                        onPressed: () {
+                          appWindow.maximize();
+                        },
+                      ),
+                      CloseCustomWindowButton(
+                          colors: CustomWindowButtonColors(
+                              mouseOver: const Color(0xFFD32F2F),
+                              mouseDown: const Color(0xFFB71C1C),
+                              iconNormal: const Color(0xFF805306),
+                              iconMouseOver: const Color(0xFFFFFFFF),
+                              normal: Theme.of(context).scaffoldBackgroundColor))
+                    ]
+                  ],
+                ),
               ),
             )
           ],
