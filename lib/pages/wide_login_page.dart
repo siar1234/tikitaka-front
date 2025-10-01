@@ -179,18 +179,33 @@ class _CustomInput extends StatelessWidget {
           obscureText: obscureText,
           controller: controller,
           decoration: InputDecoration(
-            fillColor: Theme.of(context).scaffoldBackgroundColor,
+            fillColor: Theme.of(context).highlightColor,
               focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).highlightColor,
                       style: BorderStyle.solid,
                       width: 2),
                   borderRadius: BorderRadius.circular(10)
               ),
               border: OutlineInputBorder(
                   borderSide: BorderSide(
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      style: BorderStyle.solid),
+                      color: Theme.of(context).disabledColor,
+                      style: BorderStyle.solid,
+                  width: 1),
+                  borderRadius: BorderRadius.circular(10)
+              ),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Theme.of(context).disabledColor,
+                      style: BorderStyle.solid,
+                      width: 1),
+                  borderRadius: BorderRadius.circular(10)
+              ),
+              disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Theme.of(context).disabledColor,
+                      style: BorderStyle.solid,
+                  width: 1),
                   borderRadius: BorderRadius.circular(10)
               ),
               prefixIcon: Icon(
