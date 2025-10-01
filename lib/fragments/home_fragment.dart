@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:amphi/models/app.dart';
 import 'package:amphi/widgets/menu/popup/custom_popup_menu_route.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
@@ -28,20 +30,22 @@ class _ChatsFragmentState extends ConsumerState<HomeFragment> {
         Positioned(
             left: chatsCardWidth + 15 + 15,
             right: 15,
-            top: 15,
+            top: Platform.isWindows ? 55 : 15,
             bottom: 15,
             child: CurrentChatCard()),
-        if(App.isDesktop()) ... [
-          Positioned(
-            left: 0,
-            top: 0,
-            right: 0,
-            child: SizedBox(
-              height: 60,
-              child: MoveWindow(),
-            ),
-          )
-        ],
+        // if(Platform.isWindows) ...[
+        //   Positioned(
+        //     left: chatsCardWidth + 15 + 15,
+        //     right: 135,
+        //     top: 15,
+        //     child: Container(
+        //       height: 30,
+        //       decoration: BoxDecoration(
+        //         color: Theme.of(context).cardColor
+        //       ),
+        //     ),
+        //   )
+        // ]
       ],
     );
   }
