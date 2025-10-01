@@ -12,6 +12,18 @@ class FriendsNotifier extends StateNotifier<FriendsState> {
   FriendsNotifier() : super(FriendsState([]));
 
   void init() {
+    List<AppUser> list = [];
+    var user = AppUser();
+    user.name = "23432432432432";
+    list.add(user);
+    list.add(user);
+    list.add(user);    list.add(user);    list.add(user);
+    list.add(user);    list.add(user);
+    list.add(user);
+    list.add(user);
+
+
+    state = FriendsState(list);
     // appWebChannel.getFriends(onSuccess: (list) {
     //
     // });

@@ -10,15 +10,18 @@ import 'package:tikitaka/models/app_state.dart';
 import 'package:tikitaka/pages/main_page.dart';
 import 'package:tikitaka/pages/wide_main_page.dart';
 import 'package:tikitaka/providers/chats_provider.dart';
+import 'package:tikitaka/providers/friends_provider.dart';
+import 'package:tikitaka/providers/notifications_provider.dart';
 import 'package:tikitaka/providers/providers.dart';
 
 import 'models/app_cache.dart';
 import 'models/app_localizations.dart';
 import 'models/theme_data.dart';
 
-void main() {
+void main() async  {
   WidgetsFlutterBinding.ensureInitialized();
   MediaKit.ensureInitialized();
+
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -35,6 +38,8 @@ class MyAppState extends ConsumerState<MyApp> {
   void initState() {
     appCacheData.getData().then((value) {
       ref.read(chatsProvider.notifier).init();
+      ref.read(notificationsProvider.notifier).init();
+      ref.read(friendsProvider.notifier).init();
       appWebChannel.getUserInfo(onSuccess: (user) {
         ref.read(profileProvider.notifier).state = user;
       }, onFailed: (d) {
@@ -49,7 +54,7 @@ class MyAppState extends ConsumerState<MyApp> {
           appWindow.size =
               Size(appCacheData.windowWidth, appCacheData.windowHeight);
           appWindow.alignment = Alignment.center;
-          appWindow.title = "Photos";
+          appWindow.title = "Tikitaka";
           appWindow.show();
         });
       }
