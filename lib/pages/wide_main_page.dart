@@ -5,6 +5,7 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tikitaka/fragments/profile_fragment.dart';
+import 'package:tikitaka/fragments/settings_fragment.dart';
 import 'package:tikitaka/models/app_cache.dart';
 import 'package:tikitaka/models/app_state.dart';
 import '../components/custom_window_button.dart';
@@ -34,7 +35,7 @@ class _WideMainPageState extends ConsumerState<WideMainPage> {
   Widget build(BuildContext context) {
 
     if(appCacheData.token.isEmpty && appCacheData.initialized) {
-      return WideLoginPage();
+      //return WideLoginPage();
     }
 
     final fragmentIndex = ref.watch(fragmentIndexProvider);
@@ -70,13 +71,17 @@ class _WideMainPageState extends ConsumerState<WideMainPage> {
                           ? RestoreCustomWindowButton(
                         colors: colors,
                         onPressed: () {
-                          appWindow.restore();
+                          setState(() {
+                            appWindow.restore();
+                          });
                         },
                       )
                           : MaximizeCustomWindowButton(
                         colors: colors,
                         onPressed: () {
-                          appWindow.maximize();
+                          setState(() {
+                            appWindow.maximize();
+                          });
                         },
                       ),
                       CloseCustomWindowButton(
@@ -101,12 +106,14 @@ class _WideMainPageState extends ConsumerState<WideMainPage> {
               child: () {
                 switch(fragmentIndex) {
                   case FragmentIndex.profile:
-                    return ProfileFragment();
+                    return const ProfileFragment();
+                  case FragmentIndex.settings:
+                    return const SettingsFragment();
                   default:
-                    return HomeFragment();
+                    return const HomeFragment();
                 }
               }()
-          )
+          ),
         ],
       ),
     );
