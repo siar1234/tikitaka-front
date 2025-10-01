@@ -66,6 +66,7 @@ class NavMenu extends ConsumerWidget {
                 appCacheData.windowHeight = appWindow.size.height;
                 appCacheData.windowWidth = appWindow.size.width;
                 appCacheData.save();
+                ref.read(fragmentIndexProvider.notifier).state = FragmentIndex.settings;
               },
             )
           ],
