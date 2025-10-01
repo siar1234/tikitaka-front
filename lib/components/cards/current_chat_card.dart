@@ -2,6 +2,7 @@ import 'package:amphi/widgets/menu/popup/custom_popup_menu_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tikitaka/components/chat_thumbnail.dart';
+import 'package:tikitaka/components/chatting_content_menu.dart';
 import 'package:tikitaka/views/chatting_message_list_item.dart';
 import 'package:tikitaka/providers/chats_provider.dart';
 import 'package:tikitaka/providers/providers.dart';
@@ -31,7 +32,7 @@ class CurrentChatCard extends StatelessWidget {
                     itemBuilder: (context) {
                       return [
                         PopupMenuItem(child: Text("채팅방 수정")),
-                        PopupMenuItem(child: Text("채팅방 수정"))
+                        PopupMenuItem(child: Text("채팅방 정보"))
                       ];
                     },
                   ),
@@ -51,7 +52,7 @@ class CurrentChatCard extends StatelessWidget {
                           children: [
                             IconButton(
                               onPressed: () {
-                                showCustomPopupMenu(context, Container(width: 250, height: 250, decoration: BoxDecoration(color: Colors.white)));
+                                showCustomPopupMenu(context, ChattingContentMenu());
                               },
                               icon: Icon(Icons.add_circle_outline),
                             ),
