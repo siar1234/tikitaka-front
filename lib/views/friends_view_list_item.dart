@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tikitaka/components/app_profile_image.dart';
 import 'package:tikitaka/models/app_user.dart';
 
 class FriendsViewListItem extends StatelessWidget {
@@ -10,7 +11,8 @@ class FriendsViewListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-
+        AppProfileImage(iconSize: 30, desktopIconSize: 30, imageSize: 30, desktopImageSize: 30, user: user),
+        Text(user.name)
       ],
     );
   }
