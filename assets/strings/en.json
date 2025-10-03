@@ -4,5 +4,7 @@
   "id": "id",
   "password": "password",
   "sign_out": "Sign Out",
-  "friends": "Friends"
+  "friends": "Friends",
+  "password_different": "Password is different",
+  "name": "Name"
 }
