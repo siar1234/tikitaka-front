@@ -1,0 +1,10 @@
+{
+  "sign_in": "Sign In",
+  "sign_up": "Sign Up",
+  "id": "id",
+  "password": "password",
+  "sign_out": "Sign Out",
+  "friends": "Friends",
+  "password_different": "Password is different",
+  "name": "이름"
+}
