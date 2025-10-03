@@ -114,9 +114,9 @@ class WideLoginPageState extends ConsumerState<WideLoginPage> {
                         fontWeight: FontWeight.bold
                     )),
                   ),
-                  _CustomInput(controller: idController, icon: Icons.account_circle, hint: AppLocalizations.of(context).get("id")),
-                  _CustomInput(controller: passwordController, icon: Icons.lock, hint: AppLocalizations.of(context).get("password"), obscureText: true),
-                  _LoginButton(onPressed: () async {
+                  CustomInput(controller: idController, icon: Icons.account_circle, hint: AppLocalizations.of(context).get("id")),
+                  CustomInput(controller: passwordController, icon: Icons.lock, hint: AppLocalizations.of(context).get("password"), obscureText: true),
+                  LoginButton(onPressed: () async {
                     await appWebChannel.login(id: idController.text, password: passwordController.text, onSuccess: (token) {
                       appState.onLoggedIn(() {
                         appCacheData.token = token;
@@ -136,7 +136,9 @@ class WideLoginPageState extends ConsumerState<WideLoginPage> {
                       }
                     });
                   }, title: AppLocalizations.of(context).get("sign_in")),
-                  _LoginButton(onPressed: () {}, title: AppLocalizations.of(context).get("sign_up"))
+                  LoginButton(onPressed: () {
+                    ref.read(registerProvider.notifier).state = true;
+                  }, title: AppLocalizations.of(context).get("sign_up"))
                 ],
               ),
             ),
@@ -147,11 +149,11 @@ class WideLoginPageState extends ConsumerState<WideLoginPage> {
   }
 }
 
-class _LoginButton extends StatelessWidget {
+class LoginButton extends StatelessWidget {
 
   final void Function() onPressed;
   final String title;
-  const _LoginButton({required this.onPressed, required this.title});
+  const LoginButton({required this.onPressed, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -160,13 +162,14 @@ class _LoginButton extends StatelessWidget {
 }
 
 
-class _CustomInput extends StatelessWidget {
+class CustomInput extends StatelessWidget {
 
   final TextEditingController controller;
   final IconData icon;
   final String hint;
   final bool obscureText;
-  const _CustomInput({required this.controller, required this.icon, required this.hint, this.obscureText = false});
+  final void Function(String)? onChanged;
+  const CustomInput({required this.controller, required this.icon, required this.hint, this.obscureText = false, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -178,8 +181,10 @@ class _CustomInput extends StatelessWidget {
         child: TextField(
           obscureText: obscureText,
           controller: controller,
+          onChanged: onChanged,
           decoration: InputDecoration(
             fillColor: Theme.of(context).highlightColor,
+              hintText: hint,
               focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                       color: Theme.of(context).highlightColor,
