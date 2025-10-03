@@ -32,3 +32,4 @@ import 'package:tikitaka/models/fragment_index.dart';
 final fragmentIndexProvider = StateProvider<int>((ref) => FragmentIndex.home);
 final profileProvider = StateProvider<AppUser>((ref) => AppUser());
 final currentChatroomProvider = StateProvider<int>((ref) => 0);
+final registerProvider = StateProvider<bool>((ref) => false);
