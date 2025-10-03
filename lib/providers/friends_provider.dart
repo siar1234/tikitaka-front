@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tikitaka/models/app_user.dart';
 
+import '../channels/app_web_channel.dart';
+
 class FriendsState {
   final List<AppUser> friends;
 
@@ -12,21 +14,11 @@ class FriendsNotifier extends StateNotifier<FriendsState> {
   FriendsNotifier() : super(FriendsState([]));
 
   void init() {
-    List<AppUser> list = [];
-    var user = AppUser();
-    user.name = "23432432432432";
-    list.add(user);
-    list.add(user);
-    list.add(user);    list.add(user);    list.add(user);
-    list.add(user);    list.add(user);
-    list.add(user);
-    list.add(user);
+    appWebChannel.getFriends(onSuccess: (list) {
+      state = FriendsState(list);
+    }, onFailed: (d) {
 
-
-    state = FriendsState(list);
-    // appWebChannel.getFriends(onSuccess: (list) {
-    //
-    // });
+    },);
   }
 
 }
