@@ -8,6 +8,7 @@ import 'package:tikitaka/fragments/profile_fragment.dart';
 import 'package:tikitaka/fragments/settings_fragment.dart';
 import 'package:tikitaka/models/app_cache.dart';
 import 'package:tikitaka/models/app_state.dart';
+import 'package:tikitaka/pages/wide_register_page.dart';
 import '../components/custom_window_button.dart';
 import '../fragments/home_fragment.dart';
 import '../models/fragment_index.dart';
@@ -34,8 +35,12 @@ class _WideMainPageState extends ConsumerState<WideMainPage> {
   @override
   Widget build(BuildContext context) {
 
+    if(ref.watch(registerProvider)) {
+      return WideRegisterPage();
+    }
+
     if(appCacheData.token.isEmpty && appCacheData.initialized) {
-      //return WideLoginPage();
+      return WideLoginPage();
     }
 
     final fragmentIndex = ref.watch(fragmentIndexProvider);
