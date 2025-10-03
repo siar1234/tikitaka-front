@@ -28,7 +28,7 @@ class AppWebChannel {
 
     try {
       final response = await post(
-        Uri.parse("${backendURL}/api/user/signIn"),
+        Uri.parse("${backendURL}/api/auth/sign_in"),
         headers: <String, String>{'Content-Type': 'application/json; charset=UTF-8'},
         body: postData,
       );
@@ -46,6 +46,33 @@ class AppWebChannel {
     }
   }
 
+  Future<void> register({
+    required String username,
+    required String id,
+    required String password,
+    required void Function() onSuccess,
+    required void Function(int?) onFailed,
+  }) async {
+    Map<String, dynamic> data = {'id': id, 'password': password, "name": username};
+
+    String postData = json.encode(data);
+    try {
+      final response = await post(
+        Uri.parse("${backendURL}/api/auth/sign_up"),
+        headers: <String, String>{'Content-Type': 'application/json; charset=UTF-8'},
+        body: postData,
+      );
+      if (response.statusCode == 200) {
+        onSuccess();
+      } else {
+        onFailed(response.statusCode);
+      }
+    } catch (e) {
+      print(e);
+      onFailed(null);
+    }
+  }
+
   Future<void> getJson({required String url, required void Function(Map<String, dynamic>) onSuccess, void Function(int?)? onFailed}) async {
     try {
       final response = await get(
@@ -56,19 +83,27 @@ class AppWebChannel {
       if (response.statusCode == 200) {
         onSuccess(jsonDecode(utf8.decode(response.bodyBytes)));
       } else {
+        print("failed $url, ${response.statusCode} ${appCacheData.token}");
         onFailed?.call(HttpStatus.unauthorized);
       }
     } catch (e) {
+      print(url);
       print(e);
       onFailed?.call(null);
     }
   }
 
-  Future<void> getFriends({required void Function() onSuccess, required void Function(int?) onFailed}) async {
+  Future<void> getFriends({required void Function(List<AppUser>) onSuccess, required void Function(int?) onFailed}) async {
     await getJson(
-      url: "${backendURL}/api/friend/list",
+      url: "${backendURL}/api/friend/get/list",
       onSuccess: (data) {
+        print(data);
         var list = data["list"];
+        if(list is List) {
+          for(var data in list) {
+            print(data.runtimeType);
+          }
+        }
       },
       onFailed: onFailed,
     );
@@ -96,16 +131,14 @@ class AppWebChannel {
 
   Future<void> getUserInfo({required void Function(AppUser) onSuccess, void Function(int?)? onFailed}) async {
     await getJson(
-      url: "$backendURL/api/member",
+      url: "$backendURL/api/user/get/me",
       onSuccess: (body) {
         var userData = body["user"];
-        print(userData.runtimeType);
         var user = AppUser();
-        user.id = userData["userId"];
-        user.name = userData["userName"];
-        user.profileImage = userData["userProfileImage"];
+        user.id = userData["id"];
+        user.name = userData["name"];
+        user.profileImage = userData["profileImage"];
         onSuccess(user);
-        print(body);
       },
       onFailed: onFailed,
     );
