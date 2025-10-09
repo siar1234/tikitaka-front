@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tikitaka/models/app_user.dart';
 import 'package:tikitaka/views/friends_view_list_item.dart';
 
+import '../components/app_profile_image.dart';
+
 class FriendsView extends StatelessWidget {
 
   final List<AppUser> friends;
@@ -9,12 +11,6 @@ class FriendsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(friends.isEmpty) {
-      return Center(
-        child: Text("친구가 없"),
-      );
-    }
-
     return ListView.builder(
       itemCount: friends.length,
         itemBuilder: (context, index) {

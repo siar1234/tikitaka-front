@@ -44,7 +44,7 @@ class MyAppState extends ConsumerState<MyApp> {
         ref.read(profileProvider.notifier).state = user;
       }, onFailed: (d) {
         appState.onLoggedIn(() {
-          appCacheData.token = null;
+          //appCacheData.token = null;
           appCacheData.save();
         });
       });

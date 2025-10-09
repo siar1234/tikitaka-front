@@ -1,13 +1,19 @@
 import 'dart:io';
 
+import 'package:amphi/widgets/menu/popup/show_menu.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tikitaka/components/account_button.dart';
+import 'package:tikitaka/dialogs/add_friend_dialog.dart';
 import 'package:tikitaka/dialogs/notifications_dialog.dart';
 import 'package:tikitaka/models/app_cache.dart';
 import 'package:tikitaka/models/fragment_index.dart';
 import 'package:tikitaka/providers/providers.dart';
+
+import '../channels/app_web_channel.dart';
+import '../dialogs/edit_chatroom_dialog.dart';
+import '../models/chat_room.dart';
 
 final double _iconSize = 30;
 
@@ -58,6 +64,20 @@ class NavMenu extends ConsumerWidget {
                 appCacheData.windowWidth = appWindow.size.width;
                 appCacheData.save();
                 showDialog(context: context, builder: (context) => NotificationsDialog());
+              },
+            ),
+            PopupMenuButton(
+              icon: Icon(Icons.add_circle_outline, size: _iconSize, color: iconColor,),
+              itemBuilder: (context) {
+                return [
+                  PopupMenuItem(child: Text("친구"), onTap: () {
+                    // showDialog(context: context, builder: (context) => AddFriendDialog());
+                    appWebChannel.getAvailableFriends();
+                  }),
+                  PopupMenuItem(child: Text("채팅방"), onTap: () {
+                    showDialog(context: context, builder: (context) => EditChatroomDialog(chatRoom: ChatRoom()));
+                  }),
+                ];
               },
             ),
             IconButton(

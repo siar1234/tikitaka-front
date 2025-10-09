@@ -84,6 +84,7 @@ class AppWebChannel {
         onSuccess(jsonDecode(utf8.decode(response.bodyBytes)));
       } else {
         print("failed $url, ${response.statusCode} ${appCacheData.token}");
+        print(<String, String>{'Content-Type': 'application/json; charset=UTF-8', "Authorization": "Bearer ${appCacheData.token}"});
         onFailed?.call(HttpStatus.unauthorized);
       }
     } catch (e) {
@@ -111,7 +112,7 @@ class AppWebChannel {
 
   Future<void> getChats({required void Function(List<ChatRoom>) onSuccess, void Function(int?)? onFailed}) async {
     await getJson(
-      url: "$backendURL/api/chat/list",
+      url: "$backendURL/api/chat/get/list",
       onSuccess: (body) {
         var list = body["chatList"];
         List<ChatRoom> result = [];
@@ -133,6 +134,7 @@ class AppWebChannel {
     await getJson(
       url: "$backendURL/api/user/get/me",
       onSuccess: (body) {
+        print(body);
         var userData = body["user"];
         var user = AppUser();
         user.id = userData["id"];
@@ -174,6 +176,14 @@ class AppWebChannel {
 
   Future<void> createChat({required ChatRoom chatRoom, required void Function() onSuccess, void Function(int?)? onFailed}) async {
     await postJson(url: "$backendURL/api/chat/create", jsonBody: chatRoom.toMap());
+  }
+
+  Future<void> getAvailableFriends() async {
+    await getJson(url: "$backendURL/api/friend/add/list?searchId=hey123", onSuccess: (body) {
+      print(body);
+    }, onFailed: (d) {
+      print("object $d");
+    });
   }
 
   /*
