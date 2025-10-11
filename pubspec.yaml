@@ -57,6 +57,7 @@ dependencies:
   crypto: ^3.0.6
   share_plus: ^11.0.0
   path_provider: ^2.1.5
+  stomp_dart_client: ^2.0.0
   amphi:
     #path: ../flutter_projects/amphi
     git:

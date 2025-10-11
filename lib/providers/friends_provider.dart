@@ -15,6 +15,7 @@ class FriendsNotifier extends StateNotifier<FriendsState> {
 
   void init() {
     appWebChannel.getFriends(onSuccess: (list) {
+      print("heyyy");
       state = FriendsState(list);
     }, onFailed: (d) {
 

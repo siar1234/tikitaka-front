@@ -125,6 +125,7 @@ class WideLoginPageState extends ConsumerState<WideLoginPage> {
                         });
                         appCacheData.save();
                       });
+                      appWebChannel.listenAlarm(ref);
                       ref.read(fragmentIndexProvider.notifier).state = FragmentIndex.home;
                       ref.read(chatsProvider.notifier).init();
                     }, onFailed: (code) {

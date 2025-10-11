@@ -16,7 +16,7 @@ class FriendsCard extends ConsumerWidget {
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(15)
       ),
-      child: FriendsView(friends: ref.read(friendsProvider).friends),
+      child: FriendsView(friends: ref.watch(friendsProvider).friends),
     );
   }
 }

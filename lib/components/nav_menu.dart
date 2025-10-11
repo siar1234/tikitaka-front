@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:amphi/models/app.dart';
 import 'package:amphi/widgets/menu/popup/show_menu.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:tikitaka/dialogs/notifications_dialog.dart';
 import 'package:tikitaka/models/app_cache.dart';
 import 'package:tikitaka/models/fragment_index.dart';
 import 'package:tikitaka/providers/providers.dart';
+import 'package:tikitaka/providers/selected_friends_provider.dart';
 
 import '../channels/app_web_channel.dart';
 import '../dialogs/edit_chatroom_dialog.dart';
@@ -51,18 +53,22 @@ class NavMenu extends ConsumerWidget {
             IconButton(
               icon: Icon(Icons.home, size: _iconSize, color: iconColor,),
               onPressed: () {
-                appCacheData.windowHeight = appWindow.size.height;
-                appCacheData.windowWidth = appWindow.size.width;
-                appCacheData.save();
+                if(App.isDesktop()) {
+                  appCacheData.windowHeight = appWindow.size.height;
+                  appCacheData.windowWidth = appWindow.size.width;
+                  appCacheData.save();
+                }
                 ref.read(fragmentIndexProvider.notifier).state = FragmentIndex.home;
               },
             ),
             IconButton(
               icon: Icon(Icons.notifications, size: _iconSize, color: iconColor,),
               onPressed: () {
-                appCacheData.windowHeight = appWindow.size.height;
-                appCacheData.windowWidth = appWindow.size.width;
-                appCacheData.save();
+                if(App.isDesktop()) {
+                  appCacheData.windowHeight = appWindow.size.height;
+                  appCacheData.windowWidth = appWindow.size.width;
+                  appCacheData.save();
+                }
                 showDialog(context: context, builder: (context) => NotificationsDialog());
               },
             ),
@@ -71,11 +77,13 @@ class NavMenu extends ConsumerWidget {
               itemBuilder: (context) {
                 return [
                   PopupMenuItem(child: Text("친구"), onTap: () {
-                    // showDialog(context: context, builder: (context) => AddFriendDialog());
-                    appWebChannel.getAvailableFriends();
+                    showDialog(context: context, builder: (context) => AddFriendDialog());
                   }),
                   PopupMenuItem(child: Text("채팅방"), onTap: () {
-                    showDialog(context: context, builder: (context) => EditChatroomDialog(chatRoom: ChatRoom()));
+                    ref.read(selectedFriendsProvider.notifier).startSelection();
+                    showDialog(context: context, builder: (context) => EditChatroomDialog(chatRoom: ChatRoom())).then((va) {
+                      ref.read(selectedFriendsProvider.notifier).endSelection();
+                    });
                   }),
                 ];
               },
@@ -83,9 +91,11 @@ class NavMenu extends ConsumerWidget {
             IconButton(
               icon: Icon(Icons.settings, size: _iconSize, color: iconColor,),
               onPressed: () {
-                appCacheData.windowHeight = appWindow.size.height;
-                appCacheData.windowWidth = appWindow.size.width;
-                appCacheData.save();
+                if(App.isDesktop()) {
+                  appCacheData.windowHeight = appWindow.size.height;
+                  appCacheData.windowWidth = appWindow.size.width;
+                  appCacheData.save();
+                }
                 ref.read(fragmentIndexProvider.notifier).state = FragmentIndex.settings;
               },
             )

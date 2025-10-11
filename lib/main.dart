@@ -48,6 +48,8 @@ class MyAppState extends ConsumerState<MyApp> {
           appCacheData.save();
         });
       });
+
+      appWebChannel.listenAlarm(ref);
       if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
         doWhenWindowReady(() {
           appWindow.minSize = const Size(550, 300);
@@ -74,7 +76,8 @@ class MyAppState extends ConsumerState<MyApp> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      home: Platform.isAndroid || Platform.isIOS ? const MainPage() : const WideMainPage(),
+      // home: Platform.isAndroid || Platform.isIOS ? const MainPage() : const WideMainPage(),
+      home: const WideMainPage(),
     );
   }
 }

@@ -10,16 +10,19 @@ class ChatroomItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ChatroomThumbnail(size: 40),
-          ),
-          Text(chatRoom.title)
-        ],
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onPressed,
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ChatroomThumbnail(size: 40),
+            ),
+            Text(chatRoom.title)
+          ],
+        ),
       ),
     );
   }

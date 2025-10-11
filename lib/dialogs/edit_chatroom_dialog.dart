@@ -33,6 +33,8 @@ class EditChatroomDialog extends StatelessWidget {
                       if(chatRoom.id == -1) {
                         appWebChannel.createChat(chatRoom: chatRoom, onSuccess: () {
 
+                        }, onFailed: (d) {
+                          print(d);
                         });
                       }
                       else {
@@ -40,15 +42,6 @@ class EditChatroomDialog extends StatelessWidget {
                       }
                     }, icon: Icon(Icons.check_circle_outline)),
                   ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 60,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8.0, right: 8),
-                child: TextField(
-                  decoration: outlinedInputDecoration(context: context),
                 ),
               ),
             ),

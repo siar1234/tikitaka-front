@@ -13,24 +13,19 @@ class NotificationsNotifier extends StateNotifier<NotificationsState> {
   NotificationsNotifier() : super(NotificationsState([]));
 
   void init() {
-    List<NotificationModel> list = [
-      NotificationModel(),
-      NotificationModel(),
-      NotificationModel(),
-      NotificationModel(),
-      NotificationModel(),
-      NotificationModel(),
-      NotificationModel(),
-      NotificationModel(),
-      NotificationModel(),
-      NotificationModel(),
-      NotificationModel(),
-    ];
+    List<NotificationModel> list = [];
 
     state = NotificationsState(list);
     // appWebChannel.getNotifications(onSuccess: (list) {
     //
     // });
+  }
+
+  void add(NotificationModel mo) {
+    final list = [...state.notifications];
+    list.add(mo);
+
+    state = NotificationsState(list);
   }
 
 }

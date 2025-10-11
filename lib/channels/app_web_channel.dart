@@ -2,10 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:amphi/models/app_web_channel_core.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart';
+import 'package:stomp_dart_client/stomp_dart_client.dart';
 import 'package:tikitaka/models/app_cache.dart';
 import 'package:tikitaka/models/app_user.dart';
 import 'package:tikitaka/models/chat_room.dart';
+import 'package:tikitaka/models/notification_model.dart';
+import 'package:tikitaka/providers/notifications_provider.dart';
+import 'package:tikitaka/providers/providers.dart';
 
 final appWebChannel = AppWebChannel.getInstance();
 
@@ -99,12 +104,20 @@ class AppWebChannel {
       url: "${backendURL}/api/friend/get/list",
       onSuccess: (data) {
         print(data);
+        List<AppUser> users = [];
         var list = data["list"];
-        if(list is List) {
-          for(var data in list) {
-            print(data.runtimeType);
+        if (list is List) {
+          for (var item in list) {
+            print(item);
+            var user = AppUser();
+            user.id = item["id"];
+            user.name = item["name"];
+            user.profileImage = item["profileImage"];
+            users.add(user);
           }
         }
+
+        onSuccess(users);
       },
       onFailed: onFailed,
     );
@@ -114,13 +127,14 @@ class AppWebChannel {
     await getJson(
       url: "$backendURL/api/chat/get/list",
       onSuccess: (body) {
-        var list = body["chatList"];
+        print(body);
+        var list = body["list"];
         List<ChatRoom> result = [];
         for (var map in list) {
           if (map is Map<String, dynamic>) {
             var chatRoom = ChatRoom();
-            chatRoom.id = map["chatId"];
-            chatRoom.title = map["chatName"];
+            chatRoom.id = map["chatRoomId"];
+            chatRoom.title = map["title"];
             result.add(chatRoom);
           }
         }
@@ -155,8 +169,8 @@ class AppWebChannel {
     try {
       final response = await post(
         Uri.parse(url),
-        headers: <String, String>{'Content-Type': 'application/json; charset=UTF-8', "Authorization": appCacheData.token},
-        body: jsonBody,
+        headers: <String, String>{'Content-Type': 'application/json; charset=UTF-8', "Authorization": "Bearer ${appCacheData.token}"},
+        body: jsonEncode(jsonBody),
       );
       if (response.statusCode == 200) {
         if (onSuccess != null) {
@@ -168,6 +182,7 @@ class AppWebChannel {
         }
       }
     } catch (e) {
+      print(e);
       if (onFailed != null) {
         onFailed(null);
       }
@@ -175,201 +190,151 @@ class AppWebChannel {
   }
 
   Future<void> createChat({required ChatRoom chatRoom, required void Function() onSuccess, void Function(int?)? onFailed}) async {
-    await postJson(url: "$backendURL/api/chat/create", jsonBody: chatRoom.toMap());
+    await postJson(url: "$backendURL/api/chat/create", jsonBody: chatRoom.toMap(), onSuccess: onSuccess, onFailed: onFailed);
   }
 
-  Future<void> getAvailableFriends() async {
-    await getJson(url: "$backendURL/api/friend/add/list?searchId=hey123", onSuccess: (body) {
-      print(body);
-    }, onFailed: (d) {
-      print("object $d");
-    });
+  Future<void> getAvailableFriends({required String searchId, required void Function(List<AppUser>) onSuccess}) async {
+    await getJson(
+      url: "$backendURL/api/friend/add/list?searchId=$searchId",
+      onSuccess: (body) {
+        List<dynamic> list = body["users"];
+        List<AppUser> users = [];
+        for (Map<String, dynamic> item in list) {
+          print(item);
+          AppUser user = AppUser();
+          user.id = item["id"];
+          user.name = item["name"];
+          user.profileImage = item["profileImage"];
+          user.friendRequestStatus = item["status"];
+          users.add(user);
+        }
+        onSuccess(users);
+      },
+      onFailed: (d) {
+        print("object $d");
+      },
+    );
   }
 
-  /*
-    *
-
-export async function createChat({onFailed, onSuccess, name, participants}) {
+  Future<void> requestFriend({required String userId, void Function()? onSuccess}) async {
     try {
-        const response = await axios.post(`${BACKEND_URL}/api/chat/create`, {
-            chatName: name,
-            participants: participants
-        } ,{
-            withCredentials: true,
-            headers: {
-                'Authorization': `Bearer ${Cookies.get('Authorization')}`,
-                'Content-Type': 'application/json; charset=utf-8'
-            },
-        });
-
-        if(response.status === 200){
-            onSuccess(response);
-        }
-        else {
-            return onFailed(null, response);
-        }
-
-    } catch (error) {
-        return onFailed(error, null);
+      final response = await post(
+        Uri.parse("$backendURL/api/friend/send?receiverId=$userId"),
+        headers: <String, String>{'Content-Type': 'application/json; charset=UTF-8', "Authorization": "Bearer ${appCacheData.token}"},
+      );
+      if (response.statusCode == 200) {
+        onSuccess?.call();
+      } else {
+        print("$backendURL/api/friend/send?receiverId=$userId");
+        print(response.statusCode);
+        print(response.body);
+        // if (onFailed != null) {
+        //   onFailed(response.statusCode);
+        // }
+      }
+    } catch (e) {
+      print(e);
+      // if (onFailed != null) {
+      //   onFailed(null);
+      // }
     }
-}
+  }
 
-export async function getChatRoomMessages({onFailed, onSuccess, chatId}) {
+  Future<void> cancelFriendRequest({required String userId, void Function()? onSuccess}) async {
     try {
-        const response = await axios.get(`${BACKEND_URL}/api/chat/message/list/${chatId}`,{
-            withCredentials: true,
-            headers: {
-                'Authorization': `Bearer ${Cookies.get('Authorization')}`,
-                'Content-Type': 'application/json; charset=utf-8'
-            },
-        });
-
-        if(response.status === 200){
-            onSuccess(response.data.messages);
-        }
-        else {
-            return onFailed(null, response);
-        }
-
-    } catch (error) {
-        return onFailed(error, null);
+      final response = await delete(
+        Uri.parse("$backendURL/api/friend/cancle?receiverId=$userId"),
+        headers: <String, String>{'Content-Type': 'application/json; charset=UTF-8', "Authorization": "Bearer ${appCacheData.token}"},
+      );
+      if (response.statusCode == 200) {
+        onSuccess?.call();
+      } else {
+        print("$backendURL/api/friend/cancle?receiverId=$userId");
+        print(response.statusCode);
+        print(response.body);
+        // if (onFailed != null) {
+        //   onFailed(response.statusCode);
+        // }
+      }
+    } catch (e) {
+      print(e);
+      // if (onFailed != null) {
+      //   onFailed(null);
+      // }
     }
-}
+  }
 
-export async function inviteToChat({onFailed, onSuccess, participants, chatId}) {
-    console.log(participants);
-    console.log(chatId);
-    try {
-        const response = await axios.post(`${BACKEND_URL}/api/chat/add`, {
-            chatId: chatId,
-            participants: participants
-        } ,{
-            withCredentials: true,
-            headers: {
-                'Authorization': `Bearer ${Cookies.get('Authorization')}`,
-                'Content-Type': 'application/json; charset=utf-8'
-            },
-        });
+  StompClient? stompClient;
 
-        if(response.status === 200){
-            onSuccess(response);
-        }
-        else {
-            return onFailed(null, response);
-        }
-
-    } catch (error) {
-        return onFailed(error, null);
-    }
-}
-
-export async function getAvailableParticipants({onFailed, onSuccess, chatId}) {
-    try {
-        const response = await axios.get(`${BACKEND_URL}/api/chat/add/list/${chatId}`,{
-            withCredentials: true,
-            headers: {
-                'Authorization': `Bearer ${Cookies.get('Authorization')}`,
-                'Content-Type': 'application/json; charset=utf-8'
-            },
-        });
-
-        if(response.status === 200){
-            onSuccess(response.data.friends);
-        }
-        else {
-            return onFailed(null, response);
-        }
-    } catch (error) {
-        return onFailed(error, null);
-    }
-}
-
-export async function connectWebsocket() {
-
-}
-export async function getNotifications() {
-    return [
-        {
-            "title": "고길동님이 당신에게 친구신청을 했습니다."
+  Future<void> listenAlarm(WidgetRef ref) async {
+    stompClient?.deactivate();
+    stompClient = StompClient(
+      config: StompConfig.sockJS(
+        url: 'http://localhost:8080/ws',
+        onConnect: (frame) {
+          print("object");
+          onAlarmRecieved(frame, ref);
         },
-        {
-            "title": "황근출님이 당신을 채팅방으로 초대했습니다."
+        beforeConnect: () async {
+          print('Connecting to WebSocket...');
+          await Future.delayed(Duration(milliseconds: 200));
+        },
+        stompConnectHeaders: {'Authorization': 'Bearer ${appCacheData.token}'},
+        webSocketConnectHeaders: {'Authorization': 'Bearer ${appCacheData.token}'},
+        onWebSocketError: (dynamic error) => print('WebSocket Error: $error'),
+        onStompError: (StompFrame frame) => print('STOMP Error: ${frame.body}'),
+      ),
+    );
+
+    stompClient?.activate();
+  }
+
+
+
+  void subscribeChatroom(int id, WidgetRef ref) {
+    stompClient?.subscribe(
+      destination: '/topic/chat/${id}',
+      callback: (frame) {
+        try {
+          ref.read(currentChatroomProvider.notifier).addMessage(jsonDecode(frame.body!));
+          print('📩 Message received: ${frame.body}');
+        } catch (e) {
+          print(e);
         }
-    ];
-}
+      },
+    );
+  }
 
-export async function getAvailableFriendsById({id, onSuccess, onFailed, currentUserId}) {
-    try {
-        const response = await axios.get(`${BACKEND_URL}/api/friend/add/list/${id}`, {
-            withCredentials: true,
-            headers: { 'Authorization': `Bearer ${Cookies.get('Authorization') }` },
-        });
+  void onAlarmRecieved(StompFrame frame, WidgetRef ref) {
+    stompClient?.subscribe(
+      destination: '/user/queue/notify',
+      callback: (frame) {
+        try {
+          NotificationModel model = NotificationModel();
+          model.data = jsonDecode(frame.body!);
+          if (model.data["type"] == "FRIEND_REQUEST") {
+            model.type = NotificationType.friendRequest;
+            model.title = "${model.data["senderId"]}님이 친구요청을 보냈습니다";
+          }
 
-        if(response.status === 200){
-            const result = [];
-            for(const user of response.data.users) {
-                if(currentUserId !== user.userId){
-                    result.push(user);
-                }
-            }
-            onSuccess(result);
+          ref.read(notificationsProvider.notifier).add(model);
+          print('📩 Message received: ${frame.body}');
+        } catch (e) {
+          print(e);
         }
-        else {
-            return onFailed(null, response.status);
-        }
+      },
+    );
+  }
 
-    } catch (error) {
-        return onFailed(error, null);
-    }
-}
+  Future<void> acceptFriendRequest({required String id, required void Function() onSuccess}) async {
+    postJson(url: "$backendURL/api/friend/accept?senderId=$id", jsonBody: {}, onSuccess: onSuccess);
+  }
 
-export async function updateUserInfo({onSuccess, onFailed, name, password, profileImage}) {
-    try {
-        const response = await axios.post(`${BACKEND_URL}/api/member/update`,
-            {
-                name: name,
-                password: password,
-                profileImage: profileImage
-            }
-            ,{
-            withCredentials: true,
-            headers: { 'Authorization': `Bearer ${Cookies.get('Authorization') }` },
-        });
-
-        if(response.status === 200){
-            onSuccess();
-        }
-        else {
-            return onFailed(null, response.status);
-        }
-
-    } catch (error) {
-        return onFailed(error, null);
-    }
-}
-
-export async function uploadUserProfileImage({onSuccess, onFailed, formData}) {
-    try {
-        const response = await axios.post(`${BACKEND_URL}/file/upload`,
-            formData
-            ,{
-                withCredentials: true,
-                headers: { 'Authorization': `Bearer ${Cookies.get('Authorization') }` },
-            });
-
-        if(response.status === 200){
-            onSuccess(response.data);
-        }
-        else {
-            return onFailed(null, response.status);
-        }
-
-    } catch (error) {
-        return onFailed(error, null);
-    }
-}
-
-
-    *
-    * */
+  void sendMessage({required int chatRoomId, required String message}) {
+    stompClient?.send(
+      destination: '/app/send',
+      body: jsonEncode({'chatRoomId': chatRoomId.toString(), 'message': message}),
+      headers: {'content-type': 'application/json', "Authorization": "Bearer ${appCacheData.token}"},
+    );
+  }
 }

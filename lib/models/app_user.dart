@@ -3,5 +3,6 @@ class AppUser {
   String password = "";
   String name = "";
   String? profileImage;
+  String? friendRequestStatus;
 
 }

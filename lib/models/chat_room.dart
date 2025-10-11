@@ -7,7 +7,7 @@ class ChatRoom {
 
   Map<String, dynamic> toMap() {
     return {
-      "chatName": title,
+      "title": title,
       "participants": []
     };
   }
