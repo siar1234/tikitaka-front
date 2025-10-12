@@ -37,7 +37,9 @@ class MyAppState extends ConsumerState<MyApp> {
   @override
   void initState() {
     appCacheData.getData().then((value) {
-      ref.read(chatsProvider.notifier).init();
+      appWebChannel.listenAlarm(ref, () {
+        ref.read(chatsProvider.notifier).init(ref);
+      });
       ref.read(notificationsProvider.notifier).init();
       ref.read(friendsProvider.notifier).init();
       appWebChannel.getUserInfo(onSuccess: (user) {
@@ -48,8 +50,6 @@ class MyAppState extends ConsumerState<MyApp> {
           appCacheData.save();
         });
       });
-
-      appWebChannel.listenAlarm(ref);
       if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
         doWhenWindowReady(() {
           appWindow.minSize = const Size(550, 300);
@@ -70,6 +70,7 @@ class MyAppState extends ConsumerState<MyApp> {
     return MaterialApp(
       theme: lightThemeData,
       darkTheme: darkThemeData,
+      debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
         LocalizationDelegate(),
         GlobalMaterialLocalizations.delegate,

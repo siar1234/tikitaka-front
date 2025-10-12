@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:amphi/models/app_web_channel_core.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart';
 import 'package:stomp_dart_client/stomp_dart_client.dart';
@@ -9,6 +11,7 @@ import 'package:tikitaka/models/app_cache.dart';
 import 'package:tikitaka/models/app_user.dart';
 import 'package:tikitaka/models/chat_room.dart';
 import 'package:tikitaka/models/notification_model.dart';
+import 'package:tikitaka/providers/chats_provider.dart';
 import 'package:tikitaka/providers/notifications_provider.dart';
 import 'package:tikitaka/providers/providers.dart';
 
@@ -20,6 +23,8 @@ class AppWebChannel {
   static final _instance = AppWebChannel();
 
   static AppWebChannel getInstance() => _instance;
+
+  String get token => appCacheData.token;
 
   Future<void> login({
     required String id,
@@ -266,7 +271,7 @@ class AppWebChannel {
 
   StompClient? stompClient;
 
-  Future<void> listenAlarm(WidgetRef ref) async {
+  void listenAlarm(WidgetRef ref, void Function() onConnect) {
     stompClient?.deactivate();
     stompClient = StompClient(
       config: StompConfig.sockJS(
@@ -274,6 +279,7 @@ class AppWebChannel {
         onConnect: (frame) {
           print("object");
           onAlarmRecieved(frame, ref);
+          onConnect();
         },
         beforeConnect: () async {
           print('Connecting to WebSocket...');
@@ -296,9 +302,11 @@ class AppWebChannel {
       destination: '/topic/chat/${id}',
       callback: (frame) {
         try {
-          ref.read(currentChatroomProvider.notifier).addMessage(jsonDecode(frame.body!));
-          print('📩 Message received: ${frame.body}');
+          var id = ref.watch(currentChatroomProvider);
+          print('📩 chat Message received: ${frame.body}');
+          ref.read(chatsProvider.notifier).addMessage(id, jsonDecode(frame.body!));
         } catch (e) {
+          print("#432432432ui43232");
           print(e);
         }
       },
@@ -315,9 +323,16 @@ class AppWebChannel {
           if (model.data["type"] == "FRIEND_REQUEST") {
             model.type = NotificationType.friendRequest;
             model.title = "${model.data["senderId"]}님이 친구요청을 보냈습니다";
+
+            ref.read(notificationsProvider.notifier).add(model);
+          }
+          else if(model.data["type"] == "CREATE_CHAT_ROOM") {
+            ChatRoom chatRoom=  ChatRoom();
+            chatRoom.id = int.parse(model.data["referenceId"]);
+            ref.read(chatsProvider.notifier).init(ref);
           }
 
-          ref.read(notificationsProvider.notifier).add(model);
+
           print('📩 Message received: ${frame.body}');
         } catch (e) {
           print(e);
@@ -336,5 +351,72 @@ class AppWebChannel {
       body: jsonEncode({'chatRoomId': chatRoomId.toString(), 'message': message}),
       headers: {'content-type': 'application/json', "Authorization": "Bearer ${appCacheData.token}"},
     );
+  }
+
+  Future<void> uploadFilesChat({
+    required int chatRoomId,
+    required List<PlatformFile> files,
+    void Function()? onSuccess,
+    void Function(int?)? onFailed
+}) async {
+    try {
+      final request = MultipartRequest('POST', Uri.parse("$backendURL/app/send/file"));
+      request.headers.addAll({"Authorization": "Bearer ${appCacheData.token}"});
+      for(var pFile in files) {
+
+        final totalLength = pFile.size;
+
+
+        final stream = pFile.xFile.openRead();
+        int bytesSent = 0;
+        final byteStream = stream.transform<List<int>>(
+          StreamTransformer.fromHandlers(
+            handleData: (data, sink) {
+               bytesSent += data.length;
+               sink.add(data);
+              // if (onProgress != null) {
+              //   onProgress(bytesSent, totalLength);
+              // }
+            },
+          ),
+        );
+
+        print(pFile.name);
+        final multipartFile = MultipartFile(
+          // pFile.name,
+          "files",
+          byteStream,
+          totalLength,
+          filename: pFile.name,
+        );
+
+        request.files.add(multipartFile);
+      }
+      
+      request.fields.addAll({"chatRoomId": chatRoomId.toString()});
+
+      final response = await request.send();
+
+      if (response.statusCode == 200) {
+        onSuccess?.call();
+      } else {
+        onFailed?.call(response.statusCode);
+      }
+    } catch (e) {
+      print(e);
+      onFailed?.call(null);
+    }
+  }
+
+  Future<void> getChatHistory({required int chatRoomId, required int messageId, required void Function(List<ChatMessage>) onSuccess}) async {
+    await getJson(url: "$backendURL/api/chat/get/history?chatRoomId=$chatRoomId&messageId=$messageId", onSuccess: (body) {
+      print(body);
+      List<ChatMessage> result = [];
+      for(var item in body["list"]) {
+        result.add(ChatMessage.fromMap(item));
+      }
+
+      onSuccess(result);
+    });
   }
 }

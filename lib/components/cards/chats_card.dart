@@ -25,7 +25,7 @@ class ChatsCard extends StatelessWidget {
              var id = ref.watch(chatsProvider).idList[index];
              var chatRoom = ref.watch(chatsProvider).chats.get(id);
              return ChatroomItem(chatRoom: chatRoom, onPressed: () {
-               ref.read(currentChatroomProvider.notifier).setId(id, ref);
+               ref.read(currentChatroomProvider.notifier).state = id;
              });
            });
       }),

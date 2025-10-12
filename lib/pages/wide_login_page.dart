@@ -17,7 +17,8 @@ import '../providers/providers.dart';
 import '../utils/toast.dart';
 
 class WideLoginPage extends ConsumerStatefulWidget {
-  const WideLoginPage({super.key});
+  final WidgetRef ref;
+  const WideLoginPage({super.key, required this.ref});
 
   @override
   WideLoginPageState createState() => WideLoginPageState();
@@ -125,9 +126,10 @@ class WideLoginPageState extends ConsumerState<WideLoginPage> {
                         });
                         appCacheData.save();
                       });
-                      appWebChannel.listenAlarm(ref);
-                      ref.read(fragmentIndexProvider.notifier).state = FragmentIndex.home;
-                      ref.read(chatsProvider.notifier).init();
+                      appWebChannel.listenAlarm(ref, () {
+                        ref.read(chatsProvider.notifier).init(widget.ref);
+                        ref.read(fragmentIndexProvider.notifier).state = FragmentIndex.home;
+                      });
                     }, onFailed: (code) {
                       if(code == HttpStatus.unauthorized) {
                         showToast(context, "야 이새끼야");

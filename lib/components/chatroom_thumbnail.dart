@@ -7,6 +7,11 @@ class ChatroomThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Icon(Icons.chat, size: size,);
+    return SizedBox(
+        width: size,
+        height: size,
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(size),
+            child: Image.asset("assets/images/chat.png")));
   }
 }

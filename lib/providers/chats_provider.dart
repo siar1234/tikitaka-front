@@ -15,18 +15,44 @@ class ChatsState {
 class ChatsNotifier extends StateNotifier<ChatsState> {
   ChatsNotifier() : super(ChatsState({}, []));
   
-  void init() {
-    appWebChannel.getChats(onSuccess: (list) {
+  void init(WidgetRef ref) async {
+    appWebChannel.getChats(onSuccess: (list) async {
       List<int> idList = [];
       Map<int, ChatRoom> chats = {};
 
       for(var chatRoom in list) {
         idList.add(chatRoom.id);
         chats[chatRoom.id] = chatRoom;
+
+        appWebChannel.subscribeChatroom(chatRoom.id, ref);
+        await appWebChannel.getChatHistory(chatRoomId: chatRoom.id, messageId: 65, onSuccess: (list) {
+          chats[chatRoom.id]!.messages =        list.reversed.toList();
+        });
       }
 
       state = ChatsState(chats, idList);
     });
+  }
+
+  void addMessage(int id, Map<String, dynamic> message) {
+    final chat = state.chats[id];
+    if(chat == null) return;
+
+    chat.messages.add(ChatMessage.fromMap(message));
+
+    final chats = {...state.chats, id: chat};
+    final idList = [...state.idList];
+
+    state = ChatsState(chats, idList);
+  }
+
+  void insertChat(ChatRoom chatRoom) {
+    final chats = {...state.chats, chatRoom.id: chatRoom};
+
+    final list = [...state.idList];
+    final mergedList = list.contains(chatRoom.id) ? [...state.idList] : [...list, chatRoom.id];
+
+    state = ChatsState(chats, mergedList);
   }
 
 }

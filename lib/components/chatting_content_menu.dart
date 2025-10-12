@@ -24,21 +24,21 @@ class ChattingContentMenu extends StatelessWidget {
           ),
           _CustomButton(
             icon: Icons.photo,
-            title: "사진",
+            title: "동영상",
             onPressed: () {
 
             },
           ),
           _CustomButton(
             icon: Icons.photo,
-            title: "사진",
+            title: "파일",
             onPressed: () {
 
             },
           ),
           _CustomButton(
             icon: Icons.photo,
-            title: "사진",
+            title: "음성",
             onPressed: () {
 
             },

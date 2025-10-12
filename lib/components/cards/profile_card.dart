@@ -1,5 +1,7 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tikitaka/providers/friends_provider.dart';
 import 'package:tikitaka/providers/providers.dart';
 
 import '../../models/app_cache.dart';
@@ -37,11 +39,21 @@ class ProfileCardState extends ConsumerState<ProfileCard> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          AppProfileImage(iconSize: 15,
-              desktopIconSize: 250,
-              imageSize: 250,
-              desktopImageSize: 250,
-              user: ref.watch(profileProvider),
+          GestureDetector(
+            onTap: () async {
+              final files = await FilePicker.platform.pickFiles(type: FileType.image, allowMultiple: false);
+              final file = files?.files.firstOrNull;
+              if(file != null) {
+
+                print(file.path);
+              }
+            },
+            child: AppProfileImage(iconSize: 15,
+                desktopIconSize: 250,
+                imageSize: 250,
+                desktopImageSize: 250,
+                user: ref.watch(profileProvider),
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -60,7 +72,7 @@ class ProfileCardState extends ConsumerState<ProfileCard> {
               ),
             ],
           ),
-          Text("${AppLocalizations.of(context).get("friends")}: 0"),
+          Text("친구: ${ref.watch(friendsProvider).friends.length}"),
           CardButton(width: 100,
               height: 40,
               onPressed: () {

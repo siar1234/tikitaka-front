@@ -40,7 +40,7 @@ class _WideMainPageState extends ConsumerState<WideMainPage> {
     }
 
     if(appCacheData.token.isEmpty && appCacheData.initialized) {
-      return WideLoginPage();
+      return WideLoginPage(ref: ref);
     }
 
     final fragmentIndex = ref.watch(fragmentIndexProvider);

@@ -12,7 +12,7 @@ class ChattingMessagesView extends StatelessWidget {
   Widget build(BuildContext context) {
     if(chatRoom.messages.isEmpty) {
       return Center(
-        child: Text("채팅이 없"),
+        child: Text(""),
       );
     }
 
