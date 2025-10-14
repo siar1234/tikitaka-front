@@ -112,7 +112,7 @@ class _WideRegisterPageState extends ConsumerState<WideRegisterPage> {
           Center(
             child: Container(
               width: 550,
-              height: 450,
+              height: 475,
               decoration: BoxDecoration(
                   color: Theme
                       .of(context)
@@ -143,7 +143,7 @@ class _WideRegisterPageState extends ConsumerState<WideRegisterPage> {
                   Visibility(
                     visible: passwordController.text != passwordConfirmController.text,
                     child: Text(
-                      AppLocalizations.of(context).get("password_different"),
+                      "비밀번호가 다릅니다",
                       style: TextStyle(
                         color: Colors.red
                       ),
