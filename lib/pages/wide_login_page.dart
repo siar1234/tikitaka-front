@@ -106,7 +106,7 @@ class WideLoginPageState extends ConsumerState<WideLoginPage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(AppLocalizations.of(context).get("sign_in"), style: TextStyle(
+                    child: Text("로그인", style: TextStyle(
                         fontSize: Theme
                             .of(context)
                             .textTheme
@@ -115,8 +115,8 @@ class WideLoginPageState extends ConsumerState<WideLoginPage> {
                         fontWeight: FontWeight.bold
                     )),
                   ),
-                  CustomInput(controller: idController, icon: Icons.account_circle, hint: AppLocalizations.of(context).get("id")),
-                  CustomInput(controller: passwordController, icon: Icons.lock, hint: AppLocalizations.of(context).get("password"), obscureText: true),
+                  CustomInput(controller: idController, icon: Icons.account_circle, hint: "아이디"),
+                  CustomInput(controller: passwordController, icon: Icons.lock, hint: "비밀번호", obscureText: true),
                   LoginButton(onPressed: () async {
                     await appWebChannel.login(id: idController.text, password: passwordController.text, onSuccess: (token) {
                       appState.onLoggedIn(() {
@@ -138,10 +138,10 @@ class WideLoginPageState extends ConsumerState<WideLoginPage> {
                         showToast(context, "하 참 억울하거든요?");
                       }
                     });
-                  }, title: AppLocalizations.of(context).get("sign_in")),
+                  }, title: "로그인"),
                   LoginButton(onPressed: () {
                     ref.read(registerProvider.notifier).state = true;
-                  }, title: AppLocalizations.of(context).get("sign_up"))
+                  }, title: "회원가입")
                 ],
               ),
             ),

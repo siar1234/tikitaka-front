@@ -123,7 +123,7 @@ class _WideRegisterPageState extends ConsumerState<WideRegisterPage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(AppLocalizations.of(context).get("sign_up"), style: TextStyle(
+                    child: Text("회원가입", style: TextStyle(
                         fontSize: Theme
                             .of(context)
                             .textTheme
@@ -132,10 +132,10 @@ class _WideRegisterPageState extends ConsumerState<WideRegisterPage> {
                         fontWeight: FontWeight.bold
                     )),
                   ),
-                  CustomInput(controller: nameController, icon: Icons.account_circle, hint: AppLocalizations.of(context).get("name")),
-                  CustomInput(controller: idController, icon: Icons.account_circle, hint: AppLocalizations.of(context).get("id")),
-                  CustomInput(controller: passwordController, icon: Icons.lock, hint: AppLocalizations.of(context).get("password"), obscureText: true),
-                  CustomInput(controller: passwordConfirmController, icon: Icons.lock, hint: AppLocalizations.of(context).get("password_confirm"), obscureText: true, onChanged: (text) {
+                  CustomInput(controller: nameController, icon: Icons.account_circle, hint: "이름"),
+                  CustomInput(controller: idController, icon: Icons.account_circle, hint: "아이디"),
+                  CustomInput(controller: passwordController, icon: Icons.lock, hint: "비밀번호", obscureText: true),
+                  CustomInput(controller: passwordConfirmController, icon: Icons.lock, hint: "비밀번호 확인", obscureText: true, onChanged: (text) {
                     setState(() {
 
                     });
@@ -161,7 +161,10 @@ class _WideRegisterPageState extends ConsumerState<WideRegisterPage> {
                         showToast(context, "회원가입에 실패했습니다: $d");
                       }
                     );
-                  }, title: AppLocalizations.of(context).get("sign_up")),
+                  }, title: "회원가입"),
+                  LoginButton(onPressed: () async {
+                    ref.read(registerProvider.notifier).state = false;
+                  }, title: "취소"),
                 ],
               ),
             ),
