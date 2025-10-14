@@ -15,10 +15,7 @@ class FriendsViewListItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Row(
       children: [
-        AppProfileImage(iconSize: 40,
-            desktopIconSize: 40,
-            imageSize: 40,
-            desktopImageSize: 40,
+        AppProfileImage(size: 40,
             user: user),
         Text(user.name),
         if(ref.watch(selectedFriendsProvider) != null) ...[

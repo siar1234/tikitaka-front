@@ -29,7 +29,7 @@ class ChattingMessageListItem extends ConsumerWidget {
               padding: const EdgeInsets.only(top: 8.0),
               child: Row(
                 children: [
-                  AppProfileImage(iconSize: 40, desktopIconSize: 40, imageSize: 40, desktopImageSize: 40, user: message.sender),
+                  AppProfileImage(size: 40, user: message.sender),
                   Text(message.sender.name)
                 ],
               ),

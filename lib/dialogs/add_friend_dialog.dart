@@ -65,7 +65,7 @@ class _AddFriendDialogState extends State<AddFriendDialog> {
                   final user = availableFriends[index];
               return Row(
                 children: [
-                  AppProfileImage(iconSize: 30, desktopIconSize: 30, imageSize: 30, desktopImageSize: 30, user: user),
+                  AppProfileImage(size: 30, user: user),
                   Expanded(child: Text(user.name)),
                   user.friendRequestStatus == "RECEIVED" ||  user.friendRequestStatus == "SEND" ? TextButton(onPressed: () {
                     appWebChannel.cancelFriendRequest(userId: user.id, onSuccess: () {

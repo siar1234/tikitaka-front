@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tikitaka/channels/app_web_channel.dart';
 import 'package:tikitaka/models/chat_room.dart';
+import 'package:tikitaka/providers/providers.dart';
 
 class ChatsState {
   final Map<int, ChatRoom> chats;
@@ -28,6 +29,9 @@ class ChatsNotifier extends StateNotifier<ChatsState> {
         await appWebChannel.getChatHistory(chatRoomId: chatRoom.id, messageId: 65, onSuccess: (list) {
           chats[chatRoom.id]!.messages =        list.reversed.toList();
         });
+      }
+      if(list.isNotEmpty) {
+        ref.read(currentChatroomProvider.notifier).state = list[0].id;
       }
 
       state = ChatsState(chats, idList);

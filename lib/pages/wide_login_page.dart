@@ -126,9 +126,9 @@ class WideLoginPageState extends ConsumerState<WideLoginPage> {
                         });
                         appCacheData.save();
                       });
-                      appWebChannel.listenAlarm(ref, () {
-                        ref.read(chatsProvider.notifier).init(widget.ref);
-                        ref.read(fragmentIndexProvider.notifier).state = FragmentIndex.home;
+                      appWebChannel.listenAlarm(widget.ref, () {
+                        widget.ref.read(chatsProvider.notifier).init(widget.ref);
+                        widget.ref.read(fragmentIndexProvider.notifier).state = FragmentIndex.home;
                       });
                     }, onFailed: (code) {
                       if(code == HttpStatus.unauthorized) {

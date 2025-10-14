@@ -1,6 +1,8 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tikitaka/channels/app_web_channel.dart';
+import 'package:tikitaka/channels/profile.dart';
 import 'package:tikitaka/providers/friends_provider.dart';
 import 'package:tikitaka/providers/providers.dart';
 
@@ -44,14 +46,17 @@ class ProfileCardState extends ConsumerState<ProfileCard> {
               final files = await FilePicker.platform.pickFiles(type: FileType.image, allowMultiple: false);
               final file = files?.files.firstOrNull;
               if(file != null) {
-
+                appWebChannel.updateProfile(selectedFile: file, user: ref.watch(profileProvider), onSuccess: () {
+                  appWebChannel.getUserInfo(onSuccess: (user) {
+                    ref.read(profileProvider.notifier).state = user;
+                  });
+                }, onFailed: (d) {
+                  print(d);
+                });
                 print(file.path);
               }
             },
-            child: AppProfileImage(iconSize: 15,
-                desktopIconSize: 250,
-                imageSize: 250,
-                desktopImageSize: 250,
+            child: AppProfileImage(size: 250,
                 user: ref.watch(profileProvider),
             ),
           ),
@@ -61,13 +66,24 @@ class ProfileCardState extends ConsumerState<ProfileCard> {
               SizedBox(
                 width: 150,
                 child: TextField(
-                  readOnly: true,
                   textAlign: TextAlign.center,
                   controller: usernameController,
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       disabledBorder: InputBorder.none
                   ),
+                  onChanged: (text) {
+                    var user = ref.watch(profileProvider);
+                    user.name = text;
+                    ref.read(profileProvider.notifier).state = user;
+                  },
+                  onTapOutside: (event) {
+                    appWebChannel.updateProfile(user: ref.watch(profileProvider), onSuccess: () {
+                      print("heyyyyy");
+                    },onFailed: (d) {
+                      print(d);
+                    });
+                  },
                 ),
               ),
             ],
