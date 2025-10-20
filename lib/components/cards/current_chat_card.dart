@@ -55,7 +55,7 @@ var controller = TextEditingController();
                 ],
               ),
               Expanded(
-                child: ChattingMessagesView(chatRoom: chatRoom),
+                child: ChattingMessagesView(chatRoomId: id),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),

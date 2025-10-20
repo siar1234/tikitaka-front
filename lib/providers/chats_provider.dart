@@ -26,8 +26,9 @@ class ChatsNotifier extends StateNotifier<ChatsState> {
         chats[chatRoom.id] = chatRoom;
 
         appWebChannel.subscribeChatroom(chatRoom.id, ref);
-        await appWebChannel.getChatHistory(chatRoomId: chatRoom.id, messageId: 65, onSuccess: (list) {
+        await appWebChannel.getChatHistory(chatRoomId: chatRoom.id, onSuccess: (list) {
           chats[chatRoom.id]!.messages =        list.reversed.toList();
+          chats[chatRoom.id]!.messages.sort((a, b) => a.id.compareTo(b.id));
         });
       }
       if(list.isNotEmpty) {
@@ -58,6 +59,13 @@ class ChatsNotifier extends StateNotifier<ChatsState> {
     final mergedList = list.contains(chatRoom.id) ? [...state.idList] : [...list, chatRoom.id];
 
     state = ChatsState(chats, mergedList);
+  }
+
+  void insertMessages(int id, List<ChatMessage> messages) {
+    final chatRoom = state.chats.get(id);
+    chatRoom.insertMessages(messages);
+    final chats = {...state.chats, chatRoom.id: chatRoom};
+    state = ChatsState(chats, [...state.idList]);
   }
 
 }

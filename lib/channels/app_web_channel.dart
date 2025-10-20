@@ -410,9 +410,10 @@ class AppWebChannel {
     }
   }
 
-  Future<void> getChatHistory({required int chatRoomId, required int messageId, required void Function(List<ChatMessage>) onSuccess}) async {
-    await getJson(url: "$backendURL/api/chat/get/history?chatRoomId=$chatRoomId&messageId=$messageId", onSuccess: (body) {
-      print(body);
+  Future<void> getChatHistory({required int chatRoomId, int? messageId, required void Function(List<ChatMessage>) onSuccess}) async {
+    var url = messageId != null ? "$backendURL/api/chat/get/history?chatRoomId=$chatRoomId&messageId=$messageId" : "$backendURL/api/chat/get/history?chatRoomId=$chatRoomId";
+    await getJson(url: url, onSuccess: (body) {
+      // print(body);
       List<ChatMessage> result = [];
       for(var item in body["list"]) {
         result.add(ChatMessage.fromMap(item));

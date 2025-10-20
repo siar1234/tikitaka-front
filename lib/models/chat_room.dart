@@ -19,6 +19,31 @@ class ChatRoom {
   String toJsonBody() {
     return jsonEncode(toMap());
   }
+
+  void insertMessages(List<ChatMessage> list) {
+    if (list.isEmpty) return;
+
+    // Create a map of existing message IDs for quick lookup
+    final existingIds = messages.map((m) => m.id).toSet();
+
+    // Filter out messages that already exist
+    final newMessages = list.where((m) => !existingIds.contains(m.id)).toList();
+
+    // Add the new messages
+    messages.addAll(newMessages);
+
+    // Sort messages by creation time (or by id if you prefer)
+    // messages.sort((a, b) => b.created.compareTo(a.created));
+    messages.sort((a, b) => a.id.compareTo(b.id));
+
+    // Update the last message if there is at least one
+    if (messages.isNotEmpty) {
+      lastMessage = messages.last.type == ChatMessageType.text
+          ? messages.last.message
+          : "[Image]";
+    }
+  }
+
 }
 
 enum ChatMessageType {
