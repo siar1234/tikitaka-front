@@ -20,7 +20,13 @@ class ChatroomItem extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: ChatroomThumbnail(size: 40),
             ),
-            Text(chatRoom.title)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(chatRoom.title),
+                Text(chatRoom.lastMessage)
+              ],
+            ),
           ],
         ),
       ),

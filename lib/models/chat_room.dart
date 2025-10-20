@@ -7,6 +7,7 @@ class ChatRoom {
   List<ChatMessage> messages = [];
   String title = "";
   List<String> participants = [];
+  String lastMessage = "";
 
   Map<String, dynamic> toMap() {
     return {

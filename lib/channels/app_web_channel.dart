@@ -140,6 +140,7 @@ class AppWebChannel {
             var chatRoom = ChatRoom();
             chatRoom.id = map["chatRoomId"];
             chatRoom.title = map["title"];
+            chatRoom.lastMessage = map["lastMessage"] ?? "";
             result.add(chatRoom);
           }
         }
@@ -305,6 +306,7 @@ class AppWebChannel {
           var id = ref.watch(currentChatroomProvider);
           print('📩 chat Message received: ${frame.body}');
           ref.read(chatsProvider.notifier).addMessage(id, jsonDecode(frame.body!));
+
         } catch (e) {
           print("#432432432ui43232");
           print(e);

@@ -43,6 +43,7 @@ class ChatsNotifier extends StateNotifier<ChatsState> {
     if(chat == null) return;
 
     chat.messages.add(ChatMessage.fromMap(message));
+    chat.lastMessage = message["message"] ?? "";
 
     final chats = {...state.chats, id: chat};
     final idList = [...state.idList];
