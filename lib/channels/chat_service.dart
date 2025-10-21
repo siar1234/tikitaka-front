@@ -11,7 +11,7 @@ extension ChatService on AppWebChannel {
   void sendMessageRead({required int chatRoomId, required int messageId}) {
     print("sendMessageRead");
     stompClient?.send(
-      destination: '/update/read',
+      destination: '/app/update/read',
       body: jsonEncode({
         "chatRoomId": chatRoomId,
         "messageId": messageId
@@ -22,25 +22,25 @@ extension ChatService on AppWebChannel {
 
   void subscribeMessageRead(WidgetRef ref) {
 
-    stompClient?.subscribe(
-      destination: "/topic/members/info/",
-      callback: (frame) {
-        print("/topic/members/info ");
-
-      //   {
-      //     "chatRoomId":20,
-      //   "userId":"asdasd",
-      //   "lastReadMessageId":100
-      // }
-        try {
-          var body = jsonDecode(frame.body!);
-          ref.read(chatsProvider.notifier).acknowledgeMessageRead(body["chatRoomId"], body["userId"], body["lastReadMessageId"]);
-
-        } catch (e) {
-          print("#432432432ui43232");
-          print(e);
-        }
-      },
-    );
+    // stompClient?.subscribe(
+    //   destination: "/topic/members/info/",
+    //   callback: (frame) {
+    //     print("/topic/members/info ");
+    //
+    //   //   {
+    //   //     "chatRoomId":20,
+    //   //   "userId":"asdasd",
+    //   //   "lastReadMessageId":100
+    //   // }
+    //     try {
+    //       var body = jsonDecode(frame.body!);
+    //       ref.read(chatsProvider.notifier).acknowledgeMessageRead(body["chatRoomId"], body["userId"], body["lastReadMessageId"]);
+    //
+    //     } catch (e) {
+    //       print("#432432432ui43232");
+    //       print(e);
+    //     }
+    //   },
+    // );
   }
 }
