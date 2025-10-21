@@ -25,10 +25,39 @@ class ChatsNotifier extends StateNotifier<ChatsState> {
         idList.add(chatRoom.id);
         chats[chatRoom.id] = chatRoom;
 
+        // appWebChannel.getJson(url: "$backendURL//api/chat/addable/list?chatRoomId=${chatRoom.id}", onSuccess: (data) {
+        //   print("sex");
+        //   print(data);
+        // });
         appWebChannel.subscribeChatroom(chatRoom.id, ref);
         await appWebChannel.getChatHistory(chatRoomId: chatRoom.id, onSuccess: (list) {
           chats[chatRoom.id]!.messages =        list.reversed.toList();
           chats[chatRoom.id]!.messages.sort((a, b) => a.id.compareTo(b.id));
+        });
+
+        await appWebChannel.getJson(url: "${backendURL}/api/chat/get/members/read_info?chatRoomId=${chatRoom.id}", onSuccess: (data) {
+          print("heyyysdfsfsfsd");
+          print(data);
+          var list = data["list"];
+          for(var item in list) {
+            //{chatRoomId: 6, userId: hey123, lastReadMessageId: null}
+            var userId = item["userId"];
+            int? lastReadMessageId = item["lastReadMessageId"];
+            if(!chatRoom.participants.contains(userId)) {
+              chatRoom.participants.add(userId);
+            }
+
+            if(lastReadMessageId != null) {
+              for(int i = 0 ; i < lastReadMessageId; i++) {
+                if( i >= chatRoom.messages.length) {
+                  break;
+                }
+                if(!chatRoom.messages[i].readUsers.contains(userId)) {
+                  chatRoom.messages[i].readUsers.add(userId);
+                }
+              }
+            }
+          }
         });
       }
       if(list.isNotEmpty) {
@@ -68,6 +97,20 @@ class ChatsNotifier extends StateNotifier<ChatsState> {
     state = ChatsState(chats, [...state.idList]);
   }
 
+  void acknowledgeMessageRead(int id, String userId, int lastReadMessageId) {
+    print("acknowledgeMessageRead");
+    final chatRoom = state.chats.get(id);
+    for(int i = 0 ; i < lastReadMessageId; i++) {
+      if( i >= chatRoom.messages.length) {
+        break;
+      }
+      if(!chatRoom.messages[i].readUsers.contains(userId)) {
+        chatRoom.messages[i].readUsers.add(userId);
+      }
+    }
+  final chats = {...state.chats, chatRoom.id: chatRoom};
+  state = ChatsState(chats, [...state.idList]);
+  }
 }
 
 final chatsProvider = StateNotifierProvider<ChatsNotifier, ChatsState>((ref) {

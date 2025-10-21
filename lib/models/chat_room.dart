@@ -8,6 +8,7 @@ class ChatRoom {
   String title = "";
   List<String> participants = [];
   String lastMessage = "";
+  List<dynamic> profileImages = [];
 
   Map<String, dynamic> toMap() {
     return {
@@ -57,6 +58,7 @@ class ChatMessage {
   DateTime created = DateTime.now();
   ChatMessageType type = ChatMessageType.text;
   String imageUrl = "";
+  List<String> readUsers = [];
 
   static ChatMessage fromMap(Map<String, dynamic> map) {
     var message = ChatMessage();

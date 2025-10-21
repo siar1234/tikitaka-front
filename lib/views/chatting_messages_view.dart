@@ -22,8 +22,7 @@ class _ChattingMessagesViewState extends ConsumerState<ChattingMessagesView> {
   void initState() {
     _scrollController.addListener(() {
       // Check if the user scrolled to the top
-      if (_scrollController.position.pixels <= _scrollController.position.minScrollExtent + 10) {
-        print("heyyy");
+      if (_scrollController.position.pixels <= _scrollController.position.minScrollExtent) {
 
         appWebChannel.getChatHistory(
           chatRoomId: widget.chatRoomId,
@@ -36,15 +35,6 @@ class _ChattingMessagesViewState extends ConsumerState<ChattingMessagesView> {
       }
     });
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   _scrollToBottom();
-    // });
-  }
-
-  void _scrollToBottom() {
-    if (_scrollController.hasClients) {
-      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-    }
   }
 
   @override
@@ -59,7 +49,7 @@ class _ChattingMessagesViewState extends ConsumerState<ChattingMessagesView> {
       controller: _scrollController,
       itemCount: chatRoom.messages.length,
       itemBuilder: (context, index) {
-        return ChattingMessageListItem(message: chatRoom.messages[index]);
+        return ChattingMessageListItem(message: chatRoom.messages[index], chatRoom: chatRoom);
       },
     );
   }

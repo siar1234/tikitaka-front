@@ -7,6 +7,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart';
 import 'package:stomp_dart_client/stomp_dart_client.dart';
+import 'package:tikitaka/channels/chat_service.dart';
 import 'package:tikitaka/models/app_cache.dart';
 import 'package:tikitaka/models/app_user.dart';
 import 'package:tikitaka/models/chat_room.dart';
@@ -141,6 +142,9 @@ class AppWebChannel {
             chatRoom.id = map["chatRoomId"];
             chatRoom.title = map["title"];
             chatRoom.lastMessage = map["lastMessage"] ?? "";
+            // chatRoom.profileImages = map["profileImages"] ?? [];
+            chatRoom.profileImages =  [null];
+            // chatRoom.participants = map
             result.add(chatRoom);
           }
         }
@@ -276,7 +280,7 @@ class AppWebChannel {
     stompClient?.deactivate();
     stompClient = StompClient(
       config: StompConfig.sockJS(
-        url: 'http://localhost:8080/ws',
+        url: '$backendURL/ws',
         onConnect: (frame) {
           print("object");
           onAlarmRecieved(frame, ref);
@@ -303,9 +307,29 @@ class AppWebChannel {
       destination: '/topic/chat/${id}',
       callback: (frame) {
         try {
-          var id = ref.watch(currentChatroomProvider);
           print('📩 chat Message received: ${frame.body}');
           ref.read(chatsProvider.notifier).addMessage(id, jsonDecode(frame.body!));
+
+        } catch (e) {
+          print("#432432432ui43232");
+          print(e);
+        }
+      },
+    );
+
+    stompClient?.subscribe(
+      destination: "/topic/members/info/$id",
+      callback: (frame) {
+        print("/topic/members/info ");
+
+        //   {
+        //     "chatRoomId":20,
+        //   "userId":"asdasd",
+        //   "lastReadMessageId":100
+        // }
+        try {
+          var body = jsonDecode(frame.body!);
+          ref.read(chatsProvider.notifier).acknowledgeMessageRead(body["chatRoomId"], body["userId"], body["lastReadMessageId"]);
 
         } catch (e) {
           print("#432432432ui43232");
@@ -341,6 +365,8 @@ class AppWebChannel {
         }
       },
     );
+
+    subscribeMessageRead(ref);
   }
 
   Future<void> acceptFriendRequest({required String id, required void Function() onSuccess}) async {
@@ -413,7 +439,7 @@ class AppWebChannel {
   Future<void> getChatHistory({required int chatRoomId, int? messageId, required void Function(List<ChatMessage>) onSuccess}) async {
     var url = messageId != null ? "$backendURL/api/chat/get/history?chatRoomId=$chatRoomId&messageId=$messageId" : "$backendURL/api/chat/get/history?chatRoomId=$chatRoomId";
     await getJson(url: url, onSuccess: (body) {
-      // print(body);
+       print(body);
       List<ChatMessage> result = [];
       for(var item in body["list"]) {
         result.add(ChatMessage.fromMap(item));
