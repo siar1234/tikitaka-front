@@ -11,9 +11,13 @@ class AppProfileImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if(user.profileImage != null) {
-      return SizedBox(
+      return Container(
          width: size,
         height: size,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Theme.of(context).cardColor,
+        ),
         child: ClipRRect(
             borderRadius: BorderRadius.circular(size),
             child: Image.network(user.profileImage!, fit: BoxFit.cover,)),

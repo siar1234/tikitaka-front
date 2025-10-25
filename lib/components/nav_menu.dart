@@ -49,6 +49,7 @@ class NavMenu extends ConsumerWidget {
             AccountButton(
               iconSize: _iconSize,
               iconColor: iconColor,
+              user: ref.watch(profileProvider),
             ),
             IconButton(
               icon: Icon(Icons.home, size: _iconSize, color: iconColor,),

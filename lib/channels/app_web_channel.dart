@@ -143,7 +143,7 @@ class AppWebChannel {
             chatRoom.title = map["title"];
             chatRoom.lastMessage = map["lastMessage"] ?? "";
             // chatRoom.profileImages = map["profileImages"] ?? [];
-            chatRoom.profileImages =  [null];
+            chatRoom.profileImages =   jsonDecode(map["profileImages"] ?? "[]");
             // chatRoom.participants = map
             result.add(chatRoom);
           }

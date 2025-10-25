@@ -41,7 +41,7 @@ var controller = TextEditingController();
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: ChatroomThumbnail(size: 40,),
+                    child: ChatroomThumbnail(size: 40, chatRoom: chatRoom),
                   ),
                   Expanded(child: Text(chatRoom.title)),
                   PopupMenuButton(

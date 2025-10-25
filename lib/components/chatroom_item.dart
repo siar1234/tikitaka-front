@@ -18,7 +18,7 @@ class ChatroomItem extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ChatroomThumbnail(size: 40),
+              child: ChatroomThumbnail(size: 40, chatRoom: chatRoom,),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
